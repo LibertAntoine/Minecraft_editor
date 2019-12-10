@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Test.h"
+#include "Mode.h"
 
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
@@ -8,8 +8,8 @@
 
 #include <memory>
 
-namespace test {
-	class ModePlanette: public Test
+namespace mode {
+	class ModePlanette: public Mode
 	{
 	public:
 		ModePlanette();

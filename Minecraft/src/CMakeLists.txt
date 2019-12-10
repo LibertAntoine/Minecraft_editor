@@ -1,5 +1,5 @@
-file(GLOB HEADER_FILES *.h tests/*.h)
-file(GLOB SRC_FILES *.cpp tests/*.cpp)
+file(GLOB HEADER_FILES *.h modes/*.h)
+file(GLOB SRC_FILES *.cpp modes/*.cpp)
 
 set(CMAKE_MODULE_PATH ../bin/tmp)
 

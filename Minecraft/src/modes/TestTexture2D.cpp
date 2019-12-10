@@ -3,15 +3,12 @@
 #include "Renderer.h"
 #include "ImGUI/imgui.h"
 
-
-
-
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-namespace test {
+namespace mode {
 
-	TestTexture2D::TestTexture2D()
+	ModeTexture2D::ModeTexture2D()
 		: m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)), 
 		m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))), 
 		m_TranslationA(200, 200, 0), m_TranslationB(400, 200, 0)
@@ -52,17 +49,17 @@ namespace test {
 		m_Shader->SetUniform1i("u_Texture", 0);
 	}
 
-	TestTexture2D::~TestTexture2D()
+	ModeTexture2D::~ModeTexture2D()
 	{
 
 	}
 
-	void TestTexture2D::OnUpdate(float deltaTime)
+	void ModeTexture2D::OnUpdate(float deltaTime)
 	{
 
 	}
 
-	void TestTexture2D::OnRender()
+	void ModeTexture2D::OnRender()
 	{
 
 		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
@@ -91,7 +88,7 @@ namespace test {
 	}
 
 
-	void TestTexture2D::OnImGuiRender()
+	void ModeTexture2D::OnImGuiRender()
 	{
 		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 		ImGui::SliderFloat3("Translation A", &m_TranslationA.x, 0.0f, 960.0f);          // Edit 1 float using a slider from 0.0f to 1.0f

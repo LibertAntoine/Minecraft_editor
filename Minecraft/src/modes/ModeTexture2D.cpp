@@ -1,16 +1,19 @@
-#include "ModePlanette.h"
+#include "ModeTexture2D.h"
 
 #include "Renderer.h"
 #include "ImGUI/imgui.h"
 
+
+
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-namespace test {
+namespace mode {
 
-	ModePlanette::ModePlanette()
-		: m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
-		m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
+	ModeTexture2D::ModeTexture2D()
+		: m_Proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)), 
+		m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))), 
 		m_TranslationA(200, 200, 0), m_TranslationB(400, 200, 0)
 	{
 
@@ -28,7 +31,7 @@ namespace test {
 
 		GLCall(glEnable(GL_BLEND));
 		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
+		
 		m_Shader = std::make_unique<Shader>("res/shaders/Basic.shader");
 		m_VAO = std::make_unique<VertexArray>();
 
@@ -49,17 +52,17 @@ namespace test {
 		m_Shader->SetUniform1i("u_Texture", 0);
 	}
 
-	ModePlanette::~ModePlanette()
+	ModeTexture2D::~ModeTexture2D()
 	{
 
 	}
 
-	void ModePlanette::OnUpdate(float deltaTime)
+	void ModeTexture2D::OnUpdate(float deltaTime)
 	{
 
 	}
 
-	void ModePlanette::OnRender()
+	void ModeTexture2D::OnRender()
 	{
 
 		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
@@ -84,11 +87,11 @@ namespace test {
 			m_Shader->SetUniformMat4f("u_MVP", mvp);
 			renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 		}
-
+	
 	}
 
 
-	void ModePlanette::OnImGuiRender()
+	void ModeTexture2D::OnImGuiRender()
 	{
 		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 		ImGui::SliderFloat3("Translation A", &m_TranslationA.x, 0.0f, 960.0f);          // Edit 1 float using a slider from 0.0f to 1.0f

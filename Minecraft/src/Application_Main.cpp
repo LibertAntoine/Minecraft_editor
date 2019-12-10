@@ -24,22 +24,22 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "tests/TestClearColor.h"
-#include "tests/TestTexture2D.h"
-#include "tests/ModePlanette.h"
+#include "modes/ModeClearColor.h"
+#include "modes/ModeTexture2D.h"
+#include "modes/ModePlanette.h"
 
 int main(int argc, char* argv[])
 {
 	App app;
 	Renderer renderer;
 
-	test::Test* currentTest = nullptr;
-	test::TestMenu* testMenu = new test::TestMenu(currentTest);
-	currentTest = testMenu;
+	mode::Mode* currentMode = nullptr;
+	mode::ModeMenu* modeMenu = new mode::ModeMenu(currentMode);
+	currentMode = modeMenu;
 
-	testMenu->RegisterTest<test::TestClearColor>("Clear Color");
-	testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
-	testMenu->RegisterTest<test::ModePlanette>("Mode Planette");
+	modeMenu->RegisterMode<mode::ModeClearColor>("Clear Color");
+	modeMenu->RegisterMode<mode::ModeTexture2D>("2D Texture");
+	modeMenu->RegisterMode<mode::ModePlanette>("Mode Planette");
 
 	/* Boucle principale */
 	while (app.isRunning()) {
@@ -55,21 +55,20 @@ int main(int argc, char* argv[])
 				}
 			}
 
-			GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 			renderer.Clear();
 			app.beginFrame();
 
-			if (currentTest)
+			if (currentMode)
 			{
-				currentTest->OnUpdate(0.0f);
-				currentTest->OnRender();
+				currentMode->OnUpdate(0.0f);
+				currentMode->OnRender();
 				ImGui::Begin("Test");
-				if (currentTest != testMenu && ImGui::Button("<-"))
+				if (currentMode != modeMenu && ImGui::Button("<-"))
 				{
-					delete currentTest;
-					currentTest = testMenu;
+					delete currentMode;
+					currentMode = modeMenu;
 				}
-				currentTest->OnImGuiRender();
+				currentMode->OnImGuiRender();
 				ImGui::End();
 			}
 
@@ -82,9 +81,9 @@ int main(int argc, char* argv[])
 
 	}
 
-	delete currentTest;
-	if (currentTest != testMenu) {
-		delete testMenu;
+	delete currentMode;
+	if (currentMode != modeMenu) {
+		delete modeMenu;
 	}
 
 

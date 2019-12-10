@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Test.h"
+#include "Mode.h"
 
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
@@ -8,12 +8,12 @@
 
 #include <memory>
 
-namespace test {
-	class TestTexture2D : public Test
+namespace mode {
+	class ModeTexture2D : public Mode
 	{
 	public:
-		TestTexture2D();
-		~TestTexture2D();
+		ModeTexture2D();
+		~ModeTexture2D();
 		void OnUpdate(float deltaTime) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
