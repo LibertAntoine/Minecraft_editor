@@ -23,10 +23,12 @@ include_directories( # Search directories for .h files
 
 add_subdirectory(Minecraft/vendor/ImGUI)
 add_subdirectory(Minecraft/vendor/stb_image)
+add_subdirectory(Minecraft/vendor/octree)
 
 set(ALL_LIBRARIES 
        ImGUI
        stb_image
+	octree
        ${OPENGL_LIBRARIES}
        ${CMAKE_SOURCE_DIR}/WinDependencies/SDL2/x64/SDL2.lib
 	${CMAKE_SOURCE_DIR}/WinDependencies/SDL2/x64/SDL2main.lib

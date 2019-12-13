@@ -3,6 +3,7 @@
 #include <vector>
 #include <functional>
 #include <string>
+#include <iostream>
 
 namespace mode {
 
