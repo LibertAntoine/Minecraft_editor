@@ -60,6 +60,7 @@ endif()
 
 add_subdirectory(Minecraft/vendor/ImGUI)
 add_subdirectory(Minecraft/vendor/stb_image)
+add_subdirectory(Minecraft/vendor/octree)
 
 if (WIN32)
   set(ALL_LIBRARIES 

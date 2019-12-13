@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 
 	modeMenu->RegisterMode<mode::ModeClearColor>("Clear Color");
 	modeMenu->RegisterMode<mode::ModeTexture2D>("2D Texture");
-	modeMenu->RegisterMode<mode::ModePlanette>("Mode Planette");
+	modeMenu->RegisterMode<mode::ModePlanette>("Cube");
 
 	/* Boucle principale */
 	while (app.isRunning()) {
@@ -81,10 +81,11 @@ int main(int argc, char* argv[])
 
 	}
 
-	delete currentMode;
 	if (currentMode != modeMenu) {
 		delete modeMenu;
 	}
+	delete currentMode;
+
 
 
 

@@ -10,6 +10,7 @@ struct VertexBufferElement
   unsigned int count;
   unsigned char normalized;
 
+<<<<<<< HEAD
   static unsigned int GetSizeOfType(unsigned int type)
   {
     switch (type)
@@ -21,6 +22,32 @@ struct VertexBufferElement
     ASSERT(false);
     return 0;
   }
+||||||| merged common ancestors
+	static unsigned int GetSizeOfType(unsigned int type)
+	{
+		switch (type)
+		{
+			case GL_FLOAT:			return 4;
+			case GL_UNSIGNED_INT:	return 4;
+			case GL_UNSIGNED_BYTE:	return 1;
+		}
+		ASSERT(false);
+		return 0;
+	}
+=======
+	static unsigned int GetSizeOfType(unsigned int type)
+	{
+		switch (type)
+		{
+			case GL_FLOAT:			return 4;
+			case GL_UNSIGNED_INT:	return 4;
+			case GL_INT:			return 4;
+			case GL_UNSIGNED_BYTE:	return 1;
+		}
+		ASSERT(false);
+		return 0;
+	}
+>>>>>>> 29ca14b95524b05c79a519e3c55dc62ee0596cee
 };
 
 class VertexBufferLayout
@@ -45,12 +72,35 @@ class VertexBufferLayout
         m_Stride += count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
       }
 
+<<<<<<< HEAD
     template<>
       void Push<unsigned int>(unsigned int count)
       {
         m_Elements.push_back({ GL_UNSIGNED_INT, count, GL_FALSE });
         m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT);
       }
+||||||| merged common ancestors
+	template<>
+	void Push<unsigned int>(unsigned int count)
+	{
+		m_Elements.push_back({ GL_UNSIGNED_INT, count, GL_FALSE });
+		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT);
+	}
+=======
+	template<>
+	void Push<int>(unsigned int count)
+	{
+		m_Elements.push_back({ GL_INT, count, GL_FALSE });
+		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_INT);
+	}
+
+	template<>
+	void Push<unsigned int>(unsigned int count)
+	{
+		m_Elements.push_back({ GL_UNSIGNED_INT, count, GL_FALSE });
+		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT);
+	}
+>>>>>>> 29ca14b95524b05c79a519e3c55dc62ee0596cee
 
     template<>
       void Push<unsigned char>(unsigned int count)
