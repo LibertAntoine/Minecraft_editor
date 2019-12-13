@@ -3,3 +3,8 @@
 /.vscode
 /Minecraft/bin
 /Soutien
+/bin
+
+.ccls*
+
+compile_commands.json
