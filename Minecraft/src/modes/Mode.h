@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <functional>
+#include <iostream>
 #include <string>
 
 namespace mode {

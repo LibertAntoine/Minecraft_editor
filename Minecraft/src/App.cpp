@@ -1,4 +1,4 @@
-#include "app.h"
+#include "App.h"
 
 
 bool App::m_instanciated = false;

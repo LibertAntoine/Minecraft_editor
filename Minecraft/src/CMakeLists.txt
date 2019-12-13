@@ -1,8 +1,6 @@
 file(GLOB HEADER_FILES *.h modes/*.h)
 file(GLOB SRC_FILES *.cpp modes/*.cpp)
 
-set(CMAKE_MODULE_PATH ../bin/tmp)
-
 add_executable(Minecraft
     ${SRC_FILES}
     ${HEADER_FILES}
