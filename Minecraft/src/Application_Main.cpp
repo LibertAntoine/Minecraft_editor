@@ -27,7 +27,7 @@
 #include "modes/ModeClearColor.h"
 #include "modes/ModeTexture2D.h"
 #include "modes/ModePlanette.h"
-#include "modes/ModeImGUItest.h"
+#include "modes/ModeImGUITest.h"
 
 int main(int argc, char* argv[])
 {
