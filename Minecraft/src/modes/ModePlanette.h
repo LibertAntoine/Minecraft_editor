@@ -6,6 +6,10 @@
 #include "VertexBufferLayout.h"
 #include "Texture.h"
 #include "Camera.h"
+#include <vector>
+#include <algorithm>
+#include "forms/Cube.h"
+
 
 #include <memory>
 
@@ -24,7 +28,8 @@ namespace mode {
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Texture> m_Texture;
-		glm::mat4 m_Proj, m_View;
+		glm::mat4 m_ProjMatrix;
 		camera::TrackballCamera TrackCam;
+		std::vector<form::Cube> CubeVect;
 	};
 }
