@@ -5,6 +5,12 @@
 #include <Texture.h>
 
 namespace form {
+
+	typedef struct CubeData {
+		static const int datas[];
+		static const unsigned int indices[];
+	} CubeData;
+
     class Cube {
     public:
         Cube() = delete;

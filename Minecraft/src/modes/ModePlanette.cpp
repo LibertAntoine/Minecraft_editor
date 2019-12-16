@@ -19,49 +19,9 @@ namespace mode {
 		m_Shader = std::make_unique<Shader>("res/shaders/3D.shader");
 		m_VAO = std::make_unique<VertexArray>();
 
-		const int datas[] = {
-			// Front v0,v1,v2,v3
-			 1,  1,  1,       0,  0,  1,       1, 0,
-			-1,  1,  1,       0,  0,  1,       0, 0,
-			-1, -1,  1,       0,  0,  1,       0, 1,
-			 1, -1,  1,       0,  0,  1,       1, 1,
-			 // Right v0,v3,v4,v5
-			  1,  1,  1,       1,  0,  0,       0, 0,
-			  1, -1,  1,       1,  0,  0,       0, 1,
-			  1, -1, -1,       1,  0,  0,       1, 1,
-			  1,  1, -1,       1,  0,  0,       1, 0,
-			  // Top v0,v5,v6,v1	
-			   1,  1,  1,       0,  1,  0,       0, 1,
-			   1,  1, -1,       0,  1,  0,       1, 0,
-			  -1,  1, -1,       0,  1,  0,       0, 0,
-			  -1,  1,  1,       0,  1,  0,       1, 1,
-			  // Left v1,v6,v7,v2	
-			  -1,  1,  1,      -1,  0,  0,       1, 0,
-			  -1,  1, -1,      -1,  0,  0,       0, 0,
-			  -1, -1, -1,      -1,  0,  0,       0, 1,
-			  -1, -1,  1,      -1,  0,  0,       1, 1,
-			  // Bottom v7,v4,v3,v2
-			  -1, -1, -1,       0, -1,  0,       1, 0,
-			   1, -1, -1,       0, -1,  0,       0, 0,
-			   1, -1,  1,       0, -1,  0,       0, 1,
-			  -1, -1,  1,       0, -1,  0,       1, 1,
-			  // Back v4,v7,v6,v5	
-			   1, -1, -1,       0,  0, -1,       0, 1,
-			  -1, -1, -1,       0,  0, -1,       1, 1,
-			  -1,  1, -1,       0,  0, -1,       1, 0,
-			   1,  1, -1,       0,  0, -1,       0, 0
-		};
+		form::CubeData cubeData;
 
-		const unsigned int indices[] = {
-		 0, 1, 2,   2, 3, 0,      // front
-		 4, 5, 6,   6, 7, 4,      // right
-		 8, 9,10,  10,11, 8,      // top
-		12,13,14,  14,15,12,      // left
-		16,17,18,  18,19,16,      // bottom
-		20,21,22,  22,23,20		  // back
-		};
-
-		m_VertexBuffer = std::make_unique<VertexBuffer>(datas, 6 * 4 * 8 * sizeof(int));
+		m_VertexBuffer = std::make_unique<VertexBuffer>(cubeData.datas, 6 * 4 * 8 * sizeof(int));
 
 		VertexBufferLayout layout;
 		layout.Push<int>(3);
@@ -69,7 +29,7 @@ namespace mode {
 		layout.Push<int>(2);
 
 		m_VAO->AddBuffer(*m_VertexBuffer, layout);
-		m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6 * 6);
+		m_IndexBuffer = std::make_unique<IndexBuffer>(cubeData.indices, 6 * 6);
 
 		m_Shader->Bind();
 	}
