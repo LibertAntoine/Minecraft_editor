@@ -94,11 +94,11 @@ namespace mode {
 		{
 			glm::mat4 model = glm::mat4(1.0f);
 
-			//On considère séparément la matrice de projection, celle simulant le placement de la caméra et celle simulant le placement de l'objet.
-			// C'est le modèle MVP. 
+			//On considï¿½re sï¿½parï¿½ment la matrice de projection, celle simulant le placement de la camï¿½ra et celle simulant le placement de l'objet.
+			// C'est le modï¿½le MVP. 
 			glm::mat4 mvp = m_Proj * m_View * model;
 			m_Shader->Bind();
-			//Définit les outils de dessin.
+			//Dï¿½finit les outils de dessin.
 			m_Shader->SetUniformMat4f("u_MVP", mvp);
 			renderer.Draw(*m_VAO, *m_IndexBuffer, *m_Shader);
 		}
@@ -114,8 +114,6 @@ namespace mode {
 
 	void ModePlanette::OnImGuiRender()
 	{
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::End();
 	}
 }

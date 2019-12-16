@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
 			{
 				currentMode->OnUpdate(0.0f);
 				currentMode->OnRender();
-				ImGui::Begin("Test");
+				ImGui::Begin("Select Mode");
 				if (currentMode != modeMenu && ImGui::Button("<-"))
 				{
 					delete currentMode;
