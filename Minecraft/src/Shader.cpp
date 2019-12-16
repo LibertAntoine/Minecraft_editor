@@ -18,34 +18,29 @@ Shader::~Shader()
 {
 	GLCall(glDeleteProgram(m_RendererID));
 }
- 
 
+ShaderProgramSource Shader::ParseShader(const std::string &filepath) {
+  std::ifstream stream(filepath);
+  enum class ShaderType { NONE = -1, VERTEX = 0, FRAGMENT = 1 };
 
-ShaderProgramSource Shader::ParseShader(const std::string& filepath) {
-	std::ifstream stream(filepath);
-
-	enum class ShaderType
-	{
-		NONE = -1,
-		VERTEX = 0,
-		FRAGMENT = 1
-	};
-
-	ShaderType type = ShaderType::NONE;
-	std::string line;
-	std::stringstream ss[2];
-	while (getline(stream, line)) {
-		if (line.find("#shader") != std::string::npos) {
-			if (line.find("vertex") != std::string::npos)
-				type = ShaderType::VERTEX;
-			else if (line.find("fragment") != std::string::npos)
-				type = ShaderType::FRAGMENT;
-		}
-		else {
-			ss[(int)type] << line << "\n";
-		}
-	}
-	return { ss[0].str(), ss[1].str() };
+  ShaderType type = ShaderType::NONE;
+  std::string line;
+  std::stringstream ss[2];
+  while (std::getline(stream, line)) {
+    if (line.find("#shader") != std::string::npos) {
+      if (line.find("vertex") != std::string::npos) {
+        type = ShaderType::VERTEX;
+        std::cout << "in vertexShader" << std::endl;
+      }
+      else if (line.find("fragment") != std::string::npos) {
+        type = ShaderType::FRAGMENT;
+        std::cout << "in fragmentShader" << std::endl;
+      }
+    } else {
+      ss[(int)type] << line << "\n";
+    }
+  }
+  return {ss[0].str(), ss[1].str()};
 }
 
 unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
@@ -60,7 +55,9 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 	if (result == GL_FALSE) {
 		int length;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-		char* message = (char*)alloca(length * sizeof(char));
+                // NOTE: replaced alloca by malloc, alloc seems to be a non-standard MSVC thing
+                // Was causing segfaults
+		char* message = (char*)malloc(length * sizeof(char));
 		glGetShaderInfoLog(id, length, &length, message);
 		std::cout << "Failed to compile  " <<
 			(type == GL_VERTEX_SHADER ? "vertex" : "fragment")
@@ -81,7 +78,38 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 	glAttachShader(program, vs);
 	glAttachShader(program, fs);
 	glLinkProgram(program);
+	int result;
+	glGetProgramiv(program, GL_LINK_STATUS, &result);
+	if (result == GL_FALSE) {
+		int length = 0;
+		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
+		char* message = (char*)malloc(length * sizeof(char));
+		glGetProgramInfoLog(program, length, &length, message);
+		std::cout << "Failed to link program" << std::endl;
+                if ( length == 0 ) {
+                  std::cout << "No further information provided" << std::endl;
+                }
+		std::cout << message << std::endl;
+		glDeleteProgram(program);
+		return 0;
+	}
 	glValidateProgram(program);
+
+	result;
+	glGetProgramiv(program, GL_VALIDATE_STATUS, &result);
+	if (result == GL_FALSE) {
+		int length = 0;
+		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
+		char* message = (char*)malloc(length * sizeof(char));
+		glGetProgramInfoLog(program, length, &length, message);
+		std::cout << "Failed to validate program" << std::endl;
+                if ( length == 0 ) {
+                  std::cout << "No further information provided" << std::endl;
+                }
+		std::cout << message << std::endl;
+		glDeleteProgram(program);
+		return 0;
+	}
 
 	glDeleteShader(vs); //Delete le shader du CPU
 	glDeleteShader(fs); //Delete le shader du CPU

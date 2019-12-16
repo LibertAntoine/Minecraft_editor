@@ -31,66 +31,66 @@
 
 int main(int argc, char* argv[])
 {
-	App app;
-	Renderer renderer;
+  App app;
+  Renderer renderer;
 
-	mode::Mode* currentMode = nullptr;
-	mode::ModeMenu* modeMenu = new mode::ModeMenu(currentMode);
-	currentMode = modeMenu;
+  mode::Mode* currentMode = nullptr;
+  mode::ModeMenu* modeMenu = new mode::ModeMenu(currentMode);
+  currentMode = modeMenu;
 
-	modeMenu->RegisterMode<mode::ModeClearColor>("Clear Color");
-	modeMenu->RegisterMode<mode::ModeTexture2D>("2D Texture");
-	modeMenu->RegisterMode<mode::ModePlanette>("Cube");
-	modeMenu->RegisterMode<mode::ModeImGUITest>("ImGUI Demo");
+  modeMenu->RegisterMode<mode::ModeClearColor>("Clear Color");
+  modeMenu->RegisterMode<mode::ModeTexture2D>("2D Texture");
+  modeMenu->RegisterMode<mode::ModePlanette>("Cube");
+  modeMenu->RegisterMode<mode::ModeImGUITest>("ImGUI Demo");
 
-	/* Boucle principale */
-	while (app.isRunning()) {
-		{
-			SDL_Event e;
-			while (SDL_PollEvent(&e))
-			{
-				/* L'utilisateur ferme la fenetre : */
-				if (e.type == SDL_QUIT)
-				{
-					app.exit();
-					break;
-				}
-				currentMode->OnEvent(e);
-			}
+  /* Boucle principale */
+  while (app.isRunning()) {
+    {
+      SDL_Event e;
+      while (SDL_PollEvent(&e))
+      {
+        /* L'utilisateur ferme la fenetre : */
+        if (e.type == SDL_QUIT)
+        {
+          app.exit();
+          break;
+        }
+        currentMode->OnEvent(e);
+      }
 
-			renderer.Clear();
-			app.beginFrame();
+      renderer.Clear();
+      app.beginFrame();
 
-			if (currentMode)
-			{
-				currentMode->OnUpdate(0.0f);
-				currentMode->OnRender();
-				ImGui::Begin("Select Mode");
-				if (currentMode != modeMenu && ImGui::Button("<-"))
-				{
-					delete currentMode;
-					currentMode = modeMenu;
-				}
-				currentMode->OnImGuiRender();
-				ImGui::End();
-			}
+      if (currentMode)
+      {
+        currentMode->OnUpdate(0.0f);
+        currentMode->OnRender();
+        ImGui::Begin("Select Mode");
+        if (currentMode != modeMenu && ImGui::Button("<-"))
+        {
+          delete currentMode;
+          currentMode = modeMenu;
+        }
+        currentMode->OnImGuiRender();
+        ImGui::End();
+      }
 
-			ImGui::Render();
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+      ImGui::Render();
+      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-			app.endFrame();
+      app.endFrame();
 
-		}
+    }
 
-	}
+  }
 
-	if (currentMode != modeMenu) {
-		delete modeMenu;
-	}
-	delete currentMode;
-
-
+  if (currentMode != modeMenu) {
+    delete modeMenu;
+  }
+  delete currentMode;
 
 
-		return 0;
+
+
+  return 0;
 }
