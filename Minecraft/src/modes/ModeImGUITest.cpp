@@ -16,6 +16,11 @@ namespace mode {
 
 	}
 
+	void ModeImGUITest::OnEvent(SDL_Event& e)
+	{
+
+	}
+
 	void ModeImGUITest::OnUpdate(float deltaTime)
 	{
 

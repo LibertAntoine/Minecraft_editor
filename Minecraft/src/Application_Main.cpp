@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
 					app.exit();
 					break;
 				}
-
+				currentMode->OnEvent(e);
 			}
 
 			renderer.Clear();
