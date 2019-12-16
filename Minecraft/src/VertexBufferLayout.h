@@ -4,41 +4,6 @@
 #include <GL/glew.h>
 #include "Renderer.h"
 
-namespace details {
-	template<typename T>
-	GLenum GetType()
-	{
-		static_assert(false);
-	}
-}
-	template<>
-	void Push<float>(unsigned int count)
-	{
-		m_Elements.push_back({ GL_FLOAT, count, GL_FALSE });
-		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_FLOAT);
-	}
-
-	template<>
-	void Push<int>(unsigned int count)
-	{
-		m_Elements.push_back({ GL_INT, count, GL_FALSE });
-		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_INT);
-	}
-
-	template<>
-	void Push<unsigned int>(unsigned int count)
-	{
-		m_Elements.push_back({ GL_UNSIGNED_INT, count, GL_FALSE });
-		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_INT);
-	}
-
-	template<>
-	void Push<unsigned char>(unsigned int count)
-	{
-		m_Elements.push_back({ GL_UNSIGNED_BYTE, count, GL_TRUE });
-		m_Stride += count * VertexBufferElement::GetSizeOfType(GL_BYTE);;
-	}
-}
 
 struct VertexBufferElement
 {
@@ -83,13 +48,12 @@ public:
 		: m_Stride(0) {};
 
 
-	/*
 	template<typename T>
 	void Push(unsigned int count) {
 		m_Elements.push_back({ details::getGLenum<T>(), count, details::getGLbool<T>()});
 		m_Stride += count * VertexBufferElement::GetSizeOfType(details::getGLenum<T>());
 	}
-	*/
+	
 
 	inline const std::vector<VertexBufferElement> GetElements() const { return m_Elements; }
 	inline unsigned int GetStride() const { return m_Stride; }

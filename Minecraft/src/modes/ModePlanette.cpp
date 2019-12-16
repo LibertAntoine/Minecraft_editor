@@ -16,8 +16,8 @@ namespace mode {
 	{
 		form::Cube cube(glm::vec3(1, 1, 1));
 
-        m_Shader = std::make_unique<Shader>("res/shaders/3D.shader");
-        m_VAO = std::make_unique<VertexArray>();
+		m_Shader = std::make_unique<Shader>("res/shaders/3D.shader");
+		m_VAO = std::make_unique<VertexArray>();
 
 		form::CubeData cubeData;
 
@@ -34,7 +34,6 @@ namespace mode {
 		m_Shader->Bind();
 
 		m_Texture = std::make_unique<Texture>("res/textures/blocks/log_acacia_top.png");
-		m_Texture2 = std::make_unique<Texture>("res/textures/IMAC logo.png");
 		m_Shader->SetUniform1i("uTexture", 0);
 
 
@@ -43,10 +42,10 @@ namespace mode {
 		m_CubeVect.push_back(form::Cube(glm::vec3(0, 2, 2), "IMAC.png", 1));
 	}
 
-    ModePlanette::~ModePlanette()
-    {
+	ModePlanette::~ModePlanette()
+	{
 
-    }
+	}
 
 	void ModePlanette::OnUpdate(float deltaTime)
 	{

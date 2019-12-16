@@ -29,7 +29,6 @@ namespace mode {
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Texture> m_Texture;
-		std::unique_ptr<Texture> m_Texture2;
 		glm::mat4 m_ProjMatrix;
 		camera::TrackballCamera m_TrackCam;
 		camera::FreeflyCamera m_FreeCam;
