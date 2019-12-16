@@ -5,6 +5,7 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "Texture.h"
+#include "Camera.h"
 
 #include <memory>
 
@@ -24,5 +25,6 @@ namespace mode {
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<Texture> m_Texture;
 		glm::mat4 m_Proj, m_View;
+		camera::TrackballCamera TrackCam;
 	};
 }

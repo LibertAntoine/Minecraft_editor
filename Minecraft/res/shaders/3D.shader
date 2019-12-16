@@ -5,14 +5,26 @@ layout(location = 0) in vec3 position;
 layout(location = 1) in vec3 normal;
 layout(location = 2) in vec2 texCoord;
 
-out vec2 v_TexCoord;
+uniform mat4 uMVPMatrix;
+uniform mat4 uMVMatrix;
+uniform mat4 uNormalMatrix;
 
-uniform mat4 u_MVP;
+out vec3 vPosition_vs; // Position du sommet transformé dans l'espace View
+out vec3 vNormal_vs; // Normale du sommet transformé dans l'espace View
+out vec2 vTexCoords;
 
 void main()
 {
-	gl_Position = u_MVP * position;
-	v_TexCoord = texCoord;
+	vec4 vertexPosition = vec4(position, 1);
+	vec4 vertexNormal = vec4(normal, 0);
+
+
+	vPosition_vs = vec3(uMVMatrix * vertexPosition);
+	vNormal_vs = vec3(uNormalMatrix * vertexNormal);
+	vTexCoords = texCoord;
+
+	gl_Position = uMVPMatrix * vertexPosition;
+
 };
 
 
@@ -20,12 +32,16 @@ void main()
 #shader fragment
 #version 330 core
 
-layout(location = 0) out vec4 color;
+in vec3 vPosition_vs; // Position du sommet transformé dans l'espace View
+in vec3 vNormal_vs; // Normale du sommet transformé dans l'espace View
+in vec2 vTexCoords;
 
-in vec2 v_TexCoord;
+uniform sampler2D uTexture;
 
+out vec3 fFragTexture;
 
 void main()
 {
-	color = vec4(1.0, 1.0, 1.0, 1.0);
+	vec4 tex = texture(uTexture, vTexCoords);
+	fFragTexture = vec3(tex).xyz;
 };
