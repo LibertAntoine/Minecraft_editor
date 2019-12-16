@@ -27,6 +27,7 @@
 #include "modes/ModeClearColor.h"
 #include "modes/ModeTexture2D.h"
 #include "modes/ModePlanette.h"
+#include "modes/ModeImGUItest.h"
 
 int main(int argc, char* argv[])
 {
@@ -40,6 +41,7 @@ int main(int argc, char* argv[])
 	modeMenu->RegisterMode<mode::ModeClearColor>("Clear Color");
 	modeMenu->RegisterMode<mode::ModeTexture2D>("2D Texture");
 	modeMenu->RegisterMode<mode::ModePlanette>("Cube");
+	modeMenu->RegisterMode<mode::ModeImGUITest>("ImGUI Demo");
 
 	/* Boucle principale */
 	while (app.isRunning()) {
