@@ -16,8 +16,8 @@ namespace mode {
 	{
 		form::Cube cube(glm::vec3(1, 1, 1));
 
-		m_Shader = std::make_unique<Shader>("res/shaders/3D.shader");
-		m_VAO = std::make_unique<VertexArray>();
+        m_Shader = std::make_unique<Shader>("res/shaders/3D.shader");
+        m_VAO = std::make_unique<VertexArray>();
 
 		form::CubeData cubeData;
 
@@ -41,10 +41,10 @@ namespace mode {
 		CubeVect.push_back(form::Cube(glm::vec3(1, 1, 1), "IMAC.png", 1));
 	}
 
-	ModePlanette::~ModePlanette()
-	{
+    ModePlanette::~ModePlanette()
+    {
 
-	}
+    }
 
 	void ModePlanette::OnUpdate(float deltaTime)
 	{
@@ -52,8 +52,8 @@ namespace mode {
 		TrackCam.rotateUp(1.f);
 	}
 
-	void ModePlanette::OnRender()
-	{
+    void ModePlanette::OnRender()
+    {
 
 		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
