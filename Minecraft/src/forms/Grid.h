@@ -8,7 +8,7 @@ namespace form {
 	class Grid {
 	public:
 		Grid() = delete;
-		Grid(const unsigned int &size, const glm::vec3 &color = glm::vec3(0.5,0.5,0.5));
+		Grid(const int &size, const glm::vec3 &color = glm::vec3(0.5,0.5,0.5));
 		~Grid();
 
 		inline const glm::vec3 color() const { return m_color; };
@@ -24,6 +24,6 @@ namespace form {
 		unsigned int m_size;
 		glm::vec3 m_color;
 		std::vector<int> m_datas;
-		const unsigned int* m_indices;
+		std::vector<unsigned int> m_indices;
 	};
 }
