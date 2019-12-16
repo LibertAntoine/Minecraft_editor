@@ -20,8 +20,6 @@ namespace form {
         inline const glm::vec3 position() const { return m_position; };
         inline void position(const glm::vec3& position) { m_position = position; };
 
-
-
     public:
         static const int datas[];
         static const unsigned int indices[];

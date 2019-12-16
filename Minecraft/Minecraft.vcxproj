@@ -175,6 +175,7 @@
     <ClCompile Include="src\modes\ModePlanette.cpp" />
     <ClCompile Include="src\modes\ModeTexture2D.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Renderer\CubeRenderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="src\modes\ModeClearColor.h" />
     <ClInclude Include="src\modes\ModePlanette.h" />
     <ClInclude Include="src\modes\ModeTexture2D.h" />
+    <ClInclude Include="src\Renderer\CubeRenderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\vendor\glm\simd\common.h" />
