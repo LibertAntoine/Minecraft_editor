@@ -32,12 +32,13 @@ namespace mode {
 
 		m_Shader->Bind();
 
-		m_Texture = std::make_unique<Texture>("res/textures/IMAC.png");
+		m_Texture = std::make_unique<Texture>("res/textures/blocks/log_acacia_top.png");
 		m_Shader->SetUniform1i("uTexture", 0);
 
 
-		CubeVect.push_back(form::Cube(glm::vec3(0, 0, 0), "IMAC.png", 1));
-		CubeVect.push_back(form::Cube(glm::vec3(1, 1, 1), "IMAC.png", 1));
+		m_CubeVect.push_back(form::Cube(glm::vec3(0, 0, 0), "IMAC.png", 1));
+		m_CubeVect.push_back(form::Cube(glm::vec3(2, 2, 2), "IMAC.png", 1));
+		m_CubeVect.push_back(form::Cube(glm::vec3(0, 2, 2), "IMAC.png", 1));
 	}
 
 	ModePlanette::~ModePlanette()
@@ -47,9 +48,63 @@ namespace mode {
 
 	void ModePlanette::OnUpdate(float deltaTime)
 	{
-		TrackCam.rotateLeft(1.f);
-		TrackCam.rotateUp(1.f);
 	}
+
+	void ModePlanette::OnEvent(SDL_Event& e)
+	{
+		switch (e.key.keysym.sym)
+		{
+			// TRACK CAM CONTROL //
+		case 'j' : // Left
+			m_TrackCam.rotateLeft(1.f);
+			break;
+		case 'l': // Right
+			m_TrackCam.rotateLeft(-1.f);
+			break;
+		case 'i': // Up
+			m_TrackCam.rotateUp(1.f);
+			break;
+		case 'k': // Down
+			m_TrackCam.rotateUp(-1.f);
+			break;
+			// FREE CAM CONTROL //
+		case 'f': // Left
+			m_FreeCam.rotateLeft(1.f);
+			break;
+		case 'h': // Right
+			m_FreeCam.rotateLeft(-1.f);
+			break;
+		case 't': // Top
+			m_FreeCam.rotateUp(1.f);
+			break;
+		case 'g': // Bottom
+			m_FreeCam.rotateUp(-1.f);
+			break;
+		case 'q': // Left
+			m_FreeCam.moveLeft(1.f);
+			break;
+		case 'd': // Right
+			m_FreeCam.moveLeft(-1.f);
+			break;
+		case 'z': // Top
+			m_FreeCam.moveFront(1.f);
+			break;
+		case 's': // Bottom
+			m_FreeCam.moveFront(-1.f);
+			break;
+		case 'a': // Top
+			m_FreeCam.moveUp(1.f);
+			break;
+		case 'w': // Bottom
+			m_FreeCam.moveUp(-1.f);
+			break;
+
+
+		default:
+			break;
+		}
+	}
+
 
 	void ModePlanette::OnRender()
 	{
@@ -62,10 +117,10 @@ namespace mode {
 		float ratio = 800. / 600.;
 		m_ProjMatrix = glm::perspective(fov, ratio, 0.1f, 100.f);
 
-		std::for_each(CubeVect.begin(), CubeVect.end(), [this, &renderer](form::Cube& cube) {
+		std::for_each(m_CubeVect.begin(), m_CubeVect.end(), [this, &renderer](form::Cube& cube) {
 			glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), cube.position());
 			glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
-			MVMatrix = TrackCam.getViewMatrix() * MVMatrix;
+			MVMatrix = m_FreeCam.getViewMatrix() * MVMatrix;
 			m_Shader->Bind();
 
 			m_Shader->SetUniformMat4f("uMVPMatrix", m_ProjMatrix * MVMatrix);

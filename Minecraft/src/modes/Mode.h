@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <iostream>
+#include <SDL.h>
 
 namespace mode {
 
@@ -15,6 +16,7 @@ namespace mode {
 		virtual ~Mode() {}
 
 		virtual void OnUpdate(float deltaTime) {}
+		virtual void OnEvent(SDL_Event &e) {}
 		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
 	};

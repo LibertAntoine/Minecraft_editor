@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include "Renderer.h"
 
+
 struct VertexBufferElement
 {
   unsigned int type;
@@ -46,11 +47,13 @@ public:
 	VertexBufferLayout()
 		: m_Stride(0) {};
 
+
 	template<typename T>
 	void Push(unsigned int count) {
 		m_Elements.push_back({ details::getGLenum<T>(), count, details::getGLbool<T>()});
 		m_Stride += count * VertexBufferElement::GetSizeOfType(details::getGLenum<T>());
 	}
+	
 
 	inline const std::vector<VertexBufferElement> GetElements() const { return m_Elements; }
 	inline unsigned int GetStride() const { return m_Stride; }

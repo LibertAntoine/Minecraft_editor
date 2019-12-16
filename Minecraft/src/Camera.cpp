@@ -41,6 +41,11 @@ namespace camera {
 		m_Position += t * m_FrontVector;
 	};
 
+	void FreeflyCamera::moveUp(float t)
+	{
+		m_Position += t * m_UpVector;
+	};
+
 	void FreeflyCamera::rotateLeft(float degrees)
 	{
 		m_fPhi += glm::radians(degrees);

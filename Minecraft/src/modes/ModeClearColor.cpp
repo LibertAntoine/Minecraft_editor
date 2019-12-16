@@ -20,6 +20,11 @@ namespace mode {
 
 	}
 
+	void ModeClearColor::OnEvent(SDL_Event& e)
+	{
+
+	}
+
 	void ModeClearColor::OnRender()
 	{
 		GLCall(glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3]));
