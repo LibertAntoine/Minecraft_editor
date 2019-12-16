@@ -1,4 +1,4 @@
-#include "cube.h"
+#include "Cube.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 

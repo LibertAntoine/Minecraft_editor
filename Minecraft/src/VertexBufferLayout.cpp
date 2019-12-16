@@ -3,7 +3,8 @@
 namespace details {
 	template<typename T>
 	GLenum getGLenum() {
-		static_assert(false);
+		//static_assert(false);
+		return GL_FLOAT;
 	}
 
 	template<>
@@ -28,7 +29,8 @@ namespace details {
 
 	template<typename T>
 	unsigned char getGLbool() {
-		static_assert(false);
+		//static_assert(false);
+		return GL_FALSE;
 	}
 
 	template<>
