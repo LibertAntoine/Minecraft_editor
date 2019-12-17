@@ -1,8 +1,6 @@
 
 #include "ModePlanette.h"
-
 #include "Renderer.h"
-
 #include "ImGUI/imgui.h"
 
 #include "glm/glm.hpp"
@@ -12,12 +10,14 @@
 namespace mode {
 
 	ModePlanette::ModePlanette()
-		: m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f))
-		, m_GridRenderer(200, glm::vec3(0.5,0.5,0.5))
+		: m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
+		m_GridRenderer(200, glm::vec3(0.5f, 0.5f, 0.5f)),
+		m_backgroundColor(0.3f, 0.3f, 0.3f)
+
 	{
 
-		float fov = glm::radians(70.f);
-		float ratio = 800. / 600.;
+		constexpr float fov = glm::radians(70.f);
+		float ratio = 1080. / 720.;
 		m_ProjMatrix = glm::perspective(fov, ratio, 0.1f, 100.f);
 
 		m_CubeRenderer.add(form::Cube(glm::vec3(0, 0, 0), "IMAC.png", 1));
@@ -26,6 +26,7 @@ namespace mode {
 	
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_CULL_FACE);
 	}
 
   ModePlanette::~ModePlanette()
@@ -97,11 +98,11 @@ namespace mode {
   void ModePlanette::OnRender()
   {
 
-		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+		GLCall(glClearColor(m_backgroundColor.x, m_backgroundColor.y, m_backgroundColor.z, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
 		m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix);
-		m_GridRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix);
+		m_GridRenderer.draw(m_FreeCam, m_ProjMatrix);
 
 	}
 

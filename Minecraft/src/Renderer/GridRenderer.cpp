@@ -27,11 +27,12 @@ namespace renderer {
 
 	GridRenderer::~GridRenderer() {}
 
-	void GridRenderer::draw(glm::mat4 view, glm::mat4 projection) {
+	void GridRenderer::draw(const camera::FreeflyCamera& camera, const glm::mat4& projection) {
 			Renderer renderer;
-			glm::mat4 MVMatrix = view;
+			glm::mat4 MVMatrix = glm::mat4(1);
+			MVMatrix = MVMatrix * camera.getViewMatrix();
 
-			glDisable(GL_CULL_FACE);
+
 			/*
 			m_Shader->Bind();
 			m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
@@ -40,6 +41,7 @@ namespace renderer {
 			*/
 			
 			MVMatrix = glm::rotate(MVMatrix, glm::pi<float>()/2, glm::vec3(1.f, 0.f, 0.f));
+			MVMatrix = glm::translate(MVMatrix, glm::vec3(round(camera.position().x), round(camera.position().y), 0.f));
 			m_Shader->Bind();
 			m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
 			m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);

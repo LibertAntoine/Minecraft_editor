@@ -17,6 +17,15 @@
 namespace mode {
 	class ModePlanette: public Mode
 	{
+	private:
+		glm::vec3 m_backgroundColor;
+		glm::mat4 m_ProjMatrix;
+		camera::TrackballCamera m_TrackCam;
+		camera::FreeflyCamera m_FreeCam;
+		std::vector<form::Cube> m_CubeVect;
+		renderer::GridRenderer m_GridRenderer;
+		renderer::CubeRenderer m_CubeRenderer;
+
 	public:
 		ModePlanette();
 		~ModePlanette();
@@ -24,12 +33,6 @@ namespace mode {
 		void OnEvent(SDL_Event& e) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
-	private:
-		glm::mat4 m_ProjMatrix;
-		camera::TrackballCamera m_TrackCam;
-		camera::FreeflyCamera m_FreeCam;
-		std::vector<form::Cube> m_CubeVect;
-		renderer::GridRenderer m_GridRenderer;
-		renderer::CubeRenderer m_CubeRenderer;
+
 	};
 }

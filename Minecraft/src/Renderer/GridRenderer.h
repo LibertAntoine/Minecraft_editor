@@ -1,18 +1,18 @@
 #pragma once
 
-#pragma once
 
 #include <iostream>
-#include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
 #include <vector>
 #include <algorithm>
+#include "VertexBuffer.h"
+#include "VertexBufferLayout.h"
+#include "Camera.h"
 #include "forms/Grid.h"
 
 
+
+
 namespace renderer {
-
-
 	class GridRenderer
 	{
 	private:
@@ -25,7 +25,7 @@ namespace renderer {
 	public:
 		GridRenderer(const unsigned int& size, glm::vec3 color);
 		~GridRenderer();
-		void draw(glm::mat4 view, glm::mat4 projection);
+		void draw(const camera::FreeflyCamera& camera, const glm::mat4& projection);
 	};
 
 }
