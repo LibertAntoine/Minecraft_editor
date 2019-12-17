@@ -41,10 +41,6 @@ namespace mode {
 		m_VAO->AddBuffer(*m_VertexBuffer, layout);
 		m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6);
 
-		m_Shader->Bind();
-		m_Shader->SetUniform4f("u_Color", 0.2f, 0.3f, 0.8f, 1.0f);
-
-
 		m_Texture = std::make_unique<Texture>("res/textures/IMAC.png");
 		m_Shader->SetUniform1i("u_Texture", 0);
 	}

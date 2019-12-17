@@ -14,11 +14,8 @@ namespace form {
 		inline const glm::vec3 color() const { return m_color; };
 		inline void position(const glm::vec3& color) { m_color = color; };
 		inline const unsigned int size() const { return m_size; };
-
-
-	public:
-		static const int datas[];
-		static const unsigned int indices[];
+		inline const std::vector<int> datas() const { return m_datas; };
+		inline const std::vector<unsigned int> indices() const { return m_indices; };
 
 	private:
 		unsigned int m_size;
