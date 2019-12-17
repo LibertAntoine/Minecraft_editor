@@ -38,10 +38,10 @@ in vec2 vTexCoords;
 
 uniform sampler2D uTexture;
 
-out vec3 fFragTexture;
+out vec4 fFragTexture;
 
 void main()
 {
 	vec4 tex = texture(uTexture, vTexCoords);
-	fFragTexture = vec3(tex).xyz;
+	fFragTexture = vec4(tex);
 };

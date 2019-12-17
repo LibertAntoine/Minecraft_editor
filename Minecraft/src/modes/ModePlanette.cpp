@@ -13,7 +13,9 @@ namespace mode {
 
 	ModePlanette::ModePlanette()
 		: m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f))
+		, m_GridRenderer(200, glm::vec3(0.5,0.5,0.5))
 	{
+
 		float fov = glm::radians(70.f);
 		float ratio = 800. / 600.;
 		m_ProjMatrix = glm::perspective(fov, ratio, 0.1f, 100.f);
@@ -21,7 +23,9 @@ namespace mode {
 		m_CubeRenderer.add(form::Cube(glm::vec3(0, 0, 0), "IMAC.png", 1));
 		m_CubeRenderer.add(form::Cube(glm::vec3(2, 2, 2), "IMAC.png", 1));
 		m_CubeRenderer.add(form::Cube(glm::vec3(0, 2, 2), "IMAC.png", 1));
-
+	
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	ModePlanette::~ModePlanette()
@@ -95,7 +99,10 @@ namespace mode {
 
 		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
+
 		m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix);
+		m_GridRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix);
+
 	}
 
 

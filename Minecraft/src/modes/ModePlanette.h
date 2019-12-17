@@ -10,6 +10,7 @@
 #include <algorithm>
 #include "forms/Cube.h"
 #include "Renderer/CubeRenderer.h"
+#include "Renderer/GridRenderer.h"
 
 #include <memory>
 
@@ -28,6 +29,7 @@ namespace mode {
 		camera::TrackballCamera m_TrackCam;
 		camera::FreeflyCamera m_FreeCam;
 		std::vector<form::Cube> m_CubeVect;
+		renderer::GridRenderer m_GridRenderer;
 		renderer::CubeRenderer m_CubeRenderer;
 	};
 }
