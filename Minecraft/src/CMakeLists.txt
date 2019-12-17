@@ -1,5 +1,5 @@
-file(GLOB HEADER_FILES *.h forms/*.h modes/*.h)
-file(GLOB SRC_FILES *.cpp forms/*.cpp modes/*.cpp)
+file(GLOB HEADER_FILES *.h forms/*.h modes/*.h Renderer/*.h)
+file(GLOB SRC_FILES *.cpp forms/*.cpp modes/*.cpp Renderer/*.cpp)
 
 add_executable(Minecraft
     ${SRC_FILES}
