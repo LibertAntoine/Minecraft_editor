@@ -4,6 +4,7 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include <vector>
+#include <memory> // For std::make_unique
 #include <algorithm>
 #include "forms/Cube.h"
 
