@@ -28,74 +28,74 @@ namespace mode {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	ModePlanette::~ModePlanette()
-	{
+  ModePlanette::~ModePlanette()
+  {
 
-	}
+  }
 
-	void ModePlanette::OnUpdate(float deltaTime)
-	{
-	}
+  void ModePlanette::OnUpdate(float deltaTime)
+  {
+  }
 
-	void ModePlanette::OnEvent(SDL_Event& e)
-	{
-		switch (e.key.keysym.sym)
-		{
-			// TRACK CAM CONTROL //
-		case 'j' : // Left
-			m_TrackCam.rotateLeft(1.f);
-			break;
-		case 'l': // Right
-			m_TrackCam.rotateLeft(-1.f);
-			break;
-		case 'i': // Up
-			m_TrackCam.rotateUp(1.f);
-			break;
-		case 'k': // Down
-			m_TrackCam.rotateUp(-1.f);
-			break;
+  void ModePlanette::OnEvent(SDL_Event& e)
+  {
+    switch (e.key.keysym.sym)
+    {
+      // TRACK CAM CONTROL //
+      case 'j' : // Left
+        m_TrackCam.rotateLeft(1.f);
+        break;
+      case 'l': // Right
+        m_TrackCam.rotateLeft(-1.f);
+        break;
+      case 'i': // Up
+        m_TrackCam.rotateUp(1.f);
+        break;
+      case 'k': // Down
+        m_TrackCam.rotateUp(-1.f);
+        break;
 
-			// FREE CAM CONTROL //
-		case 'f': // Left
-			m_FreeCam.rotateLeft(1.f);
-			break;
-		case 'h': // Right
-			m_FreeCam.rotateLeft(-1.f);
-			break;
-		case 't': // Top
-			m_FreeCam.rotateUp(1.f);
-			break;
-		case 'g': // Bottom
-			m_FreeCam.rotateUp(-1.f);
-			break;
-		case 'q': // Left
-			m_FreeCam.moveLeft(1.f);
-			break;
-		case 'd': // Right
-			m_FreeCam.moveLeft(-1.f);
-			break;
-		case 'z': // Top
-			m_FreeCam.moveFront(1.f);
-			break;
-		case 's': // Bottom
-			m_FreeCam.moveFront(-1.f);
-			break;
-		case 'a': // Top
-			m_FreeCam.moveUp(1.f);
-			break;
-		case 'w': // Bottom
-			m_FreeCam.moveUp(-1.f);
-			break;
-
-
-		default:
-			break;
-		}
-	}
+        // FREE CAM CONTROL //
+      case 'f': // Left
+        m_FreeCam.rotateLeft(1.f);
+        break;
+      case 'h': // Right
+        m_FreeCam.rotateLeft(-1.f);
+        break;
+      case 't': // Top
+        m_FreeCam.rotateUp(1.f);
+        break;
+      case 'g': // Bottom
+        m_FreeCam.rotateUp(-1.f);
+        break;
+      case 'q': // Left
+        m_FreeCam.moveLeft(1.f);
+        break;
+      case 'd': // Right
+        m_FreeCam.moveLeft(-1.f);
+        break;
+      case 'z': // Top
+        m_FreeCam.moveFront(1.f);
+        break;
+      case 's': // Bottom
+        m_FreeCam.moveFront(-1.f);
+        break;
+      case 'a': // Top
+        m_FreeCam.moveUp(1.f);
+        break;
+      case 'w': // Bottom
+        m_FreeCam.moveUp(-1.f);
+        break;
 
 
-	void ModePlanette::OnRender()
-	{
+      default:
+        break;
+    }
+  }
+
+
+  void ModePlanette::OnRender()
+  {
 
 		GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
 		GLCall(glClear(GL_COLOR_BUFFER_BIT));
@@ -106,8 +106,8 @@ namespace mode {
 	}
 
 
-	void ModePlanette::OnImGuiRender()
-	{
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-	}
+  void ModePlanette::OnImGuiRender()
+  {
+    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+  }
 }
