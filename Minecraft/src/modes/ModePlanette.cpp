@@ -24,7 +24,6 @@ namespace mode {
 		m_CubeSelector.Create(glm::vec3(0, 0, 0), "IMAC.png", 1);
 		m_CubeSelector.Create(glm::vec3(3, 3, 3), "IMAC.png", 1);
 		m_CubeSelector.Create(glm::vec3(0, 3, 3), "IMAC.png", 1);
-		m_CubeSelector.Move(m_CubeSelector.currentCube(), glm::vec3(0, 2, 0));
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -116,9 +115,24 @@ namespace mode {
 	  case 'p': // Add Cube at the current selection.
 		  m_CubeSelector.AddToSelector();
 		  break;
-	  case 'o': // Add Cube at the current selection.
+	  case 'o': // Delete Cube at the current selection.
 		  m_CubeSelector.DeleteToSelector();
 		  break;
+	  case ':': // Delete Cube at the current selection.
+		  m_CubeSelector.MoveIn();
+		  break;
+	  case '!': // Delete Cube at the current selection.
+		  m_CubeSelector.MoveOut();
+		  break;
+	  case '*': // Delete Cube at the current selection.
+		  m_CubeSelector.Extrude();
+		  break;
+	  case '$': // Delete Cube at the current selection.
+		  m_CubeSelector.Dig();
+		  break;
+
+
+
 
 
       default:

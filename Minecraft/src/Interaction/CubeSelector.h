@@ -16,6 +16,8 @@ namespace interaction {
 		const char* selectorTexture;
 		glm::vec3 selectorPosition;
 		int selectorScale;
+		bool currentSelected;
+		glm::vec3 selectedPosition;
 	} Selector;
 
 	class CubeSelector
@@ -26,18 +28,30 @@ namespace interaction {
 		int m_SizeWorld;
 		Selector* m_selector;
 		std::unique_ptr<Texture> m_textSelector;
+		std::unique_ptr<Texture> m_textSelected;
 
 	public:
 		CubeSelector() = delete;
 		CubeSelector(renderer::CubeRenderer& renderer, const int& capacity = 2024);
 		~CubeSelector();
-		void Create(const glm::vec3& position, const char* textName, const int& scale);
-		void Move(form::Cube* cube, const glm::vec3& NewPosition);
+
+		form::Cube* currentCube();
+		form::Cube* currentSelected();
 		void MoveSelector(const glm::vec3& deplacement);
+
+		void Create(const glm::vec3& position, const char* textName, const int& scale);
+		void Delete(form::Cube* cube);
+
+		void MoveIn();
+		void MoveOut();
 		void AddToSelector();
 		void DeleteToSelector();
+
+		void Extrude();
+		void Dig();
+
 		void Show(glm::mat4 view, glm::mat4 projection);
-		form::Cube* currentCube();
+
 
 	};
 

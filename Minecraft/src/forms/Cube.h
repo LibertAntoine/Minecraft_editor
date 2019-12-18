@@ -21,6 +21,8 @@ namespace form {
 
         inline const glm::vec3 position() const { return m_position; };
         inline void position(const glm::vec3& position) { m_position = position; };
+		inline const const char* texture() const { return m_texture; };
+		inline const int scale() const { return m_scale; };
 
     public:
         static const int datas[];
@@ -28,7 +30,7 @@ namespace form {
 
     private:
         glm::vec3 m_position;
-        const char* m_TextureId;
+        const char* m_texture;
         int m_scale;
     };
 }

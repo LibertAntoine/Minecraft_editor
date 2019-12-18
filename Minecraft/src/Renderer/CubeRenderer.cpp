@@ -59,7 +59,7 @@ namespace renderer {
 		glDisable(GL_CULL_FACE);
 
 		texture.Bind();
-		glm::mat4 MVMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.01, 1.01, 1.01));
+		glm::mat4 MVMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.03, 1.03, 1.03));
 		MVMatrix = glm::translate(MVMatrix, position);
 
 		glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));

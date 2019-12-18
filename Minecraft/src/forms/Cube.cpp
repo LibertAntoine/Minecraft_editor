@@ -56,7 +56,7 @@ namespace form {
 
 
     Cube::Cube(const glm::vec3& position, const char* texName, const short& scale)
-        : m_position(position), m_TextureId(texName), m_scale(scale)
+        : m_position(position), m_texture(texName), m_scale(scale)
     {}
 
     Cube::~Cube()
