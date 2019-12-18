@@ -29,9 +29,9 @@ namespace renderer {
 
 	void GridRenderer::draw(const camera::FreeflyCamera& camera, const glm::mat4& projection) {
 			Renderer renderer;
+			GLCall(glLineWidth(1));
 			glm::mat4 MVMatrix = glm::mat4(1);
 			MVMatrix = MVMatrix * camera.getViewMatrix();
-
 
 			/*
 			m_Shader->Bind();

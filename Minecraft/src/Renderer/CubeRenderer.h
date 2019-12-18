@@ -8,9 +8,7 @@
 #include <algorithm>
 #include "forms/Cube.h"
 
-
 namespace renderer {
-
 
 	class CubeRenderer 
 	{
@@ -20,14 +18,16 @@ namespace renderer {
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<Shader> m_Shader;	
 		std::unique_ptr<Texture> m_Texture;
-		std::vector<form::Cube> m_CubeList;
+
 
 	public:
+		std::list<form::Cube> m_CubeList;
 		CubeRenderer();
 		~CubeRenderer();
-		void add(const form::Cube& cube);
+		form::Cube* add(const form::Cube& cube);
 		void del(form::Cube* cube);
 		void draw(glm::mat4 view, glm::mat4 projection);
+		void drawSelector(const glm::vec3& position, const Texture& texture, glm::mat4 view, glm::mat4 projection);
 	};
 
 }

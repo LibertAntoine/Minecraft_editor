@@ -17,6 +17,8 @@ namespace form {
         Cube(const glm::vec3& position, const char* texName = "default", const short& scale = 3);
         ~Cube();
 
+		bool operator==(const form::Cube a);
+
         inline const glm::vec3 position() const { return m_position; };
         inline void position(const glm::vec3& position) { m_position = position; };
 

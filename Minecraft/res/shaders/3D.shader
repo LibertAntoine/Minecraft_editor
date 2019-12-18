@@ -42,6 +42,5 @@ out vec4 fFragTexture;
 
 void main()
 {
-	vec4 tex = texture(uTexture, vTexCoords);
-	fFragTexture = vec4(tex.x, tex.y, tex.z, 1.0f);
+	fFragTexture = texture(uTexture, vTexCoords);
 };

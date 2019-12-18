@@ -62,4 +62,13 @@ namespace form {
     Cube::~Cube()
     {}
 
+
+	bool Cube::operator==(const form::Cube a) {
+		if (m_position == a.m_position) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
