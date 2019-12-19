@@ -3,6 +3,7 @@
 #include "Mode.h"
 
 #include "VertexBuffer.h"
+#include "FrameBuffer.h"
 #include "VertexBufferLayout.h"
 #include "Texture.h"
 #include "Camera.h"
@@ -10,8 +11,11 @@
 #include <algorithm>
 #include "forms/Cube.h"
 #include "Renderer/CubeRenderer.h"
+#include "Renderer/CubeSelectionRenderer.h"
 #include "Renderer/GridRenderer.h"
 #include "Interaction/CubeSelector.h"
+#include "DepthBuffer.h"
+#include "FrameBuffer.h"
 
 
 #include <memory>
@@ -26,7 +30,11 @@ namespace mode {
 		camera::FreeflyCamera m_FreeCam;
 		renderer::GridRenderer m_GridRenderer;
 		renderer::CubeRenderer m_CubeRenderer;
+		renderer::CubeSelectionRenderer m_CubeSelectionRenderer;
 		interaction::CubeSelector m_CubeSelector;
+                FrameBuffer m_frameBufferSelection;
+                DepthBuffer m_depthBufferSelection;
+                Texture m_textureSelection;
 
 
 	public:

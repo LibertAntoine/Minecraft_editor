@@ -30,11 +30,9 @@ ShaderProgramSource Shader::ParseShader(const std::string &filepath) {
     if (line.find("#shader") != std::string::npos) {
       if (line.find("vertex") != std::string::npos) {
         type = ShaderType::VERTEX;
-        std::cout << "in vertexShader" << std::endl;
       }
       else if (line.find("fragment") != std::string::npos) {
         type = ShaderType::FRAGMENT;
-        std::cout << "in fragmentShader" << std::endl;
       }
     } else {
       ss[(int)type] << line << "\n";
@@ -95,7 +93,6 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 	}
 	glValidateProgram(program);
 
-	result;
 	glGetProgramiv(program, GL_VALIDATE_STATUS, &result);
 	if (result == GL_FALSE) {
 		int length = 0;
@@ -159,8 +156,10 @@ int Shader::GetUniformLocation(const std::string& name)
 		return m_UniformLocationCache[name];
 
 	GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
-	if (location == -1)
-		std::cout << "Warning : uniform '" << name << "' doesn't exist!" << std::endl;
+	if (location == -1) {
+          std::cout << "In file: " << m_FilePath << std::endl;
+          std::cout << "Warning : uniform '" << name << "' doesn't exist or may not be used in the shaders!" << std::endl;
+        }
 		
 	m_UniformLocationCache[name] = location;
 	return location;
