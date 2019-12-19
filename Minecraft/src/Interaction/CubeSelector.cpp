@@ -17,7 +17,7 @@ namespace interaction {
 		m_TextureList.addToList("res/textures/blocks/log_acacia_top.png");
 		m_selector->selectorTexture = m_TextureList.give("log_acacia_top");
 
-		this->Create(glm::vec3(0, 0, 0), m_selector->selectorTexture, m_selector->selectorScale);
+		this->Create(glm::vec3(0, 0, 0), nullptr, m_selector->selectorScale);
 		this->Create(glm::vec3(3, 3, 3), m_selector->selectorTexture, m_selector->selectorScale);
 		this->Create(glm::vec3(0, 3, 3), m_selector->selectorTexture, m_selector->selectorScale);
 	}	
@@ -26,7 +26,7 @@ namespace interaction {
 
 	}
 
-	void CubeSelector::Create(const glm::vec3& position, const Texture* texture, const int& scale) {
+	void CubeSelector::Create(const glm::vec3& position, const Texture* texture, const int& scale, const glm::vec3& color) {
 		{
 			m_selector->currentSelected = false;
 			form::Cube* cube = m_CubeWorld.at(position.x + m_SizeWorld, position.y + m_SizeWorld, position.z + m_SizeWorld);
@@ -37,7 +37,7 @@ namespace interaction {
 				(int)position.x + m_SizeWorld,
 				(int)position.y + m_SizeWorld,
 				(int)position.z + m_SizeWorld,
-				m_Cuberenderer->add(form::Cube(position, texture, scale))
+				m_Cuberenderer->add(form::Cube(position, texture, scale, color))
 			);
 		}
 	}

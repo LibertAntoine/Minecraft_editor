@@ -37,11 +37,14 @@ namespace interaction {
 		CubeSelector(renderer::CubeRenderer& renderer, const int& capacity = 2024);
 		~CubeSelector();
 
+		inline Selector* selector() { return m_selector; };
+
+
 		form::Cube* currentCube();
 		form::Cube* currentSelected();
 		void MoveSelector(const glm::vec3& deplacement);
 
-		void Create(const glm::vec3& position, const Texture* texture, const int& scale);
+		void Create(const glm::vec3& position, const Texture* texture = nullptr, const int& scale = 1, const glm::vec3& color = glm::vec3(0.5f,0.5f,0.5f));
 		void Delete(form::Cube* cube);
 
 		void MoveIn();
@@ -53,6 +56,8 @@ namespace interaction {
 		void Dig();
 
 		void Show(glm::mat4 view, glm::mat4 projection);
+
+
 
 
 	};

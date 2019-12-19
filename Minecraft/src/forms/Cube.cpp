@@ -51,12 +51,12 @@ namespace form {
 		   8, 9,10,  10,11, 8,      // top
 		  12,13,14,  14,15,12,      // left
 		  16,17,18,  18,19,16,      // bottom
-		  20,21,22,  22,23,20		  // back
+		  20,21,22,  22,23,20		// back
     };
 
 
-    Cube::Cube(const glm::vec3& position, const Texture* texture, const short& scale)
-        : m_position(position), m_texture(texture), m_scale(scale)
+    Cube::Cube(const glm::vec3& position, const Texture* texture, const short& scale, const glm::vec3& color)
+        : m_position(position), m_texture(texture), m_scale(scale), m_color(color)
     {}
 
     Cube::~Cube()

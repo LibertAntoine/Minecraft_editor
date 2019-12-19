@@ -6,6 +6,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include <SDL.h>
+#include <string>
 
 namespace mode {
 
@@ -129,10 +130,6 @@ namespace mode {
 		  m_CubeSelector.Dig();
 		  break;
 
-
-
-
-
       default:
         break;
     }
@@ -173,8 +170,6 @@ namespace mode {
 	if (ImGui::Button("MoveBack")) m_CubeSelector.MoveSelector(glm::vec3(0, 0, 1));
 	ImGui::End();
 
-
-
 	ImGui::Begin("Camera Controller");
 	if (ImGui::Button("RotateUp")) m_FreeCam.rotateUp(1.f);
 	if (ImGui::Button("RotateDown")) m_FreeCam.rotateUp(-1.f);
@@ -188,7 +183,18 @@ namespace mode {
 	if (ImGui::Button("MoveDown")) m_FreeCam.moveUp(-1.f);
 	ImGui::End();
 
-
-
+	ImGui::Begin("Infos");
+	ImGui::Text("Selector Scale : ", m_CubeSelector.selector()->selectorScale);
+	ImGui::InputInt("scale", &m_CubeSelector.selector()->selectorScale, 1, 100);
+	ImGui::Text("Selector Texture : ");
+	ImGui::Text(m_CubeSelector.selector()->selectorTexture->name().c_str());
+	ImGui::Text("Selector Position : ");
+	int x = m_CubeSelector.selector()->selectorPosition.x;
+	int y = m_CubeSelector.selector()->selectorPosition.y;
+	int z = m_CubeSelector.selector()->selectorPosition.z;
+	if (ImGui::InputInt("x", &x, 1, 100) || ImGui::InputInt("y", &y, 1, 100) || ImGui::InputInt("z", &z, 1, 100)) {
+		m_CubeSelector.selector()->selectorPosition = glm::vec3(x, y, z);
+	};
+	ImGui::End();
   }
 }

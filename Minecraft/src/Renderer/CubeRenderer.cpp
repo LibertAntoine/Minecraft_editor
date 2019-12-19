@@ -7,7 +7,8 @@ namespace renderer {
 	{
 		form::CubeData cubeData;
 
-		m_Shader = std::make_unique<Shader>("res/shaders/3D.shader");
+		m_ShaderTexture = std::make_unique<Shader>("res/shaders/3D.shader");
+		m_ShaderColor = std::make_unique<Shader>("res/shaders/3Dcolor.shader");
 
 		m_VAO = std::make_unique<VertexArray>();
 		m_VertexBuffer = std::make_unique<VertexBuffer>(cubeData.datas, 6 * 4 * 8 * sizeof(int));
@@ -20,8 +21,8 @@ namespace renderer {
 		m_VAO->AddBuffer(*m_VertexBuffer, layout);
 		m_IndexBuffer = std::make_unique<IndexBuffer>(cubeData.indices, 6 * 6);
 
-		m_Shader->Bind();
-		m_Shader->SetUniform1i("uTexture", 0);
+		m_ShaderTexture->Bind();
+		m_ShaderTexture->SetUniform1i("uTexture", 0);
 	}
 
 	CubeRenderer::~CubeRenderer() {}
@@ -42,13 +43,22 @@ namespace renderer {
 			MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5 * cube.scale(), 0.5 * cube.scale(), 0.5 * cube.scale()));
 			glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 			MVMatrix = view * MVMatrix;
-			cube.texture()->Bind();
-			m_Shader->Bind();
-			m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-			m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
-			m_Shader->SetUniformMat4f("uNormalMatrix", NormalMatrix);
-
-			renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_Shader);
+			if (cube.texture() != nullptr) {
+				cube.texture()->Bind();
+				m_ShaderTexture->Bind();
+				m_ShaderTexture->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+				m_ShaderTexture->SetUniformMat4f("uMVMatrix", MVMatrix);
+				m_ShaderTexture->SetUniformMat4f("uNormalMatrix", NormalMatrix);
+				renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderTexture);
+			}
+			else {
+				m_ShaderColor->Bind();
+				m_ShaderColor->SetUniform3f("uColor", cube.color().x, cube.color().y, cube.color().z);
+				m_ShaderColor->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+				m_ShaderColor->SetUniformMat4f("uMVMatrix", MVMatrix);
+				m_ShaderColor->SetUniformMat4f("uNormalMatrix", NormalMatrix);
+				renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderColor);
+			}
 			});
 	}
 
@@ -61,14 +71,14 @@ namespace renderer {
 		MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5 * scale + 0.03, 0.5 * scale + 0.03, 0.5 * scale + 0.03));
 		glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 		MVMatrix = view * MVMatrix;
-		m_Shader->Bind();
+		m_ShaderTexture->Bind();
 		GLCall(glLineWidth(5));
 
-		m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-		m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
-		m_Shader->SetUniformMat4f("uNormalMatrix", NormalMatrix);
+		m_ShaderTexture->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+		m_ShaderTexture->SetUniformMat4f("uMVMatrix", MVMatrix);
+		m_ShaderTexture->SetUniformMat4f("uNormalMatrix", NormalMatrix);
 
-		renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_Shader);
+		renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderTexture);
 	};
 
 }
