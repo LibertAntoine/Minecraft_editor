@@ -6,6 +6,7 @@
 /bin
 
 .ccls*
+.clang-format
 imgui.ini
 
 compile_commands.json
