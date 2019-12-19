@@ -21,7 +21,7 @@ namespace form {
 
         inline const glm::vec3 position() const { return m_position; };
         inline void position(const glm::vec3& position) { m_position = position; };
-		inline const const char* texture() const { return m_texture; };
+		inline const char* texture() const { return m_texture; };
 		inline const int scale() const { return m_scale; };
 
     public:
