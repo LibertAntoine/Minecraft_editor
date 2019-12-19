@@ -20,10 +20,12 @@ namespace form {
 		bool operator==(const form::Cube a);
 
         inline const glm::vec3 position() const { return m_position; };
+		inline glm::vec3 position() { return m_position; };
         inline void position(const glm::vec3& position) { m_position = position; };
 		inline const Texture* texture() const { return m_texture; };
-		inline const int scale() const { return m_scale; };
+		inline int scale() { return m_scale; };
 		inline const glm::vec3 color() const { return m_color; };
+		inline glm::vec3 color() { return m_color; };
 
     public:
         static const int datas[];

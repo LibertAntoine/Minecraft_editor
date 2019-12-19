@@ -17,6 +17,9 @@ namespace interaction {
 		Texture* selectorTexture;
 		glm::vec3 selectorPosition;
 		int selectorScale;
+
+		form::Cube* currentCube;
+
 		bool currentSelected;
 		bool currentCopy;
 		glm::vec3 selectedPosition;
@@ -40,7 +43,7 @@ namespace interaction {
 		inline Selector* selector() { return m_selector; };
 
 
-		form::Cube* currentCube();
+		void refresh();
 		form::Cube* currentSelected();
 		void MoveSelector(const glm::vec3& deplacement);
 

@@ -13,13 +13,13 @@ namespace interaction {
 		m_selector->currentSelected = false;
 		m_selector->currentCopy = false;
 		m_selector->selectorScale = 2;
-
 		m_TextureList.addToList("res/textures/blocks/log_acacia_top.png");
 		m_selector->selectorTexture = m_TextureList.give("log_acacia_top");
 
 		this->Create(glm::vec3(0, 0, 0), nullptr, m_selector->selectorScale);
 		this->Create(glm::vec3(3, 3, 3), m_selector->selectorTexture, m_selector->selectorScale);
 		this->Create(glm::vec3(0, 3, 3), m_selector->selectorTexture, m_selector->selectorScale);
+		this->refresh();
 	}	
 
 	CubeSelector::~CubeSelector() {
@@ -39,6 +39,7 @@ namespace interaction {
 				(int)position.z + m_SizeWorld,
 				m_Cuberenderer->add(form::Cube(position, texture, scale, color))
 			);
+			this->refresh();
 		}
 	}
 
@@ -47,11 +48,12 @@ namespace interaction {
 		if (cube != nullptr) {
 			m_CubeWorld.erase(cube->position().x + m_SizeWorld, cube->position().y + m_SizeWorld, cube->position().z + m_SizeWorld);
 			m_Cuberenderer->del(cube);
+			this->refresh();
 		}
 	}
 
-	form::Cube* CubeSelector::currentCube() {
-		return m_CubeWorld.at(m_selector->selectorPosition.x + m_SizeWorld, m_selector->selectorPosition.y + m_SizeWorld, m_selector->selectorPosition.z + m_SizeWorld);
+	void CubeSelector::refresh() {
+		m_selector->currentCube = m_CubeWorld.at(m_selector->selectorPosition.x + m_SizeWorld, m_selector->selectorPosition.y + m_SizeWorld, m_selector->selectorPosition.z + m_SizeWorld);
 	}
 
 	form::Cube* CubeSelector::currentSelected() {
@@ -65,7 +67,7 @@ namespace interaction {
 	}
 
 	void CubeSelector::MoveIn() {
-		if (this->currentCube() != nullptr) {
+		if (m_selector->currentCube != nullptr) {
 			m_selector->currentSelected = true;
 			m_selector->selectedPosition = m_selector->selectorPosition;
 		}
@@ -110,6 +112,7 @@ namespace interaction {
 
 	void CubeSelector::MoveSelector(const glm::vec3& deplacement) {
 		m_selector->selectorPosition += deplacement;
+		this->refresh();
 	}
 
 	void CubeSelector::AddToSelector() {
@@ -117,7 +120,7 @@ namespace interaction {
 	}
 
 	void CubeSelector::DeleteToSelector() {
-		this->Delete(this->currentCube());
+		this->Delete(m_selector->currentCube);
 	}
 
 }

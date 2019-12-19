@@ -183,8 +183,8 @@ namespace mode {
 	if (ImGui::Button("MoveDown")) m_FreeCam.moveUp(-1.f);
 	ImGui::End();
 
-	ImGui::Begin("Infos");
-	ImGui::Text("Selector Scale : ", m_CubeSelector.selector()->selectorScale);
+	ImGui::Begin("Infos Selector");
+	ImGui::Text("Selector Scale : ");
 	ImGui::InputInt("scale", &m_CubeSelector.selector()->selectorScale, 1, 100);
 	ImGui::Text("Selector Texture : ");
 	ImGui::Text(m_CubeSelector.selector()->selectorTexture->name().c_str());
@@ -194,7 +194,41 @@ namespace mode {
 	int z = m_CubeSelector.selector()->selectorPosition.z;
 	if (ImGui::InputInt("x", &x, 1, 100) || ImGui::InputInt("y", &y, 1, 100) || ImGui::InputInt("z", &z, 1, 100)) {
 		m_CubeSelector.selector()->selectorPosition = glm::vec3(x, y, z);
+		m_CubeSelector.refresh();
 	};
 	ImGui::End();
+
+	ImGui::Begin("Infos Current Cube");
+	if (m_CubeSelector.selector()->currentCube != nullptr) {
+		ImGui::Text("Cube Scale : ");
+		int scalec = m_CubeSelector.selector()->currentCube->scale();
+		ImGui::InputInt("scalec", &scalec, 1, 100);
+		ImGui::Text("Cube Texture : ");
+		if (m_CubeSelector.selector()->currentCube->texture() != nullptr)
+			ImGui::Text(m_CubeSelector.selector()->currentCube->texture()->name().c_str());
+		else {
+			ImGui::Text("Cube Color : ");
+			float r = m_CubeSelector.selector()->currentCube->color().x;
+			float g = m_CubeSelector.selector()->currentCube->color().x;
+			float b = m_CubeSelector.selector()->currentCube->color().x;
+			ImGui::InputFloat("r", &r, 0.01f, 0.1f, "%.3f");
+			ImGui::InputFloat("g", &g, 0.01f, 0.1f, "%.3f");
+			ImGui::InputFloat("b", &b, 0.01f, 0.1f, "%.3f");
+		}
+		ImGui::Text("Cube Position : ");
+		int xc = m_CubeSelector.selector()->currentCube->position().x;
+		int yc = m_CubeSelector.selector()->currentCube->position().y;
+		int zc = m_CubeSelector.selector()->currentCube->position().z;
+		if (ImGui::InputInt("x", &xc, 1, 100) || ImGui::InputInt("y", &yc, 1, 100) || ImGui::InputInt("z", &zc, 1, 100)) {
+			m_CubeSelector.selector()->selectorPosition = glm::vec3(xc, yc, zc);
+			m_CubeSelector.selector()->currentCube->position() = glm::vec3(xc, yc, zc);
+			m_CubeSelector.refresh();
+		};
+	}
+	ImGui::End();
+
+
+
+
   }
 }
