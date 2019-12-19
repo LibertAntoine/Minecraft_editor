@@ -171,6 +171,7 @@
     <ClCompile Include="src\FrameBuffer.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Interaction\CubeSelector.cpp" />
+    <ClCompile Include="src\Interaction\CubeTextureList.cpp" />
     <ClCompile Include="src\modes\ModeImGUITest.cpp" />
     <ClCompile Include="src\modes\Mode.cpp" />
     <ClCompile Include="src\modes\ModeClearColor.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="src\forms\Grid.h" />
     <ClInclude Include="src\FrameBuffer.h" />
     <ClInclude Include="src\Interaction\CubeSelector.h" />
+    <ClInclude Include="src\Interaction\CubeTextureList.h" />
     <ClInclude Include="src\modes\ModeImGUITest.h" />
     <ClInclude Include="src\modes\Mode.h" />
     <ClInclude Include="src\modes\ModeClearColor.h" />

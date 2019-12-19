@@ -14,14 +14,14 @@ namespace form {
     class Cube {
     public:
         Cube() = delete;
-        Cube(const glm::vec3& position, const char* texName = "default", const short& scale = 3);
+        Cube(const glm::vec3& position, const Texture* texture = nullptr, const short& scale = 3);
         ~Cube();
 
 		bool operator==(const form::Cube a);
 
         inline const glm::vec3 position() const { return m_position; };
         inline void position(const glm::vec3& position) { m_position = position; };
-		inline const const char* texture() const { return m_texture; };
+		inline const Texture* texture() const { return m_texture; };
 		inline const int scale() const { return m_scale; };
 
     public:
@@ -30,7 +30,7 @@ namespace form {
 
     private:
         glm::vec3 m_position;
-        const char* m_texture;
+        const Texture* m_texture;
         int m_scale;
     };
 }

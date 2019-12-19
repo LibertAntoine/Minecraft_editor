@@ -9,14 +9,16 @@
 #include "forms/Cube.h"
 #include <octree/octree.h>
 #include <Renderer/CubeRenderer.h>
+#include "CubeTextureList.h"
 
 namespace interaction {
 
 	typedef struct Selector {
-		const char* selectorTexture;
+		Texture* selectorTexture;
 		glm::vec3 selectorPosition;
 		int selectorScale;
 		bool currentSelected;
+		bool currentCopy;
 		glm::vec3 selectedPosition;
 	} Selector;
 
@@ -27,8 +29,8 @@ namespace interaction {
 		Octree<form::Cube*> m_CubeWorld; // Documentation : https://nomis80.org/code/doc/classOctree.html
 		int m_SizeWorld;
 		Selector* m_selector;
-		std::unique_ptr<Texture> m_textSelector;
-		std::unique_ptr<Texture> m_textSelected;
+		interaction::CubeTextureList m_TextureList;
+
 
 	public:
 		CubeSelector() = delete;
@@ -39,7 +41,7 @@ namespace interaction {
 		form::Cube* currentSelected();
 		void MoveSelector(const glm::vec3& deplacement);
 
-		void Create(const glm::vec3& position, const char* textName, const int& scale);
+		void Create(const glm::vec3& position, const Texture* texture, const int& scale);
 		void Delete(form::Cube* cube);
 
 		void MoveIn();
@@ -56,4 +58,4 @@ namespace interaction {
 	};
 
 }
-#pragma once
+

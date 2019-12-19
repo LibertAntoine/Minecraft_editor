@@ -27,7 +27,7 @@ namespace renderer {
 		form::Cube* add(const form::Cube& cube);
 		void del(form::Cube* cube);
 		void draw(glm::mat4 view, glm::mat4 projection);
-		void drawSelector(const glm::vec3& position, const Texture& texture, glm::mat4 view, glm::mat4 projection);
+		void drawSelector(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection);
 	};
 
 }

@@ -21,7 +21,6 @@ namespace renderer {
 		m_IndexBuffer = std::make_unique<IndexBuffer>(cubeData.indices, 6 * 6);
 
 		m_Shader->Bind();
-		m_Texture = std::make_unique<Texture>("res/textures/blocks/log_acacia_top.png");
 		m_Shader->SetUniform1i("uTexture", 0);
 	}
 
@@ -38,13 +37,13 @@ namespace renderer {
 
 	void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection) {
 		Renderer renderer;
-		m_Texture->Bind();
 		std::for_each(m_CubeList.begin(), m_CubeList.end(), [this, &renderer, &view, &projection](form::Cube& cube) {
 			glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), cube.position());
+			MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5 * cube.scale(), 0.5 * cube.scale(), 0.5 * cube.scale()));
 			glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 			MVMatrix = view * MVMatrix;
+			cube.texture()->Bind();
 			m_Shader->Bind();
-
 			m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
 			m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
 			m_Shader->SetUniformMat4f("uNormalMatrix", NormalMatrix);
@@ -53,15 +52,13 @@ namespace renderer {
 			});
 	}
 
-	void CubeRenderer::drawSelector(const glm::vec3& position, const Texture& texture, glm::mat4 view, glm::mat4 projection) {
+	void CubeRenderer::drawSelector(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection) {
 		Renderer renderer;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_CULL_FACE);
-
-		texture.Bind();
-		glm::mat4 MVMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.03, 1.03, 1.03));
-		MVMatrix = glm::translate(MVMatrix, position);
-
+		texture->Bind();
+		glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), position);
+		MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5 * scale + 0.03, 0.5 * scale + 0.03, 0.5 * scale + 0.03));
 		glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 		MVMatrix = view * MVMatrix;
 		m_Shader->Bind();
