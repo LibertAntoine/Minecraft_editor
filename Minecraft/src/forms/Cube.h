@@ -41,20 +41,20 @@ Dans le cube, j'ai c'est sur les datas du cubes.
     - Les normales.
     - Les indices des points.
     
-    - Est ce que j'encapsule les index et tout dans le cude ou je laisse ça dans les modes ?
-    - Si je prend le cas d'une cercle, ou d'une autre forme, la création des données peut être relative à des paramètres.
-    - Où est ce que je stocke les textures et positions spécifiques à chaque cube spécifiques à chaque cubes ? 
+    - Est ce que j'encapsule les index et tout dans le cude ou je laisse ï¿½a dans les modes ?
+    - Si je prend le cas d'une cercle, ou d'une autre forme, la crï¿½ation des donnï¿½es peut ï¿½tre relative ï¿½ des paramï¿½tres.
+    - Oï¿½ est ce que je stocke les textures et positions spï¿½cifiques ï¿½ chaque cube spï¿½cifiques ï¿½ chaque cubes ? 
     - Est ce que je stocke les cubes en fonction de leur texture ? 
-    - Est ce que je fais une collection qui représentent toutes les cases de la map, ça ve dire parcourir une collection immense lorsque
+    - Est ce que je fais une collection qui reprï¿½sentent toutes les cases de la map, ï¿½a ve dire parcourir une collection immense lorsque
     je veux dessiner un les cubes.
-    - Sinon je stocke des cubes qui contiennent leur coordonnées, leur texture, leur scale, (et leur rotate). Comme ça je parcours
-    directement cette collection pour chaque cube à faire.
-    - Par contre quand je veux retrouver un cube c'est moins facile. Est ce que l'on fait un tableau de pointeur sur les cubes en parallère ?
+    - Sinon je stocke des cubes qui contiennent leur coordonnï¿½es, leur texture, leur scale, (et leur rotate). Comme ï¿½a je parcours
+    directement cette collection pour chaque cube ï¿½ faire.
+    - Par contre quand je veux retrouver un cube c'est moins facile. Est ce que l'on fait un tableau de pointeur sur les cubes en parallï¿½re ?
     - Ensuite quand je dessine les cubes, est ce que le mieux est pas de les trier par texture dans la collection ?
-    - Pour la selection, il faut que je vois comment le système de selection avec la souris fonctionne, pour voir si dans tous les cas j'ai besoin de parcourir tous les cubes.
+    - Pour la selection, il faut que je vois comment le systï¿½me de selection avec la souris fonctionne, pour voir si dans tous les cas j'ai besoin de parcourir tous les cubes.
 
-    - Du coup je pense que le mieux c'est de faire des objets cubes qui ont en attributs static les données d'un cube et en attribut
-    la texture, les coordonnées du cubes...
+    - Du coup je pense que le mieux c'est de faire des objets cubes qui ont en attributs static les donnï¿½es d'un cube et en attribut
+    la texture, les coordonnï¿½es du cubes...
     - 
 
 

@@ -6,6 +6,7 @@
 #include <vector>
 #include <memory> // For std::make_unique
 #include <algorithm>
+#include <list>
 #include "forms/Cube.h"
 
 namespace renderer {
