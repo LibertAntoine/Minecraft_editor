@@ -39,18 +39,19 @@ namespace renderer {
 	void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection) {
 		Renderer renderer;
 		m_Texture->Bind();
+			m_Shader->Bind();
 		std::for_each(m_CubeList.begin(), m_CubeList.end(), [this, &renderer, &view, &projection](form::Cube& cube) {
 			glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), cube.position());
 			glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 			MVMatrix = view * MVMatrix;
-			m_Shader->Bind();
 
-			m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
 			m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
+			m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
 			m_Shader->SetUniformMat4f("uNormalMatrix", NormalMatrix);
 
 			renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_Shader);
 			});
+    m_Shader->Unbind();
 	}
 
 	void CubeRenderer::drawSelector(const glm::vec3& position, const Texture& texture, glm::mat4 view, glm::mat4 projection) {
