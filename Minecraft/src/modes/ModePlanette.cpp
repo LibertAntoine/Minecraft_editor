@@ -154,5 +154,14 @@ namespace mode {
   void ModePlanette::OnImGuiRender()
   {
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	
+	ImGui::Begin("Selector Menu");                        
+	if (ImGui::Button("Add Cube")) m_CubeSelector.AddToSelector();
+	if (ImGui::Button("Delete Cube")) m_CubeSelector.DeleteToSelector();
+	if (ImGui::Button("Select")) m_CubeSelector.MoveIn();;
+	if (ImGui::Button("Move Selection")) m_CubeSelector.MoveOut();
+	if (ImGui::Button("Extrude")) m_CubeSelector.Extrude();
+	if (ImGui::Button("Dig")) m_CubeSelector.Dig();;
+	ImGui::End();
   }
 }
