@@ -158,10 +158,37 @@ namespace mode {
 	ImGui::Begin("Selector Menu");                        
 	if (ImGui::Button("Add Cube")) m_CubeSelector.AddToSelector();
 	if (ImGui::Button("Delete Cube")) m_CubeSelector.DeleteToSelector();
-	if (ImGui::Button("Select")) m_CubeSelector.MoveIn();;
+	if (ImGui::Button("Select")) m_CubeSelector.MoveIn();
 	if (ImGui::Button("Move Selection")) m_CubeSelector.MoveOut();
 	if (ImGui::Button("Extrude")) m_CubeSelector.Extrude();
-	if (ImGui::Button("Dig")) m_CubeSelector.Dig();;
+	if (ImGui::Button("Dig")) m_CubeSelector.Dig();
 	ImGui::End();
+
+	ImGui::Begin("Selector Move");
+	if (ImGui::Button("MoveLeft")) m_CubeSelector.MoveSelector(glm::vec3(-1, 0, 0));
+	if (ImGui::Button("MoveRight")) m_CubeSelector.MoveSelector(glm::vec3(1, 0, 0));
+	if (ImGui::Button("MoveUp")) m_CubeSelector.MoveSelector(glm::vec3(0, 1, 0));
+	if (ImGui::Button("MoveDown")) m_CubeSelector.MoveSelector(glm::vec3(0, -1, 0));
+	if (ImGui::Button("MoveFront")) m_CubeSelector.MoveSelector(glm::vec3(0, 0, -1));
+	if (ImGui::Button("MoveBack")) m_CubeSelector.MoveSelector(glm::vec3(0, 0, 1));
+	ImGui::End();
+
+
+
+	ImGui::Begin("Camera Controller");
+	if (ImGui::Button("RotateUp")) m_FreeCam.rotateUp(1.f);
+	if (ImGui::Button("RotateDown")) m_FreeCam.rotateUp(-1.f);
+	if (ImGui::Button("RotateLeft")) m_FreeCam.rotateLeft(1.f);
+	if (ImGui::Button("RotateRight")) m_FreeCam.rotateLeft(-1.f);
+	if (ImGui::Button("ZoomIn")) m_FreeCam.moveFront(1.f);
+	if (ImGui::Button("ZoomOut")) m_FreeCam.moveFront(-1.f);
+	if (ImGui::Button("MoveLeft")) m_FreeCam.moveLeft(1.f);
+	if (ImGui::Button("MoveRight")) m_FreeCam.moveLeft(-1.f);
+	if (ImGui::Button("MoveUp")) m_FreeCam.moveUp(1.f);
+	if (ImGui::Button("MoveDown")) m_FreeCam.moveUp(-1.f);
+	ImGui::End();
+
+
+
   }
 }
