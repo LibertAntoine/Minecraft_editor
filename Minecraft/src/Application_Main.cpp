@@ -49,13 +49,12 @@ int main(int argc, char* argv[])
       SDL_Event e;
       while (SDL_PollEvent(&e))
       {
-        /* L'utilisateur ferme la fenetre : */
         if (e.type == SDL_QUIT)
         {
           app.exit();
           break;
         }
-        currentMode->OnEvent(e);
+		ImGui_ImplSDL2_ProcessEvent(&e);	
       }
 
       renderer.Clear();
@@ -66,6 +65,7 @@ int main(int argc, char* argv[])
         currentMode->OnUpdate(0.0f);
         currentMode->OnRender();
         ImGui::Begin("Select Mode");
+
         if (currentMode != modeMenu && ImGui::Button("<-"))
         {
           delete currentMode;

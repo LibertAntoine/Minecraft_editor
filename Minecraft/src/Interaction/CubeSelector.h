@@ -15,7 +15,7 @@ namespace interaction {
 
 	typedef struct Selector {
 		Texture* selectorTexture;
-		glm::vec3 selectorPosition;
+		glm::ivec3 selectorPosition;
 		int selectorScale;
 
 		form::Cube* currentCube;
@@ -45,7 +45,8 @@ namespace interaction {
 
 		void refresh();
 		form::Cube* currentSelected();
-		void MoveSelector(const glm::vec3& deplacement);
+		void MoveSelector(const glm::ivec3& deplacement);
+		void SetSelector(const glm::ivec3& NewPosition);
 		void Move(form::Cube* cube, const glm::vec3& newPosition);
 		void Create(const glm::vec3& position, Texture* texture = nullptr, const int& scale = 1, const glm::vec3& color = glm::vec3(0.5f,0.5f,0.5f));
 		void Delete(form::Cube* cube);

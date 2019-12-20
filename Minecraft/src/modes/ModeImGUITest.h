@@ -11,7 +11,7 @@ namespace mode {
 		ModeImGUITest();
 		~ModeImGUITest();
 		void OnUpdate(float deltaTime) override;
-		void OnEvent(SDL_Event& e) override;
+		void OnEvent(const SDL_Event& e) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
 	};

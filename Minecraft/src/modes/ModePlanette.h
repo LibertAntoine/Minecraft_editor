@@ -12,6 +12,7 @@
 #include "Renderer/CubeRenderer.h"
 #include "Renderer/GridRenderer.h"
 #include "Interaction/CubeSelector.h"
+#include "Interaction/Interface.h"
 
 
 #include <memory>
@@ -22,18 +23,18 @@ namespace mode {
 	private:
 		glm::vec3 m_backgroundColor;
 		glm::mat4 m_ProjMatrix;
-		camera::TrackballCamera m_TrackCam;
 		camera::FreeflyCamera m_FreeCam;
 		renderer::GridRenderer m_GridRenderer;
 		renderer::CubeRenderer m_CubeRenderer;
 		interaction::CubeSelector m_CubeSelector;
+		interaction::Interface m_Interface;
 
 
 	public:
 		ModePlanette();
 		~ModePlanette();
 		void OnUpdate(float deltaTime) override;
-		void OnEvent(SDL_Event& e) override;
+		void OnEvent(const SDL_Event& e) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
 

@@ -40,7 +40,7 @@ namespace renderer {
 		Renderer renderer;
 		std::for_each(m_CubeList.begin(), m_CubeList.end(), [this, &renderer, &view, &projection](form::Cube& cube) {
 			glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), cube.position());
-			MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5 * cube.scale(), 0.5 * cube.scale(), 0.5 * cube.scale()));
+			MVMatrix = glm::scale(MVMatrix, glm::vec3(cube.scale(), cube.scale(), cube.scale()));
 			glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 			MVMatrix = view * MVMatrix;
 			if (cube.texture() != nullptr) {
@@ -66,9 +66,10 @@ namespace renderer {
 		Renderer renderer;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
 		texture->Bind();
-		glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), position);
-		MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5 * scale + 0.03, 0.5 * scale + 0.03, 0.5 * scale + 0.03));
+		glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), position + glm::vec3(-0.015, -0.015, -0.015));
+		MVMatrix = glm::scale(MVMatrix, glm::vec3(scale + 0.03, scale + 0.03, scale + 0.03));
 		glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 		MVMatrix = view * MVMatrix;
 		m_ShaderTexture->Bind();
@@ -79,6 +80,7 @@ namespace renderer {
 		m_ShaderTexture->SetUniformMat4f("uNormalMatrix", NormalMatrix);
 
 		renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderTexture);
+		glEnable(GL_DEPTH_TEST);
 	};
 
 }

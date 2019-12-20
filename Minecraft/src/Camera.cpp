@@ -6,9 +6,9 @@ namespace camera {
 	// FREEFLY CAMERA //
 
 	FreeflyCamera::FreeflyCamera()
-		: m_Position(0, 0, 5),
-		m_fPhi(glm::pi<float>()),
-		m_fTheta(0)
+		: m_Position(-2, 3, 5),
+		m_fPhi(glm::pi<float>() + glm::radians(-30.f)),
+		m_fTheta(glm::radians(-20.f))
 	{
 		computeDirectionVectors();
 	};
@@ -44,6 +44,8 @@ namespace camera {
 	void FreeflyCamera::moveUp(float t)
 	{
 		m_Position += t * m_UpVector;
+		if (m_Position.y < 0)
+			m_Position.y = 0;
 	};
 
 	void FreeflyCamera::rotateLeft(float degrees)

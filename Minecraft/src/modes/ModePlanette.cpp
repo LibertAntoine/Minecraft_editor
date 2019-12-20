@@ -22,117 +22,22 @@ namespace mode {
 		float ratio = 1080. / 720.;
 		m_ProjMatrix = glm::perspective(fov, ratio, 0.1f, 100.f);
 
-
-
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_CULL_FACE);
+
 	}
 
   ModePlanette::~ModePlanette()
   {
-
   }
 
   void ModePlanette::OnUpdate(float deltaTime)
   {
   }
 
-  void ModePlanette::OnEvent(SDL_Event& e)
+  void ModePlanette::OnEvent(const SDL_Event& e)
   {
-    switch (e.key.keysym.sym)
-    {
-
-      // TRACK CAM CONTROL //
-		/*
-      case 'j' : // Left
-        m_TrackCam.rotateLeft(1.f);
-        break;
-      case 'l': // Right
-        m_TrackCam.rotateLeft(-1.f);
-        break;
-      case 'i': // Up
-        m_TrackCam.rotateUp(1.f);
-        break;
-      case 'k': // Down
-        m_TrackCam.rotateUp(-1.f);
-        break;
-		*/
-        // FREE CAM CONTROL //
-      case 'f': // Left
-        m_FreeCam.rotateLeft(1.f);
-        break;
-      case 'h': // Right
-        m_FreeCam.rotateLeft(-1.f);
-        break;
-      case 't': // Top
-        m_FreeCam.rotateUp(1.f);
-        break;
-      case 'g': // Bottom
-        m_FreeCam.rotateUp(-1.f);
-        break;
-      case 'q': // Left
-        m_FreeCam.moveLeft(1.f);
-        break;
-      case 'd': // Right
-        m_FreeCam.moveLeft(-1.f);
-        break;
-      case 'z': // Top
-        m_FreeCam.moveFront(1.f);
-        break;
-      case 's': // Bottom
-        m_FreeCam.moveFront(-1.f);
-        break;
-      case 'a': // Top
-        m_FreeCam.moveUp(1.f);
-        break;
-      case 'w': // Bottom
-        m_FreeCam.moveUp(-1.f);
-        break;
-
-
-		// KEY SELECTOR //
-	  case 'k': // back
-		  m_CubeSelector.MoveSelector(glm::vec3(0, 0, 1));
-		break;
-	  case 'i': // front
-		  m_CubeSelector.MoveSelector(glm::vec3(0, 0, -1));
-		  break;
-	  case 'u': // up
-		  m_CubeSelector.MoveSelector(glm::vec3(0, 1, 0));
-		  break;
-	  case ',': // down
-		  m_CubeSelector.MoveSelector(glm::vec3(0, -1, 0));
-		  break;
-	  case 'l': // right
-		  m_CubeSelector.MoveSelector(glm::vec3(1, 0, 0));
-		  break;
-	  case 'j': // left
-		  m_CubeSelector.MoveSelector(glm::vec3(-1, 0, 0));
-		  break;
-
-	  case 'p': // Add Cube at the current selection.
-		  m_CubeSelector.AddToSelector();
-		  break;
-	  case 'o': // Delete Cube at the current selection.
-		  m_CubeSelector.DeleteToSelector();
-		  break;
-	  case ':': // Block selection on Cube at the current selection.
-		  m_CubeSelector.MoveIn();
-		  break;
-	  case '!': // Move the Cube selected.
-		  m_CubeSelector.MoveOut();
-		  break;
-	  case '*': // Extrude the current y axe.
-		  m_CubeSelector.Extrude();
-		  break;
-	  case '$': // Dig the current y axe.
-		  m_CubeSelector.Dig();
-		  break;
-
-      default:
-        break;
-    }
   }
 
 
@@ -152,62 +57,26 @@ namespace mode {
   {
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	
-	ImGui::Begin("Selector Menu");                        
-	if (ImGui::Button("Add Cube")) m_CubeSelector.AddToSelector();
-	if (ImGui::Button("Delete Cube")) m_CubeSelector.DeleteToSelector();
-	if (ImGui::Button("Select")) m_CubeSelector.MoveIn();
-	if (ImGui::Button("Move Selection")) m_CubeSelector.MoveOut();
-	if (ImGui::Button("Extrude")) m_CubeSelector.Extrude();
-	if (ImGui::Button("Dig")) m_CubeSelector.Dig();
+	m_Interface.SelectorInterface(m_CubeSelector);
+	m_Interface.CameraInterface(m_FreeCam);
+
+	ImGuiWindowFlags corner =
+		ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_NoCollapse |
+		ImGuiWindowFlags_NoSavedSettings;
+
+	bool open = true;
+	ImGui::Begin("Test", &open, corner);
+	ImGui::SetWindowPos(ImVec2(0, 500), true);
+	ImGui::SetWindowSize(ImVec2(200, 200), true);
+
 	ImGui::End();
 
-	ImGui::Begin("Selector Move");
-	if (ImGui::Button("MoveLeft")) m_CubeSelector.MoveSelector(glm::vec3(-1, 0, 0));
-	if (ImGui::Button("MoveRight")) m_CubeSelector.MoveSelector(glm::vec3(1, 0, 0));
-	if (ImGui::Button("MoveUp")) m_CubeSelector.MoveSelector(glm::vec3(0, 1, 0));
-	if (ImGui::Button("MoveDown")) m_CubeSelector.MoveSelector(glm::vec3(0, -1, 0));
-	if (ImGui::Button("MoveFront")) m_CubeSelector.MoveSelector(glm::vec3(0, 0, -1));
-	if (ImGui::Button("MoveBack")) m_CubeSelector.MoveSelector(glm::vec3(0, 0, 1));
-	ImGui::End();
 
-	ImGui::Begin("Camera Controller");
-	if (ImGui::Button("RotateUp")) m_FreeCam.rotateUp(1.f);
-	if (ImGui::Button("RotateDown")) m_FreeCam.rotateUp(-1.f);
-	if (ImGui::Button("RotateLeft")) m_FreeCam.rotateLeft(1.f);
-	if (ImGui::Button("RotateRight")) m_FreeCam.rotateLeft(-1.f);
-	if (ImGui::Button("ZoomIn")) m_FreeCam.moveFront(1.f);
-	if (ImGui::Button("ZoomOut")) m_FreeCam.moveFront(-1.f);
-	if (ImGui::Button("MoveLeft")) m_FreeCam.moveLeft(1.f);
-	if (ImGui::Button("MoveRight")) m_FreeCam.moveLeft(-1.f);
-	if (ImGui::Button("MoveUp")) m_FreeCam.moveUp(1.f);
-	if (ImGui::Button("MoveDown")) m_FreeCam.moveUp(-1.f);
-	ImGui::End();
+	const float my_values[] = { 0.2f, 0.1f, 1.0f, 0.5f, 0.9f, 2.2f };
+	ImGui::PlotLines("Frame Times", my_values, IM_ARRAYSIZE(my_values));
 
-	ImGui::Begin("Infos Selector");
-	ImGui::Text("Selector Scale : ");
-	ImGui::InputInt("scale", &m_CubeSelector.selector()->selectorScale, 1, 100);
-	ImGui::Text("Selector Texture : ");
-	static std::string current_texture = m_CubeSelector.selector()->selectorTexture->name();
-	if (ImGui::BeginCombo("Texture Selector", m_CubeSelector.selector()->selectorTexture->name().c_str())) {
-		for (int i = 0; i < m_CubeSelector.textureList()->nameList().size(); ++i)
-		{
-			bool is_selected = (m_CubeSelector.selector()->selectorTexture->name() == m_CubeSelector.textureList()->nameList()[i]);
-			if (ImGui::Selectable(m_CubeSelector.textureList()->nameList()[i].c_str(), is_selected))
-				m_CubeSelector.selector()->selectorTexture = m_CubeSelector.textureList()->give(m_CubeSelector.textureList()->nameList()[i]);
-				if (is_selected)
-					ImGui::SetItemDefaultFocus();   
-		}
-		ImGui::EndCombo();
-	}
-	ImGui::Text("Selector Position : ");
-	int x = m_CubeSelector.selector()->selectorPosition.x;
-	int y = m_CubeSelector.selector()->selectorPosition.y;
-	int z = m_CubeSelector.selector()->selectorPosition.z;
-	if (ImGui::InputInt("x", &x, 1, 100) || ImGui::InputInt("y", &y, 1, 100) || ImGui::InputInt("z", &z, 1, 100)) {
-		m_CubeSelector.selector()->selectorPosition = glm::vec3(x, y, z);
-		m_CubeSelector.refresh();
-	};
-	ImGui::End();
 
 	ImGui::Begin("Infos Current Cube");
 	if (m_CubeSelector.selector()->currentCube != nullptr) {
@@ -237,9 +106,6 @@ namespace mode {
 			};
 		}
 
-
-
-		
 		ImGui::Text("Cube Position : ");
 		int xc = m_CubeSelector.selector()->currentCube->position().x;
 		int yc = m_CubeSelector.selector()->currentCube->position().y;
@@ -250,6 +116,9 @@ namespace mode {
 		};
 	}
 	ImGui::End();
+
+
+
 
 
 
