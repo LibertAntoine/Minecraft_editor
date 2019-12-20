@@ -21,4 +21,5 @@ public:
 	inline int GetWidth() const { return m_Width; }
 	inline int GetHeight() const { return m_Height; }
 	inline const std::string name() const { return m_Name; }
+	inline void SetName(const std::string& name) { m_Name = name; }
 };

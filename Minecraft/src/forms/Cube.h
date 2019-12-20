@@ -14,7 +14,7 @@ namespace form {
     class Cube {
     public:
         Cube() = delete;
-        Cube(const glm::vec3& position, const Texture* texture = nullptr, const short& scale = 3, const glm::vec3& color = glm::vec3(0.5f,0.5f,0.5f));
+        Cube(const glm::vec3& position, Texture* texture = nullptr, const short& scale = 3, const glm::vec3& color = glm::vec3(0.5f,0.5f,0.5f));
         ~Cube();
 
 		bool operator==(const form::Cube a);
@@ -22,10 +22,12 @@ namespace form {
         inline const glm::vec3 position() const { return m_position; };
 		inline glm::vec3 position() { return m_position; };
         inline void position(const glm::vec3& position) { m_position = position; };
-		inline const Texture* texture() const { return m_texture; };
+		inline Texture* texture() const { return m_texture; };
+		inline void texture(Texture* texture) { m_texture = texture; };
 		inline int scale() { return m_scale; };
+		inline int* scalePtr() { return &m_scale; };
 		inline const glm::vec3 color() const { return m_color; };
-		inline glm::vec3 color() { return m_color; };
+		inline void Setcolor(const glm::vec3& color) { m_color = color; };
 
     public:
         static const int datas[];
@@ -33,7 +35,7 @@ namespace form {
 
     private:
         glm::vec3 m_position;
-        const Texture* m_texture;
+        Texture* m_texture;
         int m_scale;
 		glm::vec3 m_color;
     };

@@ -18,6 +18,7 @@ namespace interaction {
 		if (std::regex_search(path, name_match, name_regex)) {
 			std::string name = name_match.str().substr(0, name_match.length() - 4);
 			m_TextureList.insert(std::pair<std::string, Texture*>(name, new Texture(path, name)));
+			m_NameList.push_back(name);
 		}
 		else {
 			std::cerr << "Le nom de la texture fourni semble contenir des caractères spéciaux (autres que _ ), merci de les retirer." << std::endl;

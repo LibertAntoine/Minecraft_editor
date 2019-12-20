@@ -41,13 +41,13 @@ namespace interaction {
 		~CubeSelector();
 
 		inline Selector* selector() { return m_selector; };
-
+		inline interaction::CubeTextureList* textureList() { return &m_TextureList; };
 
 		void refresh();
 		form::Cube* currentSelected();
 		void MoveSelector(const glm::vec3& deplacement);
-
-		void Create(const glm::vec3& position, const Texture* texture = nullptr, const int& scale = 1, const glm::vec3& color = glm::vec3(0.5f,0.5f,0.5f));
+		void Move(form::Cube* cube, const glm::vec3& newPosition);
+		void Create(const glm::vec3& position, Texture* texture = nullptr, const int& scale = 1, const glm::vec3& color = glm::vec3(0.5f,0.5f,0.5f));
 		void Delete(form::Cube* cube);
 
 		void MoveIn();

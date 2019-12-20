@@ -14,6 +14,9 @@ namespace interaction {
 		m_selector->currentCopy = false;
 		m_selector->selectorScale = 2;
 		m_TextureList.addToList("res/textures/blocks/log_acacia_top.png");
+		m_TextureList.addToList("res/textures/blocks/piston_bottom.png");
+		m_TextureList.addToList("res/textures/blocks/red_sandstone_bottom.png");
+		m_TextureList.addToList("res/textures/blocks/lava_placeholder.png");
 		m_selector->selectorTexture = m_TextureList.give("log_acacia_top");
 
 		this->Create(glm::vec3(0, 0, 0), nullptr, m_selector->selectorScale);
@@ -26,7 +29,7 @@ namespace interaction {
 
 	}
 
-	void CubeSelector::Create(const glm::vec3& position, const Texture* texture, const int& scale, const glm::vec3& color) {
+	void CubeSelector::Create(const glm::vec3& position, Texture* texture, const int& scale, const glm::vec3& color) {
 		{
 			m_selector->currentSelected = false;
 			form::Cube* cube = m_CubeWorld.at(position.x + m_SizeWorld, position.y + m_SizeWorld, position.z + m_SizeWorld);
@@ -61,31 +64,35 @@ namespace interaction {
 	}
 
 	void CubeSelector::Show(glm::mat4 view, glm::mat4 projection) {
-		m_Cuberenderer->drawSelector(m_selector->selectorPosition, m_selector->selectorScale, m_TextureList.selector(), view, projection);
 		if (m_selector->currentSelected == true)
 			m_Cuberenderer->drawSelector(m_selector->selectedPosition, m_selector->selectorScale, m_TextureList.selected(), view, projection);
-	}
+		m_Cuberenderer->drawSelector(m_selector->selectorPosition, m_selector->selectorScale, m_TextureList.selector(), view, projection);
+		}
 
 	void CubeSelector::MoveIn() {
 		if (m_selector->currentCube != nullptr) {
 			m_selector->currentSelected = true;
 			m_selector->selectedPosition = m_selector->selectorPosition;
+			this->refresh();
 		}
 	}
 
 	void CubeSelector::MoveOut() {
 		if (m_selector->currentSelected == true) {
 			this->DeleteToSelector();
-			form::Cube* cube = this->currentSelected();
-			if (cube != nullptr) {
-				m_CubeWorld.set(m_selector->selectorPosition.x + m_SizeWorld, m_selector->selectorPosition.y + m_SizeWorld, m_selector->selectorPosition.z + m_SizeWorld, cube);
-				m_CubeWorld.erase(m_selector->selectedPosition.x + m_SizeWorld, m_selector->selectedPosition.y + m_SizeWorld, m_selector->selectedPosition.z + m_SizeWorld);
-				cube->position(m_selector->selectorPosition);
-			}
 			m_selector->currentSelected = false;
-
+			this->Move(this->currentSelected(), m_selector->selectorPosition);
 		}
 	}
+
+	void CubeSelector::Move(form::Cube* cube, const glm::vec3& newPosition) {
+		if (cube != nullptr) {
+			m_CubeWorld.erase(cube->position().x + m_SizeWorld, cube->position().y + m_SizeWorld, cube->position().z + m_SizeWorld);
+			m_CubeWorld.set(newPosition.x + m_SizeWorld, newPosition.y + m_SizeWorld, newPosition.z + m_SizeWorld, cube);
+			cube->position(newPosition);
+		}
+	}
+
 
 	void  CubeSelector::Extrude() {
 		form::Cube* cube = nullptr;

@@ -187,7 +187,18 @@ namespace mode {
 	ImGui::Text("Selector Scale : ");
 	ImGui::InputInt("scale", &m_CubeSelector.selector()->selectorScale, 1, 100);
 	ImGui::Text("Selector Texture : ");
-	ImGui::Text(m_CubeSelector.selector()->selectorTexture->name().c_str());
+	static std::string current_texture = m_CubeSelector.selector()->selectorTexture->name();
+	if (ImGui::BeginCombo("Texture Selector", m_CubeSelector.selector()->selectorTexture->name().c_str())) {
+		for (int i = 0; i < m_CubeSelector.textureList()->nameList().size(); ++i)
+		{
+			bool is_selected = (m_CubeSelector.selector()->selectorTexture->name() == m_CubeSelector.textureList()->nameList()[i]);
+			if (ImGui::Selectable(m_CubeSelector.textureList()->nameList()[i].c_str(), is_selected))
+				m_CubeSelector.selector()->selectorTexture = m_CubeSelector.textureList()->give(m_CubeSelector.textureList()->nameList()[i]);
+				if (is_selected)
+					ImGui::SetItemDefaultFocus();   
+		}
+		ImGui::EndCombo();
+	}
 	ImGui::Text("Selector Position : ");
 	int x = m_CubeSelector.selector()->selectorPosition.x;
 	int y = m_CubeSelector.selector()->selectorPosition.y;
@@ -201,28 +212,41 @@ namespace mode {
 	ImGui::Begin("Infos Current Cube");
 	if (m_CubeSelector.selector()->currentCube != nullptr) {
 		ImGui::Text("Cube Scale : ");
-		int scalec = m_CubeSelector.selector()->currentCube->scale();
-		ImGui::InputInt("scalec", &scalec, 1, 100);
-		ImGui::Text("Cube Texture : ");
-		if (m_CubeSelector.selector()->currentCube->texture() != nullptr)
+		ImGui::InputInt("scalec", m_CubeSelector.selector()->currentCube->scalePtr(), 1, 100);
+		if (m_CubeSelector.selector()->currentCube->texture() != nullptr) {
+			ImGui::Text("Cube Texture : ");
 			ImGui::Text(m_CubeSelector.selector()->currentCube->texture()->name().c_str());
-		else {
+			if (ImGui::BeginCombo("Texture Cube", m_CubeSelector.selector()->currentCube->texture()->name().c_str())) {
+				for (int i = 0; i < m_CubeSelector.textureList()->nameList().size(); ++i)
+				{
+					bool is_selected = (m_CubeSelector.selector()->currentCube->texture()->name() == m_CubeSelector.textureList()->nameList()[i]);
+					if (ImGui::Selectable(m_CubeSelector.textureList()->nameList()[i].c_str(), is_selected))
+						m_CubeSelector.selector()->currentCube->texture(m_CubeSelector.textureList()->give(m_CubeSelector.textureList()->nameList()[i]));
+					if (is_selected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+		} else {
 			ImGui::Text("Cube Color : ");
 			float r = m_CubeSelector.selector()->currentCube->color().x;
-			float g = m_CubeSelector.selector()->currentCube->color().x;
-			float b = m_CubeSelector.selector()->currentCube->color().x;
-			ImGui::InputFloat("r", &r, 0.01f, 0.1f, "%.3f");
-			ImGui::InputFloat("g", &g, 0.01f, 0.1f, "%.3f");
-			ImGui::InputFloat("b", &b, 0.01f, 0.1f, "%.3f");
+			float g = m_CubeSelector.selector()->currentCube->color().y;
+			float b = m_CubeSelector.selector()->currentCube->color().z;
+			if (ImGui::InputFloat("r", &r, 0.01f, 0.1f, "%.3f") || ImGui::InputFloat("g", &g, 0.01f, 0.1f, "%.3f") || ImGui::InputFloat("b", &b, 0.01f, 0.1f, "%.3f")) {
+				m_CubeSelector.selector()->currentCube->Setcolor(glm::vec3(r, g, b));
+			};
 		}
+
+
+
+		
 		ImGui::Text("Cube Position : ");
 		int xc = m_CubeSelector.selector()->currentCube->position().x;
 		int yc = m_CubeSelector.selector()->currentCube->position().y;
 		int zc = m_CubeSelector.selector()->currentCube->position().z;
 		if (ImGui::InputInt("x", &xc, 1, 100) || ImGui::InputInt("y", &yc, 1, 100) || ImGui::InputInt("z", &zc, 1, 100)) {
 			m_CubeSelector.selector()->selectorPosition = glm::vec3(xc, yc, zc);
-			m_CubeSelector.selector()->currentCube->position() = glm::vec3(xc, yc, zc);
-			m_CubeSelector.refresh();
+			m_CubeSelector.Move(m_CubeSelector.selector()->currentCube, glm::vec3(xc, yc, zc));
 		};
 	}
 	ImGui::End();
