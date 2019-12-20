@@ -5,6 +5,7 @@
 #include <vector>
 #include "Texture.h"
 #include <string>
+#include <memory>
 
 namespace interaction {
 
