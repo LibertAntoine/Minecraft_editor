@@ -6,5 +6,6 @@
 /bin
 
 .ccls*
+imgui.ini
 
 compile_commands.json
