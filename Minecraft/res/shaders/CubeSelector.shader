@@ -30,7 +30,7 @@ in vec3 vPosition_vs; // Position du sommet transform� dans l'espace View
 uniform int uCubeID;
 
 // TODO: Check what is the purpose
-layout(location = 0) out vec3 fFragCubeId;
+layout(location = 0) out uvec4 fFragCubeId;
 
 void main()
 {
@@ -45,9 +45,9 @@ void main()
 
   int b = rest;
 
-  //fFragCubeId = ivec3(12, 52, 98);
+  //fFragCubeId = uvec4(12, 52, 98, 255);
   //fFragCubeId = ivec3(r, g, b);
-  fFragCubeId = vec3(r/255.f, g/255.f, b/255.f);
+  fFragCubeId = uvec4(r, g, b, 255);
   //fFragCubeId = ivec3(0.5f, 0, 0);
 
 };
