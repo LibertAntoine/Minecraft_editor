@@ -21,6 +21,29 @@ namespace mode {
     m_ProjMatrix = glm::perspective(fov, ratio, 0.1f, 100.f);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    m_CubeSelector.Create(glm::vec3(0, 0, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 4, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 6, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 8, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 10, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 12, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 14, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 16, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 18, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 20, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 22, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 24, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 26, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 28, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 30, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 32, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 34, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 36, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 38, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 40, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 42, 0), "IMAC.png", 1);
+    m_CubeSelector.Create(glm::vec3(0, 44, 0), "IMAC.png", 1);
+
 
     // NOTE: Selection related stuff
     m_textureSelection.EmptyTexture();

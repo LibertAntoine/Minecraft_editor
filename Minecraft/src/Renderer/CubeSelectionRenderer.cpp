@@ -38,10 +38,23 @@ namespace renderer {
 
         m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
         m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-        m_Shader->SetUniform1i("uCubeID", vector_cube_index);
 
+        GLuint idPart[2];
+
+        idPart[0] = (intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32;
+        idPart[1] = (intptr_t(&cube) & 0xFFFFFFFF);
+
+        m_Shader->SetUniform1uiv("uCubeID", idPart, 2);
 
         renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_Shader);
+
+        /*
+        if ( vector_cube_index == 0 ) {
+          std::cout << "pointer="<< std::dec << &cube << std::endl;
+          std::cout << "color: "<< idPart[0] << ", " << idPart[1] << std::endl;
+          std::cout << std::hex << (intptr_t(idPart[0])<<32|idPart[1]) << std::endl;
+        }
+        */
 
         vector_cube_index++;
         });
