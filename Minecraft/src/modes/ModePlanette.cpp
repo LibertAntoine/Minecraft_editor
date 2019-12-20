@@ -47,10 +47,10 @@ namespace mode {
     m_textureSelection.EmptyTexture();
     m_frameBufferSelection.Bind();
     m_textureSelection.SimpleBind();
-    m_depthBufferSelection.Bind();
+    //m_depthBufferSelection.Bind();
     // TODO: adapt to screen size dynamically
-    GLCall( glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1080, 720); )
-    GLCall( glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferSelection.getDepthBufferId()); )
+    //GLCall( glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1080, 720); )
+    //GLCall( glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferSelection.getDepthBufferId()); )
     GLCall( glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_textureSelection.GetTextureID(), 0); )
     // TODO: POSSIBLE CONFLICT with these lines and normal framebuffer
     GLCall( GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0}; )
@@ -59,9 +59,9 @@ namespace mode {
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
       std::cout << "Problem with the framebuffer" << std::endl;
 
-    m_frameBufferSelection.Unbind();
     m_textureSelection.Unbind();
-    m_depthBufferSelection.Unbind();
+    m_frameBufferSelection.Unbind();
+    //m_depthBufferSelection.Unbind();
 
   }
 
@@ -181,11 +181,16 @@ namespace mode {
 
 
     m_frameBufferSelection.Bind();
-    glClearColor(1,1,1,1);
+    glClearColor(255,255,255,255);
     glViewport(0, 0, 1080, 720);
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
     m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
+
+    GLuint color[4];
+    glReadPixels(540, 360, 1, 1, GL_RGB, GL_UNSIGNED_INT, color);
+    std::cout << "[" << color[0] << ","<< color[1] << ',' << color[2] << ',' << color[3] << "]" << std::endl;
+
     m_frameBufferSelection.Unbind();
 
 
