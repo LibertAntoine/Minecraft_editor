@@ -20,27 +20,6 @@ namespace mode {
     float ratio = 1080. / 720.;
     m_ProjMatrix = glm::perspective(fov, ratio, 0.1f, 100.f);
 
-    m_CubeSelector.Create(glm::vec3(0, 0, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 4, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 8, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 12, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 16, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 20, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 24, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 28, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 32, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 36, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 40, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 44, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 48, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 52, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 56, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 60, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 64, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 68, 0), "IMAC.png", 1);
-    m_CubeSelector.Create(glm::vec3(0, 72, 0), "IMAC.png", 1);
-
-
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // NOTE: Selection related stuff
@@ -181,15 +160,17 @@ namespace mode {
 
 
     m_frameBufferSelection.Bind();
-    glClearColor(255,255,255,255);
+    glClearColor(1,1,1,1);
     glViewport(0, 0, 1080, 720);
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
     m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
 
+    /* NOTE: get pixel value from current framebuffer
     GLuint color[4];
     glReadPixels(540, 360, 1, 1, GL_RGB, GL_UNSIGNED_INT, color);
     std::cout << "[" << color[0] << ","<< color[1] << ',' << color[2] << ',' << color[3] << "]" << std::endl;
+    */
 
     m_frameBufferSelection.Unbind();
 

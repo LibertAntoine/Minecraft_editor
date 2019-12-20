@@ -38,6 +38,7 @@ namespace interaction {
 		form::Cube* currentCube();
 		form::Cube* currentSelected();
 		void MoveSelector(const glm::vec3& deplacement);
+		void SetSelector(const glm::vec3& position);
 
 		void Create(const glm::vec3& position, const char* textName, const int& scale);
 		void Delete(form::Cube* cube);
