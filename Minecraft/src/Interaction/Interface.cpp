@@ -50,8 +50,9 @@ namespace interaction {
 		};
 		ImGui::End();
 
-		if (!ImGui::IsAnyWindowFocused() && 
+		if ((!ImGui::IsAnyWindowFocused() && 
 			!(ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)))
+			&& !(ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)))
 		{
 			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
 				cubeSelector.MoveSelector(glm::vec3(0, 1, 0));
