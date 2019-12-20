@@ -65,7 +65,7 @@ namespace renderer {
 	void CubeRenderer::drawSelector(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection) {
 		Renderer renderer;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glDisable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
 		texture->Bind();
 		glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), position);
 		MVMatrix = glm::scale(MVMatrix, glm::vec3(0.5 * scale + 0.03, 0.5 * scale + 0.03, 0.5 * scale + 0.03));
@@ -79,6 +79,7 @@ namespace renderer {
 		m_ShaderTexture->SetUniformMat4f("uNormalMatrix", NormalMatrix);
 
 		renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderTexture);
+		glEnable(GL_DEPTH_TEST);
 	};
 
 }
