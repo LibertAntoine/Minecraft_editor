@@ -27,28 +27,13 @@ void main()
 
 in vec3 vPosition_vs; // Position du sommet transform� dans l'espace View
 
-uniform int uCubeID;
+uniform uint uCubeID[2];
 
-// TODO: Check what is the purpose
-layout(location = 0) out uvec3 fFragCubeId;
+// NOTE: location 0 corresponds to the first index in glDrawBuffers array, so GL_COLOR_ATTACHMENT0
+layout(location = 0) out uvec4 fFragCubeId;
 
+// NOTE: uint is a 32-bit unsigned integer
 void main()
 {
-  // NOTE: base 256 storage
-  int rest = 0;
-
-  int r = uCubeID / (256 * 256);
-  rest = uCubeID % (256 * 256);
-
-  int g = rest / 256;
-  rest %= 256;
-
-  int b = rest;
-
-  //fFragCubeId = uvec4(12, 52, 98, 255);
-  //fFragCubeId = ivec3(r, g, b);
-  fFragCubeId = uvec3(r, g, b);
-  //fFragCubeId = uvec4(r, g, b, 1);
-  //fFragCubeId = ivec3(0.5f, 0, 0);
-
+  fFragCubeId = uvec4(uCubeID[0], uCubeID[1], 0, 1);
 };
