@@ -10,6 +10,7 @@ namespace mode {
 
 ModePlanette::ModePlanette()
     : m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
+<<<<<<< HEAD
       m_GridRenderer(200, glm::vec3(0.5f, 0.5f, 0.5f)), m_CubeRenderer(),
       m_CubeSelector(m_CubeRenderer,
                      2048), // Obligatoirement une puissance de deux.

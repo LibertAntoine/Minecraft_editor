@@ -42,6 +42,7 @@ namespace interaction {
 
 		inline Selector* selector() { return m_selector; };
 		inline interaction::CubeTextureList* textureList() { return &m_TextureList; };
+		form::Cube* currentCube();
 
 		void refresh();
 		form::Cube* currentSelected();
