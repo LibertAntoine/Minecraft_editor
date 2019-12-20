@@ -13,9 +13,8 @@ private:
 
 public: 
 	Texture(const std::string& path = "none", const std::string& name = "none");
-	Texture(const std::string& path);
+        //Texture();
 	~Texture();
-
 
         // For selection purposes
 	void EmptyTexture();

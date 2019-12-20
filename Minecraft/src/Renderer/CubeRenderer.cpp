@@ -39,7 +39,6 @@ void CubeRenderer::del(form::Cube *cube) { m_CubeList.remove(*cube); }
 void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection) 
 {
   Renderer renderer;
-  m_Texture->Bind();
   std::for_each(
       m_CubeList.begin(), m_CubeList.end(),
       [this, &renderer, &view, &projection](form::Cube &cube) {
@@ -55,7 +54,7 @@ void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection)
           m_ShaderTexture->SetUniformMat4f("uMVMatrix", MVMatrix);
           m_ShaderTexture->SetUniformMat4f("uNormalMatrix", NormalMatrix);
           renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderTexture);
-          m_ShaderTexture->Unbind();
+          //m_ShaderTexture->Unbind();
         } else {
           m_ShaderColor->Bind();
           m_ShaderColor->SetUniform3f("uColor", cube.color().x, cube.color().y,
@@ -64,7 +63,7 @@ void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection)
           m_ShaderColor->SetUniformMat4f("uMVMatrix", MVMatrix);
           m_ShaderColor->SetUniformMat4f("uNormalMatrix", NormalMatrix);
           renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderColor);
-          m_ShaderColor->Unbind();
+          //m_ShaderColor->Unbind();
         }
       });
 }
