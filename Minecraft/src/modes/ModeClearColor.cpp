@@ -20,7 +20,7 @@ namespace mode {
 
 	}
 
-	void ModeClearColor::OnEvent(SDL_Event& e)
+	void ModeClearColor::OnEvent(const SDL_Event& e)
 	{
 
 	}

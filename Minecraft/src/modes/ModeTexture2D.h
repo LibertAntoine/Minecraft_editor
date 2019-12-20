@@ -15,7 +15,7 @@ namespace mode {
 		ModeTexture2D();
 		~ModeTexture2D();
 		void OnUpdate(float deltaTime) override;
-		void OnEvent(SDL_Event& e) override;
+		void OnEvent(const SDL_Event& e) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
 	private:

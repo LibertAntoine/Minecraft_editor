@@ -106,7 +106,7 @@ namespace interaction {
 			this->Create(glm::vec3(cube->position().x, cube->position().y + 2, cube->position().z), cube->texture(), cube->scale());
 	}
 
-	void  CubeSelector::Dig() {
+	void CubeSelector::Dig() {
 		form::Cube* cube = nullptr;
 		int size = m_SizeWorld * 2;
 		for (int i = 1; cube == nullptr && i <= size; ++i) {
@@ -117,8 +117,17 @@ namespace interaction {
 
 
 
-	void CubeSelector::MoveSelector(const glm::vec3& deplacement) {
+	void CubeSelector::MoveSelector(const glm::ivec3& deplacement) {
 		m_selector->selectorPosition += deplacement;
+		if (m_selector->selectorPosition.y - m_selector->selectorScale < 1)
+			m_selector->selectorPosition.y = 1;
+		this->refresh();
+	}
+
+	void CubeSelector::SetSelector(const glm::ivec3& NewPosition) {
+		m_selector->selectorPosition = NewPosition;
+		if (m_selector->selectorPosition.y - m_selector->selectorScale < 1)
+			m_selector->selectorPosition.y = 1;
 		this->refresh();
 	}
 

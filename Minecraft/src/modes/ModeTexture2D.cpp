@@ -55,7 +55,7 @@ namespace mode {
 
 	}
 
-	void ModeTexture2D::OnEvent(SDL_Event& e)
+	void ModeTexture2D::OnEvent(const SDL_Event& e)
 	{
 
 	}

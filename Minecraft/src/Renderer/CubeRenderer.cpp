@@ -65,6 +65,7 @@ namespace renderer {
 	void CubeRenderer::drawSelector(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection) {
 		Renderer renderer;
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glDisable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
 		texture->Bind();
 		glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), position);
