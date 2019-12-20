@@ -97,6 +97,7 @@ void App::initImGUI() {
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 	ImGui::StyleColorsDark();
 	ImGui_ImplSDL2_InitForOpenGL(m_window, m_glContext);
 	ImGui_ImplOpenGL3_Init(m_glsl_version);

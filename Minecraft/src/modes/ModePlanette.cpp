@@ -30,7 +30,6 @@ namespace mode {
 
   ModePlanette::~ModePlanette()
   {
-
   }
 
   void ModePlanette::OnUpdate(float deltaTime)
@@ -39,81 +38,6 @@ namespace mode {
 
   void ModePlanette::OnEvent(const SDL_Event& e)
   {
-    switch (e.key.keysym.sym)
-    {
-
-      // TRACK CAM CONTROL //
-		/*
-      case 'j' : // Left
-        m_TrackCam.rotateLeft(1.f);
-        break;
-      case 'l': // Right
-        m_TrackCam.rotateLeft(-1.f);
-        break;
-      case 'i': // Up
-        m_TrackCam.rotateUp(1.f);
-        break;
-      case 'k': // Down
-        m_TrackCam.rotateUp(-1.f);
-        break;
-		*/
-        // FREE CAM CONTROL //
-      case 'f': // Left
-        m_FreeCam.rotateLeft(1.f);
-        break;
-      case 'h': // Right
-        m_FreeCam.rotateLeft(-1.f);
-        break;
-      case 't': // Top
-        m_FreeCam.rotateUp(1.f);
-        break;
-      case 'g': // Bottom
-        m_FreeCam.rotateUp(-1.f);
-        break;
-      case 'q': // Left
-        m_FreeCam.moveLeft(1.f);
-        break;
-      case 'd': // Right
-        m_FreeCam.moveLeft(-1.f);
-        break;
-      case 'z': // Top
-        m_FreeCam.moveFront(1.f);
-        break;
-      case 's': // Bottom
-        m_FreeCam.moveFront(-1.f);
-        break;
-      case 'a': // Top
-        m_FreeCam.moveUp(1.f);
-        break;
-      case 'w': // Bottom
-        m_FreeCam.moveUp(-1.f);
-        break;
-
-
-		// KEY SELECTOR //
-
-	  case 'p': // Add Cube at the current selection.
-		  m_CubeSelector.AddToSelector();
-		  break;
-	  case 'o': // Delete Cube at the current selection.
-		  m_CubeSelector.DeleteToSelector();
-		  break;
-	  case ':': // Block selection on Cube at the current selection.
-		  m_CubeSelector.MoveIn();
-		  break;
-	  case '!': // Move the Cube selected.
-		  m_CubeSelector.MoveOut();
-		  break;
-	  case '*': // Extrude the current y axe.
-		  m_CubeSelector.Extrude();
-		  break;
-	  case '$': // Dig the current y axe.
-		  m_CubeSelector.Dig();
-		  break;
-
-      default:
-        break;
-    }
   }
 
 
@@ -134,21 +58,25 @@ namespace mode {
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 	
 	m_Interface.SelectorInterface(m_CubeSelector);
+	m_Interface.CameraInterface(m_FreeCam);
 
-	ImGui::Begin("Camera Controller");
-	if (ImGui::Button("RotateUp")) m_FreeCam.rotateUp(1.f);
-	if (ImGui::Button("RotateDown")) m_FreeCam.rotateUp(-1.f);
-	if (ImGui::Button("RotateLeft")) m_FreeCam.rotateLeft(1.f);
-	if (ImGui::Button("RotateRight")) m_FreeCam.rotateLeft(-1.f);
-	if (ImGui::Button("ZoomIn")) m_FreeCam.moveFront(1.f);
-	if (ImGui::Button("ZoomOut")) m_FreeCam.moveFront(-1.f);
-	if (ImGui::Button("MoveLeft")) m_FreeCam.moveLeft(1.f);
-	if (ImGui::Button("MoveRight")) m_FreeCam.moveLeft(-1.f);
-	if (ImGui::Button("MoveUp")) m_FreeCam.moveUp(1.f);
-	if (ImGui::Button("MoveDown")) m_FreeCam.moveUp(-1.f);
+	ImGuiWindowFlags corner =
+		ImGuiWindowFlags_NoMove |
+		ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_NoCollapse |
+		ImGuiWindowFlags_NoSavedSettings;
+
+	bool open = true;
+	ImGui::Begin("Test", &open, corner);
+	ImGui::SetWindowPos(ImVec2(0, 500), true);
+	ImGui::SetWindowSize(ImVec2(200, 200), true);
+
 	ImGui::End();
 
-	
+
+	const float my_values[] = { 0.2f, 0.1f, 1.0f, 0.5f, 0.9f, 2.2f };
+	ImGui::PlotLines("Frame Times", my_values, IM_ARRAYSIZE(my_values));
+
 
 	ImGui::Begin("Infos Current Cube");
 	if (m_CubeSelector.selector()->currentCube != nullptr) {
@@ -178,9 +106,6 @@ namespace mode {
 			};
 		}
 
-
-
-		
 		ImGui::Text("Cube Position : ");
 		int xc = m_CubeSelector.selector()->currentCube->position().x;
 		int yc = m_CubeSelector.selector()->currentCube->position().y;

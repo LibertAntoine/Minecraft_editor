@@ -23,7 +23,6 @@ namespace mode {
 	private:
 		glm::vec3 m_backgroundColor;
 		glm::mat4 m_ProjMatrix;
-		camera::TrackballCamera m_TrackCam;
 		camera::FreeflyCamera m_FreeCam;
 		renderer::GridRenderer m_GridRenderer;
 		renderer::CubeRenderer m_CubeRenderer;

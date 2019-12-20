@@ -12,7 +12,7 @@ namespace interaction {
 		m_selector->selectedPosition = glm::vec3(0, 1, 0);
 		m_selector->currentSelected = false;
 		m_selector->currentCopy = false;
-		m_selector->selectorScale = 2;
+		m_selector->selectorScale = 1;
 		m_TextureList.addToList("res/textures/blocks/log_acacia_top.png");
 		m_TextureList.addToList("res/textures/blocks/piston_bottom.png");
 		m_TextureList.addToList("res/textures/blocks/red_sandstone_bottom.png");
@@ -96,38 +96,52 @@ namespace interaction {
 
 	void  CubeSelector::Extrude() {
 		form::Cube* cube = nullptr;
+		glm::vec3 NewPosition;
 		int size = m_SizeWorld * 2;
 		for (int i = 1; cube == nullptr && i <= size; ++i) {
 			cube = m_CubeWorld.at(m_selector->selectorPosition.x + m_SizeWorld, size - i, m_selector->selectorPosition.z + m_SizeWorld);
 		}
-		if (cube == nullptr)
-			this->Create(glm::vec3(m_selector->selectorPosition.x, 1, m_selector->selectorPosition.z), m_selector->selectorTexture, m_selector->selectorScale);
-		else
-			this->Create(glm::vec3(cube->position().x, cube->position().y + 2, cube->position().z), cube->texture(), cube->scale());
+		if (cube == nullptr) {
+			NewPosition = glm::vec3(m_selector->selectorPosition.x, 0, m_selector->selectorPosition.z);
+			this->Create(NewPosition, m_selector->selectorTexture, m_selector->selectorScale);
+		} else {
+			NewPosition = glm::vec3(cube->position().x, cube->position().y + cube->scale(), cube->position().z);
+			this->Create(NewPosition, cube->texture(), cube->scale(), cube->color());
+
+		}
+		this->SetSelector(NewPosition);
 	}
 
 	void CubeSelector::Dig() {
 		form::Cube* cube = nullptr;
+		glm::vec3 position;
 		int size = m_SizeWorld * 2;
 		for (int i = 1; cube == nullptr && i <= size; ++i) {
 			cube = m_CubeWorld.at(m_selector->selectorPosition.x + m_SizeWorld, size - i, m_selector->selectorPosition.z + m_SizeWorld);
 		}
-		this->Delete(cube);
+		if (cube == nullptr) {
+			position = glm::vec3(m_selector->selectorPosition.x, 0, m_selector->selectorPosition.z), m_selector->selectorTexture, m_selector->selectorScale;
+		}
+		else {
+			position = glm::vec3(cube->position().x, cube->position().y - cube->scale(), cube->position().z);
+			this->Delete(cube);
+		}
+		this->SetSelector(position);
 	}
 
 
 
 	void CubeSelector::MoveSelector(const glm::ivec3& deplacement) {
 		m_selector->selectorPosition += deplacement;
-		if (m_selector->selectorPosition.y - m_selector->selectorScale < 1)
-			m_selector->selectorPosition.y = 1;
+		if (m_selector->selectorPosition.y < 0)
+		m_selector->selectorPosition.y = 0;
 		this->refresh();
 	}
 
 	void CubeSelector::SetSelector(const glm::ivec3& NewPosition) {
 		m_selector->selectorPosition = NewPosition;
-		if (m_selector->selectorPosition.y - m_selector->selectorScale < 1)
-			m_selector->selectorPosition.y = 1;
+		if (m_selector->selectorPosition.y < 0)
+		m_selector->selectorPosition.y = 0;
 		this->refresh();
 	}
 

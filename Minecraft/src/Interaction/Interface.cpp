@@ -72,31 +72,74 @@ namespace interaction {
 				cubeSelector.MoveSelector(glm::vec3(1, 0, 0));
 		}
 
-		if ((ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))
-			&& ImGui::IsKeyPressed(SDL_SCANCODE_I))
-			cubeSelector.AddToSelector();
+		if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) {
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_I))
+				cubeSelector.AddToSelector();
 
-		if ((ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))
-			&& ImGui::IsKeyPressed(SDL_SCANCODE_O))
-			cubeSelector.DeleteToSelector();
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_O))
+				cubeSelector.DeleteToSelector();
 
-		if ((ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))
-			&& ImGui::IsKeyPressed(SDL_SCANCODE_X))
-			cubeSelector.MoveIn();
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_X))
+				cubeSelector.MoveIn();
+	
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_V))
+				cubeSelector.MoveOut();
 
-		if ((ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))
-			&& ImGui::IsKeyPressed(SDL_SCANCODE_V))
-			cubeSelector.MoveOut();
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
+				cubeSelector.Extrude();
 
-		if ((ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))
-			&& ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP)) {
-			cubeSelector.MoveSelector(glm::vec3(0, 1, 0));
-			cubeSelector.Extrude();
-		}
-		if ((ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))
-			&& ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN)) {
-			cubeSelector.MoveSelector(glm::vec3(0, -1, 0));
-			cubeSelector.Dig();
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN))
+				cubeSelector.Dig();
 		}
 	}
+
+	void Interface::CameraInterface(camera::FreeflyCamera& Camera) {
+		ImGui::Begin("Camera Controller");
+		if (ImGui::Button("RotateUp")) Camera.rotateUp(1.f);
+		if (ImGui::Button("RotateDown")) Camera.rotateUp(-1.f);
+		if (ImGui::Button("RotateLeft")) Camera.rotateLeft(1.f);
+		if (ImGui::Button("RotateRight")) Camera.rotateLeft(-1.f);
+		if (ImGui::Button("ZoomIn")) Camera.moveFront(1.f);
+		if (ImGui::Button("ZoomOut")) Camera.moveFront(-1.f);
+		if (ImGui::Button("MoveLeft")) Camera.moveLeft(1.f);
+		if (ImGui::Button("MoveRight")) Camera.moveLeft(-1.f);
+		if (ImGui::Button("MoveUp")) Camera.moveUp(1.f);
+		if (ImGui::Button("MoveDown")) Camera.moveUp(-1.f);
+		ImGui::End();
+
+		if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)) {
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
+				Camera.moveFront(1.f);
+
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN))
+				Camera.moveFront(-1.f);
+
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_UP))
+				Camera.moveUp(1.f);
+
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_DOWN))
+				Camera.moveUp(-1.f);
+
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_LEFT))
+				Camera.moveLeft(1.f);
+
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_RIGHT))
+				Camera.moveLeft(-1.f);
+		}
+
+		if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) {
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_UP))
+				Camera.rotateUp(2.f);
+
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_DOWN))
+				Camera.rotateUp(-2.f);
+
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_LEFT))
+				Camera.rotateLeft(2.f);
+
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_RIGHT))
+				Camera.rotateLeft(-2.f);
+		}
+	}
+
 }
