@@ -20,8 +20,6 @@ namespace interaction {
 		m_selector->selectorTexture = m_TextureList.give("log_acacia_top");
 
 		this->Create(glm::vec3(0, 0, 0), nullptr, m_selector->selectorScale);
-		this->Create(glm::vec3(3, 3, 3), m_selector->selectorTexture, m_selector->selectorScale);
-		this->Create(glm::vec3(0, 3, 3), m_selector->selectorTexture, m_selector->selectorScale);
 		this->refresh();
 	}	
 
