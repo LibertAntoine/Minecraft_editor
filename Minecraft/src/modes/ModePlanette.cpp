@@ -88,6 +88,7 @@ void ModePlanette::OnRender()
   glEnable(GL_BLEND);
   glDisable(GL_CULL_FACE);
   m_GridRenderer.draw(m_FreeCam, m_ProjMatrix);
+  m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix);
   m_CubeSelector.Show(m_FreeCam.getViewMatrix(), m_ProjMatrix);
   glDisable(GL_BLEND);
   glEnable(GL_CULL_FACE);
@@ -97,8 +98,7 @@ void ModePlanette::OnRender()
   glViewport(0, 0, 1080, 720);
   GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-  m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix,
-                               m_CubeRenderer.m_CubeList);
+  m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
   m_frameBufferSelection.Unbind();
 
   glEnable(GL_BLEND);
@@ -169,8 +169,6 @@ void ModePlanette::OnImGuiRender()
           ImGui::InputFloat("b", &b, 0.01f, 0.1f, "%.3f")) {
         m_CubeSelector.selector()->currentCube->Setcolor(glm::vec3(r, g, b));
       };
-    }
-
     ImGui::Text("Cube Position : ");
     int xc = m_CubeSelector.selector()->currentCube->position().x;
     int yc = m_CubeSelector.selector()->currentCube->position().y;
