@@ -14,7 +14,7 @@ void Texture::EmptyTexture() {
   */
 
   // TODO: values to be taken from the actual window size
-  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8UI, 1080, 720, 0, GL_RGB_INTEGER, GL_UNSIGNED_INT, 0));
+  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32UI, 1080, 720, 0, GL_RGBA_INTEGER, GL_UNSIGNED_INT, 0));
   //GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, 1080, 720, 0, GL_RGB, GL_UNSIGNED_BYTE, 0));
   GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
