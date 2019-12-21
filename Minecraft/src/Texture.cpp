@@ -6,12 +6,10 @@ void Texture::EmptyTexture() {
   GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureID));
 
   // TODO: may cause problems...
-  /*
   GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
   GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
   GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
   GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-  */
 
   // TODO: values to be taken from the actual window size
   GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32UI, 1080, 720, 0, GL_RGBA_INTEGER, GL_UNSIGNED_INT, 0));

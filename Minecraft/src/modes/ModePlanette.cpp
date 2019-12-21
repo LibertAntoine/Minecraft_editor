@@ -1,4 +1,5 @@
 #include "ModePlanette.h"
+#include <stdint.h>
 #include "ImGUI/imgui.h"
 #include "Renderer.h"
 
@@ -69,34 +70,30 @@ ModePlanette::ModePlanette()
 
 void ModePlanette::OnEvent(const SDL_Event &e)
 {
+  // TODO: May move elsewhere? Like in RenderImgui...
   switch(e.type) {
     case SDL_MOUSEBUTTONDOWN:
       if ( e.button.button == SDL_BUTTON_LEFT ) {
-        /*
+
+        /* NOTE: check which FrameBuffer is currently bound
         GLint drawFboId = 0, readFboId = 0;
         glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFboId);
         glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFboId);
-        */
         //std::cout << "checking current FBO. Draw:" << drawFboId << ", Read: " << readFboId << std::endl;
-        //GLCall(glBindFramebuffer(GL_READ_FRAMEBUFFER, m_frameBufferSelection.GetFrameBufferId()));
-        m_frameBufferSelection.Bind();
-        //m_textureSelection.SimpleBind();
-        /*
-        glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFboId);
-        glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFboId);
         */
-        uint32_t pixels[4] = {0,0,0,0};
-        std::cout << e.button.x << "," << e.button.y << std::endl;
-        //std::cout << "GL_IMPLEMENTATION_COLOR_READ_FORMAT: " << GL_IMPLEMENTATION_COLOR_READ_FORMAT << std::endl;
-        GLCall(glReadBuffer(GL_COLOR_ATTACHMENT0));
-        //GLCall( glPixelStorei(GL_PACK_ALIGNMENT, 1) );
-        //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        //glPixelStorei(GL_PACK_ALIGNMENT, 1);
-        GLCall(glViewport(0, 0, 1080, 720));
-        GLCall( glReadPixels(e.button.x, 720-e.button.y-1, 1, 1, GL_RGBA, GL_UNSIGNED_INT, pixels) );
-        //( glReadPixels(e.button.x, 720-e.button.y-1, 1, 1, GL_RGBA, GL_UNSIGNED_INT, pixels) );
+
+        // NOTE: Check if a cube has been selected
+        m_frameBufferSelection.Bind();
+        GLuint pixels[4] = {0,0,0,0};
+        GLCall( glReadPixels(e.button.x, 720-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_UNSIGNED_INT, pixels) );
         std::cout << pixels[0] << "," << pixels[1] << "," << pixels[2] << "," << pixels[3] << std::endl;
-        //m_textureSelection.Unbind();
+        // TODO: make the following check stronger
+        if ( pixels[0] != pixels[1] ) {
+          form::Cube* selectionAddress;
+          // NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
+          selectionAddress = (form::Cube*)( (intptr_t( pixels[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( pixels[1] ) & 0xFFFFFFFF ) );
+          // TODO: Get position from pointer then call SelectorInterface to pick the new position
+        }
         m_frameBufferSelection.Unbind();
       }
       break;
@@ -124,6 +121,9 @@ void ModePlanette::OnRender()
   //m_textureSelection.SimpleBind();
   m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
   //m_textureSelection.Unbind();
+  GLint texId;
+  glGetIntegerv(GL_ACTIVE_TEXTURE, &texId);
+  //std::cout << texId << std::endl;
   m_frameBufferSelection.Unbind();
 
 }
