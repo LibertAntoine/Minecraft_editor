@@ -31,6 +31,11 @@ namespace renderer {
     int vector_cube_index = 0;
 
 
+    glClearColor(1, 1, 1, 1); // White for unselectable air
+    // TODO: Set dynamic values
+    glViewport(0, 0, 1080, 720);
+    GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+
     m_Shader->Bind();
     std::for_each(cubeList.begin(), cubeList.end(), [&vector_cube_index, this, &renderer, &view, &projection](form::Cube& cube) {
         glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), cube.position());
