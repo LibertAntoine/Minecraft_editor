@@ -109,9 +109,13 @@ namespace mode {
             form::Cube* selectionAddress;
             // NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
             selectionAddress = (form::Cube*)( (intptr_t( pixels[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( pixels[1] ) & 0xFFFFFFFF ) );
-            // TODO: Get position from pointer then call SelectorInterface to pick the new position
+            m_CubeSelector.SetSelector(glm::vec3(selectionAddress->position()));
           }
-          m_frameBufferSelection.Unbind();        }
+          m_frameBufferSelection.Unbind();        
+
+          // TODO: Detect IMGUI hover and do not triger selection
+          // TODO: Add floor checking
+        }
         break;
     }
   }
