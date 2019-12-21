@@ -20,3 +20,8 @@ void FrameBuffer::Unbind() const
 {
   GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 }
+
+const GLuint FrameBuffer::GetFrameBufferId() const
+{
+  return m_FrameBufferId;
+}

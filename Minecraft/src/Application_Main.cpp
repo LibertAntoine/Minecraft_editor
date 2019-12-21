@@ -45,25 +45,25 @@ int main(int argc, char* argv[])
 
   /* Boucle principale */
   while (app.isRunning()) {
+    renderer.Clear();
+    app.beginFrame();
     {
-      SDL_Event e;
-      while (SDL_PollEvent(&e))
-      {
-        if (e.type == SDL_QUIT)
-        {
-          app.exit();
-          break;
-        }
-		ImGui_ImplSDL2_ProcessEvent(&e);	
-      }
-
-      renderer.Clear();
-      app.beginFrame();
 
       if (currentMode)
       {
         currentMode->OnUpdate(0.0f);
         currentMode->OnRender();
+        SDL_Event e;
+        while (SDL_PollEvent(&e))
+        {
+          if (e.type == SDL_QUIT)
+          {
+            app.exit();
+            break;
+          }
+          currentMode->OnEvent(e);
+          ImGui_ImplSDL2_ProcessEvent(&e);	
+        }
         ImGui::Begin("Select Mode");
 
         if (currentMode != modeMenu && ImGui::Button("<-"))
@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
 
       ImGui::Render();
       ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 
       app.endFrame();
 
