@@ -51,9 +51,6 @@ namespace mode {
     m_textureSelection.SimpleBind();
     //m_depthBufferSelection.Bind();
 
-    // TODO: adapt to screen size dynamically
-    //GLCall(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1080, 720););
-    //GLCall(glFramebufferRenderbuffer( GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferSelection.getDepthBufferId()););
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureSelection.GetTextureID(), 0););
     GLCall(GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};);
     GLCall(glDrawBuffers(1, DrawBuffers););
@@ -94,33 +91,27 @@ namespace mode {
     switch(e.type) {
       case SDL_MOUSEBUTTONDOWN:
         if ( e.button.button == SDL_BUTTON_LEFT ) {
-          /*
+
+          /* NOTE: check which FrameBuffer is currently bound
              GLint drawFboId = 0, readFboId = 0;
              glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFboId);
              glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFboId);
-             */
           //std::cout << "checking current FBO. Draw:" << drawFboId << ", Read: " << readFboId << std::endl;
-          //GLCall(glBindFramebuffer(GL_READ_FRAMEBUFFER, m_frameBufferSelection.GetFrameBufferId()));
+          */
+
+          // NOTE: Check if a cube has been selected
           m_frameBufferSelection.Bind();
-          //m_textureSelection.SimpleBind();
-          /*
-             glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFboId);
-             glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFboId);
-             */
-          uint32_t pixels[4] = {0,0,0,0};
-          std::cout << e.button.x << "," << e.button.y << std::endl;
-          //std::cout << "GL_IMPLEMENTATION_COLOR_READ_FORMAT: " << GL_IMPLEMENTATION_COLOR_READ_FORMAT << std::endl;
-          GLCall(glReadBuffer(GL_COLOR_ATTACHMENT0));
-          //GLCall( glPixelStorei(GL_PACK_ALIGNMENT, 1) );
-          //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-          //glPixelStorei(GL_PACK_ALIGNMENT, 1);
-          GLCall(glViewport(0, 0, 1080, 720));
-          GLCall( glReadPixels(e.button.x, 720-e.button.y-1, 1, 1, GL_RGBA, GL_UNSIGNED_INT, pixels) );
-          //( glReadPixels(e.button.x, 720-e.button.y-1, 1, 1, GL_RGBA, GL_UNSIGNED_INT, pixels) );
+          GLuint pixels[4] = {0,0,0,0};
+          GLCall( glReadPixels(e.button.x, 960-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_UNSIGNED_INT, pixels) );
           std::cout << pixels[0] << "," << pixels[1] << "," << pixels[2] << "," << pixels[3] << std::endl;
-          //m_textureSelection.Unbind();
-          m_frameBufferSelection.Unbind();
-        }
+          // TODO: make the following check stronger
+          if ( pixels[0] != pixels[1] ) {
+            form::Cube* selectionAddress;
+            // NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
+            selectionAddress = (form::Cube*)( (intptr_t( pixels[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( pixels[1] ) & 0xFFFFFFFF ) );
+            // TODO: Get position from pointer then call SelectorInterface to pick the new position
+          }
+          m_frameBufferSelection.Unbind();        }
         break;
     }
   }

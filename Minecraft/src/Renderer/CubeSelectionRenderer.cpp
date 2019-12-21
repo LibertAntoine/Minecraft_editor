@@ -33,7 +33,7 @@ namespace renderer {
 
     glClearColor(1, 1, 1, 1); // White for unselectable air
     // TODO: Set dynamic values
-    glViewport(0, 0, 1080, 720);
+    glViewport(0, 0, 1440, 960);
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
     m_Shader->Bind();
