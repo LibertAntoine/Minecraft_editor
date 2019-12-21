@@ -49,6 +49,7 @@ namespace renderer {
         idPart[0] = (intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32;
         idPart[1] = (intptr_t(&cube) & 0xFFFFFFFF);
 
+        //GLuint test = 0xFFFFFFFF00000000 >> 32;
         m_Shader->SetUniform1uiv("uCubeID", idPart, 2);
 
         renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_Shader);

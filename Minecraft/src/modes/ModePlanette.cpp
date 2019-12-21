@@ -1,4 +1,5 @@
 #include "ModePlanette.h"
+#include <stdint.h>
 #include "ImGUI/imgui.h"
 #include "Renderer.h"
 
@@ -67,6 +68,29 @@ namespace mode {
     //m_depthBufferSelection.Unbind();
   }
 
+  ModePlanette::~ModePlanette() {}
+
+  void ModePlanette::OnUpdate(float deltaTime) {}
+
+  void ModePlanette::OnRender()
+  {
+
+    GLCall(glClearColor(m_backgroundColor.x, m_backgroundColor.y,
+          m_backgroundColor.z, 1.0f));
+    // TODO: Check if necessary (redundancy) because of App.cpp beginFrame()
+    GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+
+    m_GridRenderer.draw(m_FreeCam, m_ProjMatrix);
+    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix);
+    m_CubeSelector.Show(m_FreeCam.getViewMatrix(), m_ProjMatrix);
+
+    // NOTE: Generating offscreen selection texture
+    m_frameBufferSelection.Bind();
+    m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
+    m_frameBufferSelection.Unbind();
+
+  }
+
   void ModePlanette::OnEvent(const SDL_Event &e)
   {
     switch(e.type) {
@@ -103,28 +127,7 @@ namespace mode {
     }
   }
 
-  ModePlanette::~ModePlanette() {}
 
-  void ModePlanette::OnUpdate(float deltaTime) {}
-
-  void ModePlanette::OnRender()
-  {
-
-    GLCall(glClearColor(m_backgroundColor.x, m_backgroundColor.y,
-          m_backgroundColor.z, 1.0f));
-    // TODO: Check if necessary (redundancy) because of App.cpp beginFrame()
-    GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-
-    m_GridRenderer.draw(m_FreeCam, m_ProjMatrix);
-    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix);
-    m_CubeSelector.Show(m_FreeCam.getViewMatrix(), m_ProjMatrix);
-
-    // NOTE: Generating offscreen selection texture
-    m_frameBufferSelection.Bind();
-    m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
-    m_frameBufferSelection.Unbind();
-
-  }
 
   void ModePlanette::OnImGuiRender()
   {
