@@ -12,6 +12,9 @@
 /**
  * @brief Base root of the app
  */
+static unsigned int WINDOW_HEIGHT = 960;
+static unsigned int WINDOW_WIDTH = 1440;
+
 class App {
 public:
 	App();

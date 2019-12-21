@@ -63,8 +63,8 @@ void App::initSDL() {
 	m_window = SDL_CreateWindow("Minecraft Editor",
 		SDL_WINDOWPOS_CENTERED,           // initial x position
 		SDL_WINDOWPOS_CENTERED,           // initial y position
-		1080,                               // width, in pixels
-		720,                               // height, in pixels
+		WINDOW_WIDTH,                               // width, in pixels
+		WINDOW_HEIGHT,                               // height, in pixels
 		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL                  // flags - see below
 	);
 

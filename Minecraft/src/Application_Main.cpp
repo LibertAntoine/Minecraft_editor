@@ -39,7 +39,6 @@ int main(int argc, char* argv[])
   currentMode = modeMenu;
 
   modeMenu->RegisterMode<mode::ModeClearColor>("Clear Color");
-  modeMenu->RegisterMode<mode::ModeTexture2D>("2D Texture");
   modeMenu->RegisterMode<mode::ModePlanette>("Cube");
   modeMenu->RegisterMode<mode::ModeImGUITest>("ImGUI Demo");
 
