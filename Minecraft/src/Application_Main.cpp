@@ -34,6 +34,8 @@ int main(int argc, char* argv[])
   App app;
   Renderer renderer;
 
+
+
   mode::Mode* currentMode = nullptr;
   mode::ModeMenu* modeMenu = new mode::ModeMenu(currentMode);
   currentMode = modeMenu;
@@ -41,6 +43,8 @@ int main(int argc, char* argv[])
   modeMenu->RegisterMode<mode::ModeClearColor>("Clear Color");
   modeMenu->RegisterMode<mode::ModePlanette>("Cube");
   modeMenu->RegisterMode<mode::ModeImGUITest>("ImGUI Demo");
+
+
 
   /* Boucle principale */
   while (app.isRunning()) {
@@ -63,20 +67,20 @@ int main(int argc, char* argv[])
       {
         currentMode->OnUpdate(0.0f);
         currentMode->OnRender();
+		
         ImGui::Begin("Select Mode");
-
-        if (currentMode != modeMenu && ImGui::Button("<-"))
+		if (currentMode != modeMenu && ImGui::Button("<-"))
         {
           delete currentMode;
           currentMode = modeMenu;
         }
-        currentMode->OnImGuiRender();
+		currentMode->OnImGuiRender();
         ImGui::End();
       }
 
-      ImGui::Render();
+	  ImGui::Render();
       ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
+	  
       app.endFrame();
 
     }

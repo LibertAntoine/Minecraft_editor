@@ -8,10 +8,10 @@ namespace interaction {
 	}
 
 	void Interface::MainActionMenu(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector) {
-		ImGui::SetNextWindowSizeConstraints({ 200.0f,  (float)WINDOW_HEIGHT }, { 500.0f,  (float)WINDOW_HEIGHT });
-		ImGui::Begin("Test", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar);
+		ImGui::SetNextWindowSizeConstraints({ 200.0f,  (float)WINDOW_HEIGHT - 20 }, { 500.0f,  (float)WINDOW_HEIGHT - 20 });
+		ImGui::Begin("Test", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar);
 		m_actionMenuWitdh = ImGui::GetWindowWidth();
-		ImGui::SetWindowPos(ImVec2((float)WINDOW_WIDTH - m_actionMenuWitdh, 18), true);
+		ImGui::SetWindowPos(ImVec2((float)WINDOW_WIDTH - m_actionMenuWitdh, 20), true);
 
 		
 		this->CameraInterface(Camera);
@@ -131,8 +131,10 @@ namespace interaction {
 	}
 
 	void Interface::MenuBarInterface(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector) {
+		
 		if (ImGui::BeginMainMenuBar())
 		{
+
 			if (ImGui::BeginMenu("File"))
 			{
 				ImGui::EndMenu();
@@ -153,11 +155,14 @@ namespace interaction {
 	void Interface::MenuInfosInterface(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector) {
 
 		ImGui::SetNextWindowSizeConstraints({ (float)WINDOW_WIDTH - m_actionMenuWitdh,  100.0f }, { (float)WINDOW_WIDTH - m_actionMenuWitdh,  300.0f });
-		ImGui::Begin("Selector Infos", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+		ImGui::Begin("Selector Infos", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 		ImGui::SetWindowPos(ImVec2(0, (float)WINDOW_HEIGHT - ImGui::GetWindowHeight()), true);
+		
+
 
 		ImGui::Columns(2, "Infos");
 		this->InfosSelectorInterface(cubeSelector);
+
 		ImGui::NextColumn();
 		this->InfosCurrentCubeInterface(cubeSelector);
 
@@ -168,31 +173,41 @@ namespace interaction {
 	void Interface::InfosCurrentCubeInterface(interaction::CubeSelector& cubeSelector) {
 		if (cubeSelector.selector()->currentCube != nullptr) {
 			ImGui::Text("Current cube selected infos : ");
-			ImGui::Text("Cube Scale : ");
-			ImGui::InputInt("scalec", cubeSelector.selector()->currentCube->scalePtr(), 1, 100);
+			ImGui::InputInt("Scale Cube", cubeSelector.selector()->currentCube->scalePtr(), 1, 100);
 			if (cubeSelector.selector()->currentCube->texture() != nullptr) {
-				ImGui::Text("Cube Texture : ");
-				ImGui::Text(cubeSelector.selector()->currentCube->texture()->name().c_str());
-				if (ImGui::BeginCombo("Texture Cube", cubeSelector.selector()->currentCube->texture()->name().c_str())) {
+				ImVec2 combo_pos = ImGui::GetCursorScreenPos();
+				if (ImGui::BeginCombo("Texture Cube","" )) {
 					for (int i = 0; i < cubeSelector.textureList()->nameList().size(); ++i)
 					{
 						bool is_selected = (cubeSelector.selector()->currentCube->texture()->name() == cubeSelector.textureList()->nameList()[i]);
-						if (ImGui::Selectable(cubeSelector.textureList()->nameList()[i].c_str(), is_selected))
+						ImGui::Image((void*)(intptr_t)cubeSelector.textureList()->give(cubeSelector.textureList()->nameList()[i])->GetTexId(), ImVec2(20,20));
+						ImGui::SameLine();
+						bool selectable = ImGui::Selectable(cubeSelector.textureList()->nameList()[i].c_str(), is_selected);
+
+						if (selectable)
 							cubeSelector.selector()->currentCube->texture(cubeSelector.textureList()->give(cubeSelector.textureList()->nameList()[i]));
 						if (is_selected)
 							ImGui::SetItemDefaultFocus();
 					}
 					ImGui::EndCombo();
 				}
+				ImGui::SetCursorScreenPos(ImVec2(combo_pos.x + 3, combo_pos.y + 3));
+				float h = ImGui::GetTextLineHeight();
+				ImGui::Image((void*)(intptr_t)cubeSelector.selector()->currentCube->texture()->GetTexId(), ImVec2(h, h));
+				ImGui::SameLine();
+				ImGui::Text(cubeSelector.selector()->currentCube->texture()->name().c_str());
+
 			}
+
 			else {
 				ImGui::Text("Cube Color : ");
-				float r = cubeSelector.selector()->currentCube->color().x;
-				float g = cubeSelector.selector()->currentCube->color().y;
-				float b = cubeSelector.selector()->currentCube->color().z;
-				if (ImGui::InputFloat("r", &r, 0.01f, 0.1f, "%.3f") || ImGui::InputFloat("g", &g, 0.01f, 0.1f, "%.3f") || ImGui::InputFloat("b", &b, 0.01f, 0.1f, "%.3f")) {
-					cubeSelector.selector()->currentCube->Setcolor(glm::vec3(r, g, b));
+				static float color[3] = { cubeSelector.selector()->currentCube->color().x,
+				cubeSelector.selector()->currentCube->color().y,
+				cubeSelector.selector()->currentCube->color().z,};
+				if (ImGui::ColorEdit3("MyColor##1", color)) {
+					cubeSelector.selector()->currentCube->Setcolor(glm::vec3(color[0], color[1], color[2]));
 				};
+
 			}
 
 			ImGui::Text("Cube Position : ");
@@ -203,6 +218,9 @@ namespace interaction {
 				cubeSelector.selector()->selectorPosition = glm::vec3(xc, yc, zc);
 				cubeSelector.Move(cubeSelector.selector()->currentCube, glm::vec3(xc, yc, zc));
 			};
+			
+			
+
 		}
 		else {
 			ImGui::Text("No Cube Selected.");

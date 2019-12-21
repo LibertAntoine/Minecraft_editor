@@ -33,12 +33,16 @@ namespace camera {
 	void FreeflyCamera::moveLeft(float t)
 	{
 		m_Position += t * m_LeftVector;
+		if (m_Position.y < 0)
+			m_Position.y = 0;
 	};
 
 
 	void FreeflyCamera::moveFront(float t)
 	{
 		m_Position += t * m_FrontVector;
+		if (m_Position.y < 0)
+			m_Position.y = 0;
 	};
 
 	void FreeflyCamera::moveUp(float t)

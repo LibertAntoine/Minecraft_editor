@@ -99,8 +99,13 @@ void App::initImGUI() {
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 	ImGui::StyleColorsDark();
+	io.Fonts->AddFontFromFileTTF("res/fonts/Lato/Lato-Medium.ttf", 15);
 	ImGui_ImplSDL2_InitForOpenGL(m_window, m_glContext);
 	ImGui_ImplOpenGL3_Init(m_glsl_version);
 
-
+	ImGui::PushStyleColor(ImGuiCol_ResizeGrip, 0);
+	ImGui::PushStyleColor(ImGuiCol_ResizeGripActive, 0); 
+	ImGui::PushStyleColor(ImGuiCol_ResizeGripHovered, 0); 
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.f);
+	ImGui::PushStyleVar(ImGuiStyleVar_ScrollbarRounding, 0.f);
 }
