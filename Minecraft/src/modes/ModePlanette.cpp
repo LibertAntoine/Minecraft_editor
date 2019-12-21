@@ -84,9 +84,6 @@ void ModePlanette::OnRender()
 
   // NOTE: Generating offscreen selection texture
   m_frameBufferSelection.Bind();
-  glClearColor(1, 1, 1, 1); // White for unselectable air
-  glViewport(0, 0, 1080, 720);
-  GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
   m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
   m_frameBufferSelection.Unbind();
 
