@@ -47,24 +47,25 @@ void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection)
             MVMatrix, glm::vec3(cube.scale(), cube.scale(), cube.scale()));
         glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
         MVMatrix = view * MVMatrix;
-        if (cube.texture() != nullptr) {
-          cube.texture()->Bind();
-          m_ShaderTexture->Bind();
-          m_ShaderTexture->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-          m_ShaderTexture->SetUniformMat4f("uMVMatrix", MVMatrix);
-          m_ShaderTexture->SetUniformMat4f("uNormalMatrix", NormalMatrix);
-          renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderTexture);
-          //m_ShaderTexture->Unbind();
-        } else {
-          m_ShaderColor->Bind();
-          m_ShaderColor->SetUniform3f("uColor", cube.color().x, cube.color().y,
-                                      cube.color().z);
-          m_ShaderColor->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-          m_ShaderColor->SetUniformMat4f("uMVMatrix", MVMatrix);
-          m_ShaderColor->SetUniformMat4f("uNormalMatrix", NormalMatrix);
-          renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderColor);
-          //m_ShaderColor->Unbind();
-        }
+        if (cube.type() == form::COLORED) {
+			m_ShaderColor->Bind();
+			m_ShaderColor->SetUniform3f("uColor", cube.color().x, cube.color().y,
+				cube.color().z);
+			m_ShaderColor->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+			m_ShaderColor->SetUniformMat4f("uMVMatrix", MVMatrix);
+			m_ShaderColor->SetUniformMat4f("uNormalMatrix", NormalMatrix);
+			renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderColor);
+			//m_ShaderColor->Unbind();
+        } else if(cube.type() == form::TEXTURED) {
+		  cube.texture()->Bind();
+		  m_ShaderTexture->Bind();
+		  m_ShaderTexture->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+		  m_ShaderTexture->SetUniformMat4f("uMVMatrix", MVMatrix);
+		  m_ShaderTexture->SetUniformMat4f("uNormalMatrix", NormalMatrix);
+		  renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderTexture);
+		  //m_ShaderTexture->Unbind();
+		} else if (cube.type() == form::MULTI_TEXTURED) {
+		}
       });
 }
 

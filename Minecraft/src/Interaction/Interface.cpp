@@ -161,32 +161,37 @@ namespace interaction {
 
 
 		ImGui::Columns(2, "Infos");
-		this->InfosSelectorInterface(cubeSelector);
-
-		ImGui::NextColumn();
 		this->InfosCurrentCubeInterface(cubeSelector);
-
+		ImGui::NextColumn();
+		this->InfosSelectorInterface(cubeSelector);
 		ImGui::End();
 	}
 
 
 	void Interface::InfosCurrentCubeInterface(interaction::CubeSelector& cubeSelector) {
-		if (cubeSelector.selector()->currentCube != nullptr) {
+		if (cubeSelector.currentCube() != nullptr) {
 			ImGui::Text("Current cube selected infos : ");
 			ImGui::InputInt("Scale Cube", cubeSelector.selector()->currentCube->scalePtr(), 1, 100);
-			if (cubeSelector.selector()->currentCube->texture() != nullptr) {
-				this->ComboTexture(cubeSelector, *cubeSelector.currentCube(), "Cube Texture");
-			} else {
-				ImGui::Text("Cube Color : ");
-				static float color[3] = { cubeSelector.selector()->currentCube->color().x,
-				cubeSelector.selector()->currentCube->color().y,
-				cubeSelector.selector()->currentCube->color().z,};
-				if (ImGui::ColorEdit3("MyColor##1", color)) {
-					cubeSelector.selector()->currentCube->Setcolor(glm::vec3(color[0], color[1], color[2]));
+			int r = cubeSelector.currentCube()->type();
+			ImGui::Text("Type : "); ImGui::SameLine();
+			ImGui::RadioButton("Colored##1", &r, form::COLORED); ImGui::SameLine();
+			ImGui::RadioButton("Textured##1", &r, form::TEXTURED); ImGui::SameLine();
+			ImGui::RadioButton("Multi-textured##1", &r, form::MULTI_TEXTURED);
+			if (r == form::COLORED) {
+				cubeSelector.currentCube()->type() = form::COLORED;
+				static float color[3] = { cubeSelector.currentCube()->color().x,
+				cubeSelector.currentCube()->color().y,
+				cubeSelector.currentCube()->color().z, };
+				if (ImGui::ColorEdit3("Color Cube", color)) {
+					cubeSelector.currentCube()->Setcolor(glm::vec3(color[0], color[1], color[2]));
 				};
-
 			}
-
+			else if (r == form::TEXTURED) {
+				cubeSelector.currentCube()->type() = form::TEXTURED;
+				this->ComboTexture(cubeSelector, cubeSelector.currentCube()->texturePtr(), "Cube Texture");
+			} else if (r == form::MULTI_TEXTURED) {
+				cubeSelector.currentCube()->type() = form::MULTI_TEXTURED;
+			}
 			ImGui::Text("Cube Position : ");
 			int xc = cubeSelector.currentCube()->position().x;
 			int yc = cubeSelector.currentCube()->position().y;
@@ -195,11 +200,7 @@ namespace interaction {
 				cubeSelector.selector()->selectorCube.position() = glm::vec3(xc, yc, zc);
 				cubeSelector.Move(cubeSelector.currentCube(), glm::vec3(xc, yc, zc));
 			};
-			
-			
-
-		}
-		else {
+		} else {
 			ImGui::Text("No Cube Selected.");
 		}
 	}
@@ -207,20 +208,28 @@ namespace interaction {
 
 	void Interface::InfosSelectorInterface(interaction::CubeSelector& cubeSelector) {
 		ImGui::Text("Selector Infos : ");
-		ImGui::InputInt("scale", &cubeSelector.selectorCube().scale(), 1, 100);
-		/*
-		if (ImGui::BeginCombo("Texture Selector", cubeSelector.selector()->selectorTexture->name().c_str())) {
-			for (int i = 0; i < cubeSelector.textureList()->nameList().size(); ++i)
-			{
-				bool is_selected = (cubeSelector.selector()->selectorTexture->name() == cubeSelector.textureList()->nameList()[i]);
-				if (ImGui::Selectable(cubeSelector.textureList()->nameList()[i].c_str(), is_selected))
-					cubeSelector.selector()->selectorTexture = cubeSelector.textureList()->give(cubeSelector.textureList()->nameList()[i]);
-				if (is_selected)
-					ImGui::SetItemDefaultFocus();
-			}
-			ImGui::EndCombo();
+		ImGui::InputInt("Selector Scale", &cubeSelector.selectorCube().scale(), 1, 100);
+		static int e = 0;
+		ImGui::Text("Type : "); ImGui::SameLine();
+		ImGui::RadioButton("Colored##2", &e, form::COLORED); ImGui::SameLine();
+		ImGui::RadioButton("Textured##2", &e, form::TEXTURED); ImGui::SameLine();
+		ImGui::RadioButton("Multi-textured##2", &e, form::MULTI_TEXTURED);
+		if (e == form::COLORED) {
+			cubeSelector.selectorCube().type() = form::COLORED;
+			static float color[3] = { cubeSelector.selectorCube().color().x,
+			cubeSelector.selectorCube().color().y,
+			cubeSelector.selectorCube().color().z, };
+			if (ImGui::ColorEdit3("Selector Color", color)) {
+				cubeSelector.selectorCube().Setcolor(glm::vec3(color[0], color[1], color[2]));
+			};
+		} else if (e == form::TEXTURED) {
+			cubeSelector.selectorCube().type() = form::TEXTURED;
+			this->ComboTexture(cubeSelector, cubeSelector.selectorCube().texturePtr(), "Selector Texture");
 		}
-		*/
+		else if (e == form::MULTI_TEXTURED) {
+			cubeSelector.selectorCube().type() = form::MULTI_TEXTURED;
+		}
+
 		ImGui::Text("Position : ");
 		if (ImGui::InputInt("x", &cubeSelector.selectorCube().position().x, 1, 100) ||
 			ImGui::InputInt("y", &cubeSelector.selectorCube().position().y, 1, 100) ||
@@ -230,17 +239,17 @@ namespace interaction {
 		
 	}
 
-	void Interface::ComboTexture(interaction::CubeSelector& cubeSelector, form::Cube& cube, const char* label) {
+	void Interface::ComboTexture(interaction::CubeSelector& cubeSelector, Texture** texture, const char* label) {
 		ImVec2 combo_pos = ImGui::GetCursorScreenPos();
 		if (ImGui::BeginCombo(label, "")) {
 			for (int i = 0; i < cubeSelector.textureList()->nameList().size(); ++i)
 			{
-				bool is_selected = (cube.texture()->name() == cubeSelector.textureList()->nameList()[i]);
+				bool is_selected = ((*texture)->name() == cubeSelector.textureList()->nameList()[i]);
 				ImGui::Image((void*)(intptr_t)cubeSelector.textureList()->give(cubeSelector.textureList()->nameList()[i])->GetTexId(), ImVec2(20, 20));
 				ImGui::SameLine();
 				bool selectable = ImGui::Selectable(cubeSelector.textureList()->nameList()[i].c_str(), is_selected);
 				if (selectable)
-					cube.texture(cubeSelector.textureList()->give(cubeSelector.textureList()->nameList()[i]));
+					*texture = cubeSelector.textureList()->give(cubeSelector.textureList()->nameList()[i]);
 				if (is_selected)
 					ImGui::SetItemDefaultFocus();
 			}
@@ -248,9 +257,9 @@ namespace interaction {
 		}
 		ImGui::SetCursorScreenPos(ImVec2(combo_pos.x + 3, combo_pos.y + 3));
 		float h = ImGui::GetTextLineHeight();
-		ImGui::Image((void*)(intptr_t)cube.texture()->GetTexId(), ImVec2(h, h));
+		ImGui::Image((void*)(intptr_t)(*texture)->GetTexId(), ImVec2(h, h));
 		ImGui::SameLine();
-		ImGui::Text(cube.texture()->name().c_str());
+		ImGui::Text((*texture)->name().c_str());
 	}
 
 }

@@ -30,6 +30,7 @@ namespace form {
 		inline glm::ivec3& position() { return m_position; };
         inline void position(const glm::ivec3& position) { m_position = position; };
 		inline Texture* texture() { return m_texture; };
+		inline Texture** texturePtr() { return &m_texture; };
 		inline void texture(Texture* texture) { m_texture = texture; };
 		inline int& scale() { return m_scale; };
 		inline int* scalePtr() { return &m_scale; };

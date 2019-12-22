@@ -25,7 +25,7 @@ namespace interaction {
 		void MenuInfosInterface(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector);
 		void InfosCurrentCubeInterface(interaction::CubeSelector& cubeSelector);
 		void InfosSelectorInterface(interaction::CubeSelector& cubeSelector);
-		void ComboTexture(interaction::CubeSelector& cubeSelector, form::Cube& cube, const char* label);
+		void ComboTexture(interaction::CubeSelector& cubeSelector, Texture** texture, const char* label);
 	};
 
 }
