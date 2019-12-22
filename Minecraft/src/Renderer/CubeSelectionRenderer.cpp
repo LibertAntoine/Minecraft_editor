@@ -31,6 +31,11 @@ namespace renderer {
     int vector_cube_index = 0;
 
 
+    glClearColor(1, 1, 1, 1); // White for unselectable air
+    // TODO: Set dynamic values
+    glViewport(0, 0, 1440, 960);
+    GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+
     m_Shader->Bind();
     std::for_each(cubeList.begin(), cubeList.end(), [&vector_cube_index, this, &renderer, &view, &projection](form::Cube& cube) {
         glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), (glm::vec3)cube.position());
@@ -44,6 +49,7 @@ namespace renderer {
         idPart[0] = (intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32;
         idPart[1] = (intptr_t(&cube) & 0xFFFFFFFF);
 
+        //GLuint test = 0xFFFFFFFF00000000 >> 32;
         m_Shader->SetUniform1uiv("uCubeID", idPart, 2);
 
         renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_Shader);

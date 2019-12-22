@@ -5,10 +5,11 @@
 
 class FrameBuffer {
   private:
-    unsigned int m_FrameBufferId;
+    GLuint m_FrameBufferId;
   public:
     FrameBuffer();
     ~FrameBuffer();
     void Bind() const;
     void Unbind() const;
+    const GLuint GetFrameBufferId() const;
 };
