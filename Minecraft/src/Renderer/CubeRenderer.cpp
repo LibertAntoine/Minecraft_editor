@@ -42,7 +42,7 @@ void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection)
   std::for_each(
       m_CubeList.begin(), m_CubeList.end(),
       [this, &renderer, &view, &projection](form::Cube &cube) {
-        glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), cube.position());
+        glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), (glm::vec3)cube.position());
         MVMatrix = glm::scale(
             MVMatrix, glm::vec3(cube.scale(), cube.scale(), cube.scale()));
         glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));

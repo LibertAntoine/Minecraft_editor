@@ -33,7 +33,7 @@ namespace renderer {
 
     m_Shader->Bind();
     std::for_each(cubeList.begin(), cubeList.end(), [&vector_cube_index, this, &renderer, &view, &projection](form::Cube& cube) {
-        glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), cube.position());
+        glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), (glm::vec3)cube.position());
         MVMatrix = view * MVMatrix;
 
         m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);

@@ -13,13 +13,15 @@
 
 namespace interaction {
 
+	typedef enum SelectorState {
+		NEUTRAL = 0,
+		SELECTED = 1,
+		COPY = 2
+	} SelectorState;
+
 	typedef struct Selector {
-		Texture* selectorTexture;
-		glm::ivec3 selectorPosition;
-		int selectorScale;
-
+		form::Cube selectorCube;
 		form::Cube* currentCube;
-
 		bool currentSelected;
 		bool currentCopy;
 		glm::vec3 selectedPosition;
@@ -41,15 +43,16 @@ namespace interaction {
 		~CubeSelector();
 
 		inline Selector* selector() { return m_selector; };
+		inline form::Cube* currentCube() { return m_selector->currentCube; };
+		inline form::Cube& selectorCube() { return m_selector->selectorCube; };
 		inline interaction::CubeTextureList* textureList() { return &m_TextureList; };
-		form::Cube* currentCube();
 
 		void refresh();
 		form::Cube* currentSelected();
 		void MoveSelector(const glm::ivec3& deplacement);
 		void SetSelector(const glm::ivec3& NewPosition);
 		void Move(form::Cube* cube, const glm::vec3& newPosition);
-		void Create(const glm::vec3& position, Texture* texture = nullptr, const int& scale = 1, const glm::vec3& color = glm::vec3(0.5f,0.5f,0.5f));
+		void Create(const form::Cube& cube);
 		void Delete(form::Cube* cube);
 
 		void MoveIn();
