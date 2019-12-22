@@ -11,7 +11,7 @@ Shader::Shader(const std::string& filepath)
 	: m_FilePath(filepath), m_RendererID(0)
 {
 	ShaderProgramSource source = ParseShader(filepath);
-	m_RendererID = CreateShader(source.VertexSource, source.FragmentSource);
+	m_RendererID = CreateShader(source.VertexSource, source.FragmentSource, source.GeometrySource);
 }
 
 Shader::~Shader()
@@ -21,11 +21,11 @@ Shader::~Shader()
 
 ShaderProgramSource Shader::ParseShader(const std::string &filepath) {
   std::ifstream stream(filepath);
-  enum class ShaderType { NONE = -1, VERTEX = 0, FRAGMENT = 1 };
+  enum class ShaderType { NONE = -1, VERTEX = 0, FRAGMENT = 1, GEOMETRY = 2};
 
   ShaderType type = ShaderType::NONE;
   std::string line;
-  std::stringstream ss[2];
+  std::stringstream ss[3];
   while (std::getline(stream, line)) {
     if (line.find("#shader") != std::string::npos) {
       if (line.find("vertex") != std::string::npos) {
@@ -33,12 +33,15 @@ ShaderProgramSource Shader::ParseShader(const std::string &filepath) {
       }
       else if (line.find("fragment") != std::string::npos) {
         type = ShaderType::FRAGMENT;
-      }
+	  }
+	  else if (line.find("geometry") != std::string::npos) {
+		type = ShaderType::GEOMETRY;
+	  }
     } else {
       ss[(int)type] << line << "\n";
     }
   }
-  return {ss[0].str(), ss[1].str()};
+  return {ss[0].str(), ss[1].str(), ss[2].str()};
 }
 
 unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
@@ -67,14 +70,21 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 	return id;
 }
 
-unsigned int Shader::CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
+unsigned int Shader::CreateShader(const std::string& vertexShader, const std::string& fragmentShader, const std::string& geometryShader)
 {
 	unsigned int program = glCreateProgram();
 	unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
 	unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
+	unsigned int gs = 0;
+	if (geometryShader != "") {
+		gs = CompileShader(GL_GEOMETRY_SHADER, geometryShader);
+		glAttachShader(program, gs);
+	}
+
 
 	glAttachShader(program, vs);
 	glAttachShader(program, fs);
+
 	glLinkProgram(program);
 	int result;
 	glGetProgramiv(program, GL_LINK_STATUS, &result);
@@ -110,6 +120,8 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 
 	glDeleteShader(vs); //Delete le shader du CPU
 	glDeleteShader(fs); //Delete le shader du CPU
+	if (geometryShader != "")
+		glDeleteShader(gs); //Delete le shader du CPU
 	//glDetachShader(program); pour enlever le shader du GPU.
 
 	return program;

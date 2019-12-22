@@ -17,7 +17,9 @@ namespace interaction {
 		m_selector->selectedPosition = glm::vec3(0, 1, 0);
 		m_selector->currentSelected = false;
 		m_selector->currentCopy = false;
-		m_selector->selectorCube = form::Cube(glm::ivec3(0, 0, 0), m_TextureList.give("log_acacia_top"), 1, glm::vec3(0.5, 0.5, 0.5), form::COLORED);
+		Texture* dft_texture = m_TextureList.give("log_acacia_top");
+		std::vector<Texture*> dft_textures = { dft_texture, dft_texture, dft_texture, dft_texture, dft_texture, dft_texture };
+		m_selector->selectorCube = form::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0.5, 0.5, 0.5), form::COLORED, dft_textures);
 
 		this->Create(m_selector->selectorCube);
 		this->refresh();
@@ -112,11 +114,11 @@ namespace interaction {
 		if (cube == nullptr) {
 			NewPosition = glm::vec3(m_selector->selectorCube.position().x, 
 				0, m_selector->selectorCube.position().z);
-			this->Create(form::Cube(NewPosition, m_selector->selectorCube.texture(),
-				m_selector->selectorCube.scale(), m_selector->selectorCube.color(), m_selector->selectorCube.type()));
+			this->Create(form::Cube(NewPosition, m_selector->selectorCube.scale(), 
+				m_selector->selectorCube.color(), m_selector->selectorCube.type(), m_selector->selectorCube.texture()));
 		} else {
 			NewPosition = glm::vec3(cube->position().x, cube->position().y + cube->scale(), cube->position().z);
-			this->Create(form::Cube(NewPosition, cube->texture(), cube->scale(), cube->color(), cube->type()));
+			this->Create(form::Cube(NewPosition, cube->scale(), cube->color(), cube->type(), cube->texture()));
 
 		}
 		this->SetSelector(NewPosition);
