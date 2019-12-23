@@ -55,9 +55,9 @@ public:
 		: m_Stride(0) {};
 
 
-	template<typename T, GLboolean normalized = GL_FALSE, GLboolean make_float = GL_TRUE, GLenum type = GL_FLOAT>
+	template<typename T, GLboolean normalized = GL_FALSE, GLboolean make_float = GL_TRUE>
 	void Push(unsigned int count) {
-		m_Elements.push_back(VertexBufferElement( type, count, normalized, make_float ));
+		m_Elements.push_back(VertexBufferElement( details::getGLenum<T>(), count, normalized, make_float ));
 		//m_Elements.push_back({ details::getGLenum<T>(), count, normalized, makeFloat});
 		m_Stride += count * VertexBufferElement::GetSizeOfType(details::getGLenum<T>());
 	}
