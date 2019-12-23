@@ -7,7 +7,7 @@ namespace interaction {
 	Interface::~Interface() {
 	}
 
-	void Interface::MainActionMenu(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector) {
+	void Interface::MainActionMenu(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector, interaction::LightManager& lightManager) {
 		ImGui::SetNextWindowSizeConstraints({ 200.0f,  (float)WINDOW_HEIGHT - 20 }, { 500.0f,  (float)WINDOW_HEIGHT - 20 });
 		ImGui::Begin("ControllerWindow", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
 		m_actionMenuWitdh = ImGui::GetWindowWidth();
@@ -32,6 +32,10 @@ namespace interaction {
 
 		if (ImGui::CollapsingHeader("Grid Controller", ImGuiTreeNodeFlags_None)) {
 			this->GridController(cubeSelector);
+		}
+
+		if (ImGui::CollapsingHeader("Light Controller", ImGuiTreeNodeFlags_None)) {
+			this->LightController(cubeSelector, lightManager);
 		}
 
 		ImGui::End();
@@ -94,7 +98,7 @@ namespace interaction {
 		ImGui::Text("Rotate Up-Down :");
 		if (ImGui::DragFloat("##DragCamRotateUD", &Camera.fTheta(), 0.03f, -cubeSelector.sizeWorld() / 2, cubeSelector.sizeWorld() / 2)) {
 			Camera.computeDirectionVectors();
-		}
+		};
 	
 		
 		ImGui::Text("Rotate Right-Left :");
@@ -319,5 +323,16 @@ namespace interaction {
 		ImGui::EndGroup();
 		return value_changed;
 	}
+
+	void Interface::LightController(interaction::CubeSelector& cubeSelector, interaction::LightManager& lightManager) {
+		ImGui::Text("Directive Light COntroller : ");
+		ImGui::DragFloat3("uKs", &lightManager.dirLight().uKs.x, 0.01f);
+		ImGui::DragFloat3("uKd", &lightManager.dirLight().uKd.x, 0.01f);
+		ImGui::DragFloat3("Light Direction", &lightManager.dirLight().lightDirection.x, 0.01f);
+		ImGui::DragFloat3("Light Intensity", &lightManager.dirLight().lightIntensity.x, 0.01f);
+		ImGui::DragFloat("Shininess", &lightManager.dirLight().shininess, 0.01f);
+
+	}
+
 
 }

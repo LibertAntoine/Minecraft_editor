@@ -26,6 +26,7 @@ namespace mode {
     // TODO: check the following if necessary
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_CULL_FACE);
 
     /* 
        m_CubeSelector.Create(glm::vec3(0, 0, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
@@ -77,7 +78,8 @@ namespace mode {
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
     m_GridRenderer.draw(m_FreeCam, m_ProjMatrix, m_CubeSelector.activeGrid());
-    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix);
+	//m_LightManager.dirLight().lightDirection = glm::vec3(m_FreeCam.getViewMatrix() * glm::vec4(m_LightManager.direction(), 0));
+    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_LightManager);
     m_CubeSelector.Show(m_FreeCam.getViewMatrix(), m_ProjMatrix);
 
     // NOTE: Generating offscreen selection texture
@@ -126,7 +128,7 @@ namespace mode {
   void ModePlanette::OnImGuiRender()
   {
     m_Interface.MenuBarInterface(m_FreeCam, m_CubeSelector);
-    m_Interface.MainActionMenu(m_FreeCam, m_CubeSelector);
+    m_Interface.MainActionMenu(m_FreeCam, m_CubeSelector, m_LightManager);
     m_Interface.MenuInfosInterface(m_FreeCam, m_CubeSelector);
   }
 } // namespace mode

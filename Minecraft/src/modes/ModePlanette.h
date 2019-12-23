@@ -14,6 +14,7 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "forms/Cube.h"
+#include "Interaction/LightManager.h"
 #include <algorithm>
 #include <vector>
 
@@ -32,6 +33,7 @@ private:
   renderer::CubeSelectionRenderer m_CubeSelectionRenderer;
   interaction::CubeSelector m_CubeSelector;
   interaction::Interface m_Interface;
+  interaction::LightManager m_LightManager;
   FrameBuffer m_frameBufferSelection; /// Custom framebuffer that is bound during selection texture rendering, also for queries
   //DepthBuffer m_depthBufferSelection;
   Texture m_textureSelection; /// Offscreen texture that contains mouse selectable elements

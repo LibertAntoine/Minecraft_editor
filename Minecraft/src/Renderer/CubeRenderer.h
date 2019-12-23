@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <list>
 #include "forms/Cube.h"
+#include "Interaction/LightManager.h"
 
 namespace renderer {
 
@@ -30,7 +31,7 @@ namespace renderer {
       ~CubeRenderer();
       form::Cube* add(const form::Cube& cube);
       void del(form::Cube* cube);
-      void draw(glm::mat4 view, glm::mat4 projection);
+      void draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightMananger);
       void drawSelector(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection);
   };
 

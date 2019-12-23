@@ -36,11 +36,29 @@ in vec3 vPosition_vs; // Position du sommet transform� dans l'espace View
 in vec3 vNormal_vs; // Normale du sommet transform� dans l'espace View
 in vec2 vTexCoords;
 
+uniform vec3 uKd;
+uniform vec3 uKs;
+uniform float uShininess;
+
+uniform vec3 uLightDir_vs;
+uniform vec3 uLightIntensity;
+
 uniform sampler2D uTexture;
 
 out vec4 fFragTexture;
 
+vec3 blinnPhong()
+{
+	return 
+		vec3(uLightIntensity * (
+			uKd * (dot(uLightDir_vs, vNormal_vs))
+			+ uKs * pow(dot(normalize(-vPosition_vs), vNormal_vs), uShininess)
+			));
+}
+
+
+
 void main()
 {
-	fFragTexture = texture(uTexture, vTexCoords);
+	fFragTexture = texture(uTexture, vTexCoords) * vec4(blinnPhong(), 1);
 };

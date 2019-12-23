@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <GL/glew.h>
 #include "glm/glm.hpp"
+#include "Interaction/LightManager.h"
 
 struct ShaderProgramSource {
 	std::string VertexSource;

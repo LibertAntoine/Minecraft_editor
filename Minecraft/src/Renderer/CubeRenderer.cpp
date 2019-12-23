@@ -49,12 +49,12 @@ void CubeRenderer::del(form::Cube *cube) { m_CubeList.remove(*cube); }
 
 
 
-void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection) 
+void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager)
 {
   Renderer renderer;
   std::for_each(
       m_CubeList.begin(), m_CubeList.end(),
-      [this, &renderer, &view, &projection](form::Cube &cube) {
+      [this, &renderer, &view, &projection, &lightManager](form::Cube &cube) {
         glm::mat4 MVMatrix = glm::translate(glm::mat4(1.0f), (glm::vec3)cube.position());
         MVMatrix = glm::scale(
             MVMatrix, glm::vec3(cube.scale(), cube.scale(), cube.scale()));
@@ -70,7 +70,9 @@ void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection)
 			m_ShaderColor->SetUniformMat4f("uNormalMatrix", NormalMatrix);
 			renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderColor);
 			//m_ShaderColor->Unbind();
+
         } else if(cube.type() == form::TEXTURED) {
+
 			if (cube.texture()[0] == nullptr)
 				assert("[CubeRenderer] No Main Texture to render");
 			cube.texture()[0]->Bind();
@@ -78,10 +80,18 @@ void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection)
 			m_ShaderTexture->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
 			m_ShaderTexture->SetUniformMat4f("uMVMatrix", MVMatrix);
 			m_ShaderTexture->SetUniformMat4f("uNormalMatrix", NormalMatrix);
+			m_ShaderTexture->SetUniform3f("uKd", lightManager.dirLight().uKd.x, lightManager.dirLight().uKd.y, lightManager.dirLight().uKd.z);
+			m_ShaderTexture->SetUniform3f("uKs", lightManager.dirLight().uKs.x, lightManager.dirLight().uKs.y, lightManager.dirLight().uKs.z);
+			m_ShaderTexture->SetUniform3f("uLightDir_vs", lightManager.dirLight().lightDirection.x, lightManager.dirLight().lightDirection.y, lightManager.dirLight().lightDirection.z);
+			m_ShaderTexture->SetUniform3f("uLightIntensity", lightManager.dirLight().lightIntensity.x, lightManager.dirLight().lightIntensity.y, lightManager.dirLight().lightIntensity.z);
+			m_ShaderTexture->SetUniform1f("uShininess", lightManager.dirLight().shininess);
+
+
 			renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_ShaderTexture);
 			cube.texture()[0]->Bind();
 			//m_ShaderTexture->Unbind();
 		} else if (cube.type() == form::MULTI_TEXTURED) {
+
 			if (cube.texture()[0] == nullptr)
 				assert("[CubeRenderer] No Main Texture to render");
 			m_ShaderMultiTexture->Bind();
