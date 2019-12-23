@@ -27,33 +27,41 @@ namespace renderer {
 
 	GridRenderer::~GridRenderer() {}
 
-	void GridRenderer::draw(const camera::FreeflyCamera& camera, const glm::mat4& projection) {
+	void GridRenderer::draw(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active) {
 			Renderer renderer;
 			GLCall(glLineWidth(1));
-			glm::mat4 MVMatrix = glm::mat4(1);
-			MVMatrix = MVMatrix * camera.getViewMatrix();
+			glm::mat4 MVMatrix;
+			int gridMove = round(camera.position().y) - m_grid.size() /2;
+			if (gridMove < 0)
+				gridMove = 0;
 
-			/*
-			m_Shader->Bind();
-			m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-			m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
-			renderer.Draw(GL_LINES, *m_VAO, *m_IndexBuffer, *m_Shader);
-			*/
+			if (active[1]) {
+				MVMatrix = glm::mat4(1) * camera.getViewMatrix();
+				MVMatrix = glm::translate(MVMatrix, glm::vec3(round(camera.position().x), gridMove + m_grid.size(), 0.f));
+				m_Shader->Bind();
+				m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+				m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
+				renderer.Draw(GL_LINES, *m_VAO, *m_IndexBuffer, *m_Shader);
+			}
 			
-			MVMatrix = glm::rotate(MVMatrix, glm::pi<float>()/2, glm::vec3(1.f, 0.f, 0.f));
-			MVMatrix = glm::translate(MVMatrix, glm::vec3(round(camera.position().x), round(camera.position().y), 0.f));
-			m_Shader->Bind();
-			m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-			m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
-			renderer.Draw(GL_LINES, *m_VAO, *m_IndexBuffer, *m_Shader);
-			
-			/*
-			MVMatrix = glm::rotate(MVMatrix, glm::pi<float>() / 2, glm::vec3(0.f, 1.f, 0.f));
-			m_Shader->Bind();
-			m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-			m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
-			renderer.Draw(GL_LINES, *m_VAO, *m_IndexBuffer, *m_Shader);
-			*/
+			if (active[0]) {
+				MVMatrix = glm::mat4(1) * camera.getViewMatrix();
+				MVMatrix = glm::rotate(MVMatrix, glm::pi<float>() / 2, glm::vec3(1.f, 0.f, 0.f));
+				MVMatrix = glm::translate(MVMatrix, glm::vec3(round(camera.position().x), round(camera.position().y), 0.f));
+				m_Shader->Bind();
+				m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+				m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
+				renderer.Draw(GL_LINES, *m_VAO, *m_IndexBuffer, *m_Shader);
+			}
+			if (active[2]) {
+				MVMatrix = glm::mat4(1) * camera.getViewMatrix();
+				MVMatrix = glm::rotate(MVMatrix, glm::pi<float>() / 2, glm::vec3(0.f, 1.f, 0.f));
+				MVMatrix = glm::translate(MVMatrix, glm::vec3(round(camera.position().x), gridMove + m_grid.size(), 0.f));
+				m_Shader->Bind();
+				m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+				m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
+				renderer.Draw(GL_LINES, *m_VAO, *m_IndexBuffer, *m_Shader);
+			}
 	}
 
 	}

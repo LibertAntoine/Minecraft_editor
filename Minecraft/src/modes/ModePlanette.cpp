@@ -21,6 +21,8 @@ namespace mode {
     float ratio = 1080. / 720.;
     m_ProjMatrix = glm::perspective(fov, ratio, 0.1f, 100.f);
 
+
+
     // TODO: check the following if necessary
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -74,7 +76,7 @@ namespace mode {
     // TODO: Check if necessary (redundancy) because of App.cpp beginFrame()
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-    m_GridRenderer.draw(m_FreeCam, m_ProjMatrix);
+    m_GridRenderer.draw(m_FreeCam, m_ProjMatrix, m_CubeSelector.activeGrid());
     m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix);
     m_CubeSelector.Show(m_FreeCam.getViewMatrix(), m_ProjMatrix);
 

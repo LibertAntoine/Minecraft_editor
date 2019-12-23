@@ -23,10 +23,13 @@ namespace camera {
 		void rotateLeft(float degrees);
 		void rotateUp(float degrees);
 		glm::mat4 getViewMatrix() const;
+		void computeDirectionVectors();
 
 		inline const glm::vec3 position() const { return m_Position; };
-	private:
-		void computeDirectionVectors();
+		inline glm::vec3& position() { return m_Position; };
+		inline float& fPhi() { return m_fPhi; };
+		inline float& fTheta() { return m_fTheta; };
+		
 	};
 
 

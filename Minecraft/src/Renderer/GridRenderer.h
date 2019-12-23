@@ -26,7 +26,7 @@ namespace renderer {
 	public:
 		GridRenderer(const unsigned int& size, glm::vec3 color);
 		~GridRenderer();
-		void draw(const camera::FreeflyCamera& camera, const glm::mat4& projection);
+		void draw(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active);
 	};
 
 }

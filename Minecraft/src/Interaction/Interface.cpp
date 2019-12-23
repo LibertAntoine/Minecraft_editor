@@ -9,31 +9,30 @@ namespace interaction {
 
 	void Interface::MainActionMenu(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector) {
 		ImGui::SetNextWindowSizeConstraints({ 200.0f,  (float)WINDOW_HEIGHT - 20 }, { 500.0f,  (float)WINDOW_HEIGHT - 20 });
-		ImGui::Begin("Test", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoTitleBar);
+		ImGui::Begin("ControllerWindow", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
 		m_actionMenuWitdh = ImGui::GetWindowWidth();
 		ImGui::SetWindowPos(ImVec2((float)WINDOW_WIDTH - m_actionMenuWitdh, 20), true);
 
-		
-		this->CameraInterface(Camera);
-
-		if (ImGui::Button("Add Cube")) cubeSelector.AddToSelector();
-		if (ImGui::Button("Delete Cube")) cubeSelector.DeleteToSelector();
-		if (ImGui::Button("Select")) cubeSelector.MoveIn();
-		if (ImGui::Button("Move Selection")) cubeSelector.MoveOut();
-		if (ImGui::Button("Extrude")) cubeSelector.Extrude();
-		if (ImGui::Button("Dig")) cubeSelector.Dig();
-
-
-
-		if (ImGui::Button("MoveLeft")) cubeSelector.MoveSelector(glm::vec3(-1, 0, 0));
-		if (ImGui::Button("MoveRight")) cubeSelector.MoveSelector(glm::vec3(1, 0, 0));
-		if (ImGui::Button("MoveUp")) cubeSelector.MoveSelector(glm::vec3(0, 1, 0));
-		if (ImGui::Button("MoveDown")) cubeSelector.MoveSelector(glm::vec3(0, -1, 0));
-		if (ImGui::Button("MoveFront")) cubeSelector.MoveSelector(glm::vec3(0, 0, -1));
-		if (ImGui::Button("MoveBack")) cubeSelector.MoveSelector(glm::vec3(0, 0, 1));
+		if (ImGui::CollapsingHeader("Cube Action", ImGuiTreeNodeFlags_None)) {
+			if (ImGui::Button("Add Cube")) cubeSelector.AddToSelector();
+			ImGui::SameLine();
+			if (ImGui::Button("Delete Cube")) cubeSelector.DeleteToSelector();
+			if (ImGui::Button("Select")) cubeSelector.MoveIn();
+			ImGui::SameLine();
+			if (ImGui::Button("Move Selection")) cubeSelector.MoveOut();
+			if (ImGui::Button("Extrude")) cubeSelector.Extrude();
+			ImGui::SameLine();
+			if (ImGui::Button("Dig")) cubeSelector.Dig();
+		}
 
 
-		
+		if (ImGui::CollapsingHeader("Camera Controller", ImGuiTreeNodeFlags_None)) {
+			this->CameraInterface(cubeSelector, Camera);
+		}
+
+		if (ImGui::CollapsingHeader("Grid Controller", ImGuiTreeNodeFlags_None)) {
+			this->GridController(cubeSelector);
+		}
 
 		ImGui::End();
 		ImGui::IsAnyWindowHovered;
@@ -82,18 +81,26 @@ namespace interaction {
 		
 	}
 
-	void Interface::CameraInterface(camera::FreeflyCamera& Camera) {
+	void Interface::CameraInterface(interaction::CubeSelector& cubeSelector, camera::FreeflyCamera& Camera) {
 
-		if (ImGui::Button("RotateUp")) Camera.rotateUp(1.f);
-		if (ImGui::Button("RotateDown")) Camera.rotateUp(-1.f);
-		if (ImGui::Button("RotateLeft")) Camera.rotateLeft(1.f);
-		if (ImGui::Button("RotateRight")) Camera.rotateLeft(-1.f);
-		if (ImGui::Button("ZoomIn")) Camera.moveFront(1.f);
-		if (ImGui::Button("ZoomOut")) Camera.moveFront(-1.f);
-		if (ImGui::Button("MoveLeft")) Camera.moveLeft(1.f);
-		if (ImGui::Button("MoveRight")) Camera.moveLeft(-1.f);
-		if (ImGui::Button("MoveUp")) Camera.moveUp(1.f);
-		if (ImGui::Button("MoveDown")) Camera.moveUp(-1.f);
+		ImGui::Text("Cam Position :");
+		// TODO Check if the value is not to high with the input.
+		if (ImGui::DragFloat3("##DragCameraPosition", &Camera.position().x, 0.1f, -cubeSelector.sizeWorld() / 2, cubeSelector.sizeWorld() / 2))
+		{
+			if (Camera.position().y < 0)
+				Camera.position().y = 0;
+		};
+		
+		ImGui::Text("Rotate Up-Down :");
+		if (ImGui::DragFloat("##DragCamRotateUD", &Camera.fTheta(), 0.03f, -cubeSelector.sizeWorld() / 2, cubeSelector.sizeWorld() / 2)) {
+			Camera.computeDirectionVectors();
+		}
+	
+		
+		ImGui::Text("Rotate Right-Left :");
+		if (ImGui::DragFloat("##DragCamRotateLR", &Camera.fPhi(), 0.03f, -cubeSelector.sizeWorld() / 2, cubeSelector.sizeWorld() / 2)) {
+			Camera.computeDirectionVectors();
+		};
 
 		if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)) {
 			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
@@ -173,12 +180,10 @@ namespace interaction {
 			ImGui::Text("Current cube selected infos : ");
 			ImGui::InputInt("Scale Cube", cubeSelector.selector()->currentCube->scalePtr(), 1, 100);
 			ImGui::Text("Cube Position : ");
-			int xc = cubeSelector.currentCube()->position().x;
-			int yc = cubeSelector.currentCube()->position().y;
-			int zc = cubeSelector.currentCube()->position().z;
-			if (ImGui::InputInt("x", &xc, 1, 100) || ImGui::InputInt("y", &yc, 1, 100) || ImGui::InputInt("z", &zc, 1, 100)) {
-				cubeSelector.selectorCube().position() = glm::vec3(xc, yc, zc);
-				cubeSelector.Move(cubeSelector.currentCube(), glm::vec3(xc, yc, zc));
+			if (ImGui::DragInt3("##DragCubePosition", &cubeSelector.selectorCube().position().x, 1, -cubeSelector.sizeWorld() / 2, cubeSelector.sizeWorld() / 2)) {
+				if (cubeSelector.selectorCube().position().y < 0) 
+					cubeSelector.selectorCube().position().y = 0;
+				cubeSelector.Move(cubeSelector.currentCube(), cubeSelector.selectorCube().position());
 			};
 			int r = cubeSelector.currentCube()->type();
 			ImGui::Text("Type : "); ImGui::SameLine();
@@ -207,16 +212,19 @@ namespace interaction {
 		}
 	}
 
+	void Interface::GridController(interaction::CubeSelector& cubeSelector) {
+		ImGui::Checkbox("Origin Grid x", &cubeSelector.activeGrid()[0]);
+		ImGui::Checkbox("Origin Grid y", &cubeSelector.activeGrid()[1]);
+		ImGui::Checkbox("Origin Grid z", &cubeSelector.activeGrid()[2]);
+	}
 
 	void Interface::InfosSelectorInterface(interaction::CubeSelector& cubeSelector) {
 		ImGui::Text("Selector Infos : ");
 		ImGui::InputInt("Selector Scale", &cubeSelector.selectorCube().scale(), 1, 100);
 		ImGui::Text("Position : ");
-		int x = cubeSelector.selectorCube().position().x;
-		int y = cubeSelector.selectorCube().position().y;
-		int z = cubeSelector.selectorCube().position().z;
-		if (ImGui::InputInt("x", &x, 1, 100) || ImGui::InputInt("y", &y, 1, 100) || ImGui::InputInt("z", &z, 1, 100)) {
-			cubeSelector.selectorCube().position() = glm::vec3(x, y, z);
+		if (ImGui::DragInt3("##DragSelectorPosition", &cubeSelector.selectorCube().position().x, 1, -cubeSelector.sizeWorld() /2, cubeSelector.sizeWorld() /2)) {
+			if (cubeSelector.selectorCube().position().y < 0)
+				cubeSelector.selectorCube().position().y = 0;
 			cubeSelector.refresh();
 		};
 		static int e = 0;
@@ -296,6 +304,20 @@ namespace interaction {
 		}
 	}
 
+	bool Interface::DragIntSameLine(const char* label, const int& nb, int* value, const int& step, const int& min, const int& max, const char* symbol) {
 
+		bool value_changed = false;
+		ImGui::BeginGroup();
+
+		for (int i = 0; i < nb; i++)
+		{
+			value_changed |= ImGui::DragInt("##v", &value[i], step, min, max, symbol);
+
+			ImGui::SameLine(0, -1.0f);
+		}
+
+		ImGui::EndGroup();
+		return value_changed;
+	}
 
 }

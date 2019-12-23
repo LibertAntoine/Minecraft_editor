@@ -36,6 +36,8 @@ private:
   //DepthBuffer m_depthBufferSelection;
   Texture m_textureSelection; /// Offscreen texture that contains mouse selectable elements
 
+
+
 public:
   ModePlanette();
   ~ModePlanette();

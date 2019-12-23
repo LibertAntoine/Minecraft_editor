@@ -35,7 +35,7 @@ namespace interaction {
 		int m_SizeWorld;
 		Selector* m_selector;
 		interaction::CubeTextureList m_TextureList;
-
+		bool m_activeGrid[3];
 
 	public:
 		CubeSelector() = delete;
@@ -46,6 +46,10 @@ namespace interaction {
 		inline form::Cube* currentCube() { return m_selector->currentCube; };
 		inline form::Cube& selectorCube() { return m_selector->selectorCube; };
 		inline interaction::CubeTextureList* textureList() { return &m_TextureList; };
+		inline const int sizeWorld() const { return m_SizeWorld; };
+		inline const bool* activeGrid() const { return m_activeGrid; };
+		inline bool* activeGrid() { return m_activeGrid; };
+
 
 		void refresh();
 		form::Cube* currentSelected();

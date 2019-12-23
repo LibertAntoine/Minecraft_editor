@@ -12,6 +12,11 @@ namespace interaction {
 		m_TextureList.addToList("res/textures/blocks/red_sandstone_bottom.png");
 		m_TextureList.addToList("res/textures/blocks/lava_placeholder.png");
 
+		m_activeGrid[0] = true;
+		m_activeGrid[1] = false;
+		m_activeGrid[2] = false;
+
+
 
 		m_selector = new interaction::Selector();
 		m_selector->selectedPosition = glm::vec3(0, 1, 0);
