@@ -2,8 +2,8 @@
 #version 330 core
 
 layout(location = 0) in vec3 position;
-layout(location = 1) in vec3 normal;
-layout(location = 2) in vec2 texCoord;
+//layout(location = 1) in vec3 normal;
+layout(location = 1) in vec2 texCoord;
 
 uniform mat4 uMVPMatrix;
 uniform mat4 uMVMatrix;
@@ -12,7 +12,7 @@ out vec3 vPosition_vs; // Position du sommet transform� dans l'espace View
 
 void main()
 {
-	vec4 vertexPosition = vec4(position, 1);
+	vec4 vertexPosition = vec4(position, 1.f);
 
 	vPosition_vs = vec3(uMVMatrix * vertexPosition);
 

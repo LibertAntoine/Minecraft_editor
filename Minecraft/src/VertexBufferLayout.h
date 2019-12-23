@@ -10,7 +10,14 @@ struct VertexBufferElement
   unsigned int type;
   unsigned int count;
   unsigned char normalized;
+  unsigned char makeFloat;
 
+
+  VertexBufferElement(unsigned int type, unsigned int count, unsigned int normalized, unsigned int makeFloat)
+    :type(type),
+    count(count),
+    normalized(normalized),
+    makeFloat(makeFloat) {}
 
 	static unsigned int GetSizeOfType(unsigned int type)
 	{
@@ -48,9 +55,10 @@ public:
 		: m_Stride(0) {};
 
 
-	template<typename T>
+	template<typename T, GLboolean normalized = GL_FALSE, GLboolean make_float = GL_TRUE, GLenum type = GL_FLOAT>
 	void Push(unsigned int count) {
-		m_Elements.push_back({ details::getGLenum<T>(), count, details::getGLbool<T>()});
+		m_Elements.push_back(VertexBufferElement( type, count, normalized, make_float ));
+		//m_Elements.push_back({ details::getGLenum<T>(), count, normalized, makeFloat});
 		m_Stride += count * VertexBufferElement::GetSizeOfType(details::getGLenum<T>());
 	}
 	

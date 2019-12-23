@@ -60,6 +60,7 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 		std::cout << "Failed to compile  " <<
 			(type == GL_VERTEX_SHADER ? "vertex" : "fragment")
 			<< " shader!" << std::endl;
+                std::cout << m_FilePath << std::endl;
 		std::cout << message << std::endl;
 		glDeleteShader(id);
 		return 0;

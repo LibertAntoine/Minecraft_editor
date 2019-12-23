@@ -12,12 +12,14 @@ CubeRenderer::CubeRenderer()
 
   m_VAO = std::make_unique<VertexArray>();
   m_VertexBuffer =
-      std::make_unique<VertexBuffer>(cubeData.datas, 6 * 4 * 8 * sizeof(int));
+      std::make_unique<VertexBuffer>(cubeData.datas, 6 * 4 * 6 * sizeof(GLfloat));
 
   VertexBufferLayout layout;
-  layout.Push<int>(3);
-  layout.Push<int>(3);
-  layout.Push<int>(2);
+  layout.Push<float>(3);
+  layout.Push<float>(2);
+  //layout.Push<int>(2, GL_FALSE);
+  layout.Push<float>(1); // TODO: no GL_FALSE that comes from nowhere
+  
 
   m_VAO->AddBuffer(*m_VertexBuffer, layout);
   m_IndexBuffer = std::make_unique<IndexBuffer>(cubeData.indices, 6 * 6);

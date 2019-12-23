@@ -14,7 +14,7 @@ namespace renderer {
 		m_VertexBuffer = std::make_unique<VertexBuffer>(m_grid.datas().data(), 8.f * (size + 1.0f) * 3.f * sizeof(int));
 
 		VertexBufferLayout layout;
-		layout.Push<int>(3);
+		layout.Push<int>(3); // TODO: No GL_TRUC
 
 		m_VAO->AddBuffer(*m_VertexBuffer, layout);
 		m_IndexBuffer = std::make_unique<IndexBuffer>(m_grid.indices().data(), 8 * (size + 1));

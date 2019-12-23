@@ -7,7 +7,7 @@
 namespace form {
 
 	typedef struct CubeData {
-		static const int datas[];
+		static const GLfloat datas[];
 		static const unsigned int indices[];
 	} CubeData;
 

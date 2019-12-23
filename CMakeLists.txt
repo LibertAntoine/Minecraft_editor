@@ -9,7 +9,7 @@ project(Minecraft)
 set (CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_DEBUG "-g -ggdb3")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
