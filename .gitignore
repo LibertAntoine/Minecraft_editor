@@ -8,5 +8,6 @@
 .ccls*
 .clang-format
 imgui.ini
+.gdb_history
 
 compile_commands.json
