@@ -2,25 +2,25 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include <GL/glew.h>
 
 namespace form {
 
-  class Grid {
+  class Gridv2 {
     public:
-      Grid() = delete;
-      Grid(const int &size, const glm::vec3 &color = glm::vec3(0.5,0.5,0.5));
-      ~Grid();
+      Gridv2() = delete;
+      Gridv2(const int &half_size, const glm::vec3 &color = glm::vec3(0.5,0.5,0.5));
+      ~Gridv2();
 
       inline const glm::vec3 color() const { return m_color; };
-      inline void position(const glm::vec3& color) { m_color = color; };
+      inline const std::vector<GLfloat> datas() const { return m_datas; };
       inline const unsigned int size() const { return m_size; };
-      inline const std::vector<int> datas() const { return m_datas; };
       inline const std::vector<unsigned int> indices() const { return m_indices; };
 
     private:
       unsigned int m_size;
       glm::vec3 m_color;
-      std::vector<int> m_datas;
+      std::vector<GLfloat> m_datas;
       std::vector<unsigned int> m_indices;
   };
 }
