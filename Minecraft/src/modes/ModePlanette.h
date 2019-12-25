@@ -9,6 +9,7 @@
 #include "Interaction/Interface.h"
 #include "Renderer/CubeRenderer.h"
 #include "Renderer/CubeSelectionRenderer.h"
+#include "Renderer/GroundSelectionRenderer.h"
 #include "Renderer/GridRenderer.h"
 #include "Texture.h"
 #include "VertexBuffer.h"
@@ -31,14 +32,14 @@ private:
   renderer::GridRenderer m_GridRenderer;
   renderer::CubeRenderer m_CubeRenderer;
   renderer::CubeSelectionRenderer m_CubeSelectionRenderer;
+  renderer::GroundSelectionRenderer m_GroundSelectionRenderer;
   interaction::CubeSelector m_CubeSelector;
   interaction::Interface m_Interface;
   interaction::LightManager m_LightManager;
   FrameBuffer m_frameBufferSelection; /// Custom framebuffer that is bound during selection texture rendering, also for queries
   //DepthBuffer m_depthBufferSelection;
-  Texture m_textureSelection; /// Offscreen texture that contains mouse selectable elements
-
-
+  Texture m_textureSelectionCube; /// Offscreen texture that contains mouse selectable(visible) Cubes
+  Texture m_textureSelectionGround; /// Offscreen texture that contains mouse selectable (visible) ground
 
 public:
   ModePlanette();
