@@ -14,19 +14,19 @@
 
 
 namespace renderer {
-	class GridRenderer
-	{
-	private:
-		std::unique_ptr<VertexArray> m_VAO;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<Shader> m_Shader;
-		form::Grid m_grid;
+  class GridRenderer
+  {
+    private:
+      std::unique_ptr<VertexArray> m_VAO;
+      std::unique_ptr<IndexBuffer> m_IndexBuffer;
+      std::unique_ptr<VertexBuffer> m_VertexBuffer;
+      std::unique_ptr<Shader> m_Shader;
+      form::Grid m_grid;
 
-	public:
-		GridRenderer(const unsigned int& size, glm::vec3 color);
-		~GridRenderer();
-		void draw(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active);
-	};
+    public:
+      GridRenderer(const unsigned int& size, glm::vec3 color);
+      ~GridRenderer();
+      void draw(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active);
+  };
 
 }
