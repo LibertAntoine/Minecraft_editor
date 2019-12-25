@@ -21,7 +21,8 @@ bool GLLogError(const char* function, const char* file, int line);
 
 class Renderer
 {
-public:
-	void Clear() const;
-	void Draw(const GLenum& type, const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+  public:
+    void Clear() const;
+    void Draw(const GLenum& type, const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+    void DrawNoIndexBuffer(const GLenum& type, const VertexArray& va, const Shader& shader, const int &count) const;
 };
