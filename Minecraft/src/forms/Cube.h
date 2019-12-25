@@ -27,7 +27,7 @@ namespace form {
           );
       ~Cube();
 
-      bool operator==(const form::Cube a);
+        bool operator==(const form::Cube& a);
 
       inline const glm::ivec3& position() const { return m_position; };
       inline glm::ivec3& position() { return m_position; };
