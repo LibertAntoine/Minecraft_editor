@@ -60,6 +60,7 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
                 // Was causing segfaults
 		char* message = (char*)malloc(length * sizeof(char));
 		glGetShaderInfoLog(id, length, &length, message);
+                std::cout << "Error in: " << m_FilePath << std::endl;
 		std::cout << "Failed to compile  " <<
 			(type == GL_VERTEX_SHADER ? "vertex" : "fragment")
 			<< " shader!" << std::endl;

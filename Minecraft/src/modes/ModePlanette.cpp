@@ -14,7 +14,8 @@ namespace mode {
     : m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
     m_GridRenderer(200, glm::vec3(0.5f, 0.5f, 0.5f)), m_CubeRenderer(),
     m_CubeSelector(m_CubeRenderer, 2048), // Obligatoirement une puissance de deux.
-    m_backgroundColor(0.3f, 0.3f, 0.3f)
+    m_backgroundColor(0.3f, 0.3f, 0.3f),
+    m_GroundSelectionRenderer(200)
 
   {
     constexpr float fov = glm::radians(70.f);
@@ -48,19 +49,26 @@ namespace mode {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // NOTE: Selection related stuff
-    m_textureSelection.EmptyTexture();
+    m_textureSelectionCube.EmptyTextureUI();
+    m_textureSelectionGround.EmptyTextureI();
+
     m_frameBufferSelection.Bind();
-    m_textureSelection.SimpleBind();
+
+    m_textureSelectionCube.SimpleBind();
     //m_depthBufferSelection.Bind();
 
-    GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureSelection.GetTextureID(), 0););
-    GLCall(GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};);
-    GLCall(glDrawBuffers(1, DrawBuffers););
+    GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureSelectionCube.GetTextureID(), 0););
+
+    m_textureSelectionCube.SimpleBind();
+    GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_textureSelectionGround.GetTextureID(), 0););
+
+    //GLenum DrawBuffers[2] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
+    //GLCall(glDrawBuffers(2, DrawBuffers););
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) 
       std::cout << "Problem with the framebuffer" << std::endl;
 
-    //m_textureSelection.Unbind();
+    m_textureSelectionGround.Unbind();
     m_frameBufferSelection.Unbind();
     //m_depthBufferSelection.Unbind();
   }
@@ -85,6 +93,7 @@ namespace mode {
     // NOTE: Generating offscreen selection texture
     m_frameBufferSelection.Bind();
     m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
+    m_GroundSelectionRenderer.draw(m_FreeCam, m_ProjMatrix, m_CubeSelector.activeGrid());
     m_frameBufferSelection.Unbind();
 
   }
@@ -93,7 +102,7 @@ namespace mode {
   {
     switch(e.type) {
       case SDL_MOUSEBUTTONDOWN:
-        if ( e.button.button == SDL_BUTTON_LEFT ) {
+        if ( e.button.button == SDL_BUTTON_LEFT  && ImGui::IsAnyWindowHovered() == false ) {
 
           /* NOTE: check which FrameBuffer is currently bound
              GLint drawFboId = 0, readFboId = 0;
@@ -104,15 +113,23 @@ namespace mode {
 
           // NOTE: Check if a cube has been selected
           m_frameBufferSelection.Bind();
+          GLCall(glReadBuffer(GL_COLOR_ATTACHMENT0));
           GLuint pixels[4] = {0,0,0,0};
           GLCall( glReadPixels(e.button.x, 960-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_UNSIGNED_INT, pixels) );
-          std::cout << pixels[0] << "," << pixels[1] << "," << pixels[2] << "," << pixels[3] << std::endl;
-          // TODO: make the following check stronger
-          if ( pixels[0] != pixels[1] ) {
+          //std::cout << pixels[0] << "," << pixels[1] << "," << pixels[2] << "," << pixels[3] << std::endl;
+          if ( pixels[3] != 0 ) {
             form::Cube* selectionAddress;
             // NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
             selectionAddress = (form::Cube*)( (intptr_t( pixels[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( pixels[1] ) & 0xFFFFFFFF ) );
-            m_CubeSelector.SetSelector(glm::vec3(selectionAddress->position()));
+            m_CubeSelector.SetSelector(glm::ivec3(selectionAddress->position()));
+          } else {
+            GLint position[4];
+            GLCall( glReadBuffer(GL_COLOR_ATTACHMENT1); );
+            GLCall( glReadPixels(e.button.x, 960-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_INT, position) );
+            //std::cout << "PosX: " << position[0] << ", PosY: " << position[1] << std::endl;
+            if ( position[3] != 0 ) {
+              m_CubeSelector.SetSelector(glm::ivec3(position[0], 0, position[1]));
+            }
           }
           m_frameBufferSelection.Unbind();        
 

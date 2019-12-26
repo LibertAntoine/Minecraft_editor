@@ -1,15 +1,18 @@
 #include "Texture.h"
 #include "stb_image/stb_image.h"
 
-void Texture::EmptyTexture() {
+void Texture::EmptyTextureUI() 
+{
   GLCall(glGenTextures(1, &m_TextureID));
   GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureID));
 
   // TODO: may cause problems...
+  /*
   GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
   GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
   GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
   GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+  */
 
   // TODO: values to be taken from the actual window size
   GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32UI, 1440, 960, 0, GL_RGBA_INTEGER, GL_UNSIGNED_INT, 0));
@@ -18,6 +21,44 @@ void Texture::EmptyTexture() {
 
 }
 
+void Texture::EmptyTextureF() 
+{
+  GLCall(glGenTextures(1, &m_TextureID));
+  GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureID));
+
+  // TODO: may cause problems...
+  /*
+  GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+  GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+  GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+  GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+  */
+
+  // TODO: values to be taken from the actual window size
+  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, 1440, 960, 0, GL_RGBA, GL_FLOAT, 0));
+  //GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, 1080, 720, 0, GL_RGB, GL_UNSIGNED_BYTE, 0));
+  GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+
+}
+void Texture::EmptyTextureI() 
+{
+  GLCall(glGenTextures(1, &m_TextureID));
+  GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureID));
+
+  // TODO: may cause problems...
+  /*
+  GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+  GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+  GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+  GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+  */
+
+  // TODO: values to be taken from the actual window size
+  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32I, 1440, 960, 0, GL_RGBA_INTEGER, GL_INT, 0));
+  //GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, 1080, 720, 0, GL_RGB, GL_UNSIGNED_BYTE, 0));
+  GLCall(glBindTexture(GL_TEXTURE_2D, 0));
+
+}
 //Texture::Texture()
 //    :m_LocalBuffer(nullptr)
 //{}

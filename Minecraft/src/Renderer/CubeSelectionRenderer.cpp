@@ -30,8 +30,8 @@ namespace renderer {
     Renderer renderer;
     int vector_cube_index = 0;
 
-
-    glClearColor(1, 1, 1, 1); // White for unselectable air
+    GLCall(glDrawBuffer(GL_COLOR_ATTACHMENT0));
+    glClearColor(1, 1, 1, 0); // White for unselectable air
     // TODO: Set dynamic values
     glViewport(0, 0, 1440, 960);
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));

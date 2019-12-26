@@ -17,7 +17,9 @@ public:
 	~Texture();
 
         // For selection purposes
-	void EmptyTexture();
+	void EmptyTextureUI();
+	void EmptyTextureF();
+	void EmptyTextureI();
 
 	void Bind(unsigned int slot = 0) const;
         
