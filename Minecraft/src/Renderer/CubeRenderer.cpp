@@ -43,7 +43,7 @@ form::Cube *CubeRenderer::add(const form::Cube &cube)
   return &m_CubeList.back();
 }
 
-void CubeRenderer::del(form::Cube *cube) { m_CubeList.remove(*cube); }
+void CubeRenderer::del(form::Cube *cube) { /*m_CubeList.remove(*cube);*/ }
 
 
 

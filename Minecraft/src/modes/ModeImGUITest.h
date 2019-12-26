@@ -4,7 +4,7 @@
 
 #include <memory>
 
-namespace mode {
+namespace modes {
 	class ModeImGUITest : public Mode
 	{
 	public:

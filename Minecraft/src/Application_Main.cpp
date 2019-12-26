@@ -36,13 +36,13 @@ int main(int argc, char* argv[])
 
 
 
-  mode::Mode* currentMode = nullptr;
-  mode::ModeMenu* modeMenu = new mode::ModeMenu(currentMode);
+  modes::Mode* currentMode = nullptr;
+  modes::ModeMenu* modeMenu = new modes::ModeMenu(currentMode);
   currentMode = modeMenu;
 
-  modeMenu->RegisterMode<mode::ModeClearColor>("Clear Color");
-  modeMenu->RegisterMode<mode::ModePlanette>("Cube");
-  modeMenu->RegisterMode<mode::ModeImGUITest>("ImGUI Demo");
+  modeMenu->RegisterMode<modes::ModeClearColor>("Clear Color");
+  modeMenu->RegisterMode<modes::ModePlanette>("Cube");
+  modeMenu->RegisterMode<modes::ModeImGUITest>("ImGUI Demo");
 
 
 

@@ -2,7 +2,7 @@
 
 #include "Mode.h"
 
-namespace mode {
+namespace modes {
 	class ModeClearColor : public Mode
 	{
 	public:

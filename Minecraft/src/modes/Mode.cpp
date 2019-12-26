@@ -1,7 +1,7 @@
 #include "Mode.h"
 #include "ImGUI/imgui.h"
 
-namespace mode {
+namespace modes {
 
 	ModeMenu::ModeMenu(Mode*& currentTestPointer)
 		: m_CurrentMode(currentTestPointer)

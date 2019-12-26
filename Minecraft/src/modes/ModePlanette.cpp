@@ -8,7 +8,7 @@
 #include <SDL.h>
 #include <string>
 
-namespace mode {
+namespace modes {
 
   ModePlanette::ModePlanette()
     : m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
@@ -145,7 +145,7 @@ namespace mode {
   void ModePlanette::OnImGuiRender()
   {
     m_Interface.MenuBarInterface(m_FreeCam, m_CubeSelector);
-    m_Interface.MainActionMenu(m_FreeCam, m_CubeSelector, m_LightManager);
+    m_Interface.MainActionMenu(m_CubeSelector, m_FreeCam, m_LightManager, m_backgroundColor);
     m_Interface.MenuInfosInterface(m_FreeCam, m_CubeSelector);
   }
-} // namespace mode
+} // namespace modes

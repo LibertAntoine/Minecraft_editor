@@ -2,7 +2,7 @@
 #include "Renderer.h"
 #include "ImGUI/imgui.h"
 
-namespace mode {
+namespace modes {
 
 	ModeClearColor::ModeClearColor()
 		: m_ClearColor { 0.2f, 0.3f, 0.8, 1.0f }

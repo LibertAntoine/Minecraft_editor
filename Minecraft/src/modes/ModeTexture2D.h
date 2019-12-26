@@ -8,7 +8,7 @@
 
 #include <memory>
 
-namespace mode {
+namespace modes {
 	class ModeTexture2D : public Mode
 	{
 	public:
@@ -27,6 +27,4 @@ namespace mode {
 		glm::mat4 m_Proj, m_View;
 		glm::vec3 m_TranslationA, m_TranslationB;
 	};
-
-
 }

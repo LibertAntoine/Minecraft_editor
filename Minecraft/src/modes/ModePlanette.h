@@ -22,7 +22,8 @@
 
 #include <memory>
 
-namespace mode {
+namespace modes {
+
 class ModePlanette : public Mode
 {
 private:
@@ -48,5 +49,11 @@ public:
   void OnEvent(const SDL_Event &e) override;
   void OnRender() override;
   void OnImGuiRender() override;
+
+  inline glm::vec3& backgroundColor() { return  m_backgroundColor; };
+  inline camera::FreeflyCamera& freeCam() { return  m_FreeCam; };
+  inline interaction::CubeSelector& cubeSelector() { return  m_CubeSelector; };
+  inline interaction::LightManager& lightManager() { return  m_LightManager; };
+
 };
-} // namespace mode
+} // namespace modes
