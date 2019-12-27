@@ -66,14 +66,14 @@ namespace interaction {
 		}
 	}
 
-	void Interface::MenuInfosInterface(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector) {
+	void Interface::MenuInfosInterface(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector, renderer::CubeRenderer& cubeRenderer) {
 
 		ImGui::SetNextWindowSizeConstraints({ (float)WINDOW_WIDTH - m_actionMenuWitdh,  100.0f }, { (float)WINDOW_WIDTH - m_actionMenuWitdh,  300.0f });
 		ImGui::Begin("Selector Infos", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 		ImGui::SetWindowPos(ImVec2(0, (float)WINDOW_HEIGHT - ImGui::GetWindowHeight()), true);
 
 		ImGui::Columns(2, "Infos");
-		this->InfosCurrentCubeInterface(cubeSelector);
+		this->InfosCurrentCubeInterface(cubeSelector, cubeRenderer);
 		ImGui::NextColumn();
 		this->InfosSelectorInterface(cubeSelector);
 		ImGui::End();
@@ -139,17 +139,17 @@ namespace interaction {
 
 	void Interface::LightController(interaction::CubeSelector& cubeSelector, interaction::LightManager& lightManager) {
 		ImGui::Text("Directive Light Controller : ");
-		ImGui::DragFloat3("uKs", &lightManager.dirLight().uKs.x, 0.01f);
-		ImGui::DragFloat3("uKd", &lightManager.dirLight().uKd.x, 0.01f);
-		ImGui::DragFloat3("Light Direction", &lightManager.dirLight().lightDirection.x, 0.01f);
-		ImGui::DragFloat3("Light Intensity", &lightManager.dirLight().lightIntensity.x, 0.01f);
-		ImGui::DragFloat("Shininess", &lightManager.dirLight().shininess, 0.01f);
+		ImGui::DragFloat3("uKs", &lightManager.dirLight().uKs.x, 0.01f, 0 , 1);
+		ImGui::DragFloat3("uKd", &lightManager.dirLight().uKd.x, 0.01f, 0, 1);
+		ImGui::DragFloat3("Light Direction", &lightManager.direction().x, 0.01f, -1, 1);
+		ImGui::DragFloat3("Light Intensity", &lightManager.dirLight().lightIntensity.x, 0.01f, 0, 100);
+		ImGui::DragFloat("Shininess", &lightManager.dirLight().shininess, 0.01f, 0, 1000);
 
 	}
 
 
 	/* INFOS - SELECTOR CONTROLLERS */
-	void Interface::InfosCurrentCubeInterface(interaction::CubeSelector& cubeSelector) {
+	void Interface::InfosCurrentCubeInterface(interaction::CubeSelector& cubeSelector, renderer::CubeRenderer& cubeRenderer) {
 		if (cubeSelector.currentCube() != nullptr) {
 			ImGui::Text("Current cube selected infos : ");
 			ImGui::InputInt("Scale Cube", cubeSelector.selector()->currentCube->scalePtr(), 1, 100);
@@ -171,6 +171,7 @@ namespace interaction {
 				cubeSelector.currentCube()->color().z, };
 				if (ImGui::ColorEdit3("Color Cube", color)) {
 					cubeSelector.currentCube()->Setcolor(glm::vec3(color[0], color[1], color[2]));
+					cubeRenderer.updateColor();
 				};
 			}
 			else if (r == form::TEXTURED) {

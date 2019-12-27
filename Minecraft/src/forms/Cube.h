@@ -35,7 +35,7 @@ namespace form {
       inline std::vector<Texture*>& texture() { return m_textures; };
       inline int& scale() { return m_scale; };
       inline int* scalePtr() { return &m_scale; };
-      inline const glm::vec3 color() const { return m_color; };
+      inline glm::vec3& color() { return m_color; };
       inline void Setcolor(const glm::vec3& color) { m_color = color; };
       inline CubeType& type() { return m_type; };
 
@@ -46,10 +46,10 @@ namespace form {
 
     private:
       glm::ivec3 m_position;
-      std::vector<Texture*> m_textures;
       int m_scale;
       glm::vec3 m_color;
       CubeType m_type;
+      std::vector<Texture*> m_textures;
   };
 }
 

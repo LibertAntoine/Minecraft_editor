@@ -86,7 +86,7 @@ namespace modes {
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
     m_GridRenderer.draw(m_FreeCam, m_ProjMatrix, m_CubeSelector.activeGrid());
-	//m_LightManager.dirLight().lightDirection = glm::vec3(m_FreeCam.getViewMatrix() * glm::vec4(m_LightManager.direction(), 0));
+	m_LightManager.dirLight().lightDirection = glm::vec3(glm::mat4(1.0f) * glm::vec4(m_LightManager.direction(), 0));
     m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_LightManager);
     m_CubeSelector.Show(m_FreeCam.getViewMatrix(), m_ProjMatrix);
 
@@ -146,6 +146,6 @@ namespace modes {
   {
     m_Interface.MenuBarInterface(m_FreeCam, m_CubeSelector);
     m_Interface.MainActionMenu(m_CubeSelector, m_FreeCam, m_LightManager, m_backgroundColor);
-    m_Interface.MenuInfosInterface(m_FreeCam, m_CubeSelector);
+    m_Interface.MenuInfosInterface(m_FreeCam, m_CubeSelector, m_CubeRenderer);
   }
 } // namespace modes

@@ -16,15 +16,13 @@ namespace interaction {
     m_activeGrid[1] = false;
     m_activeGrid[2] = false;
 
-
-
     m_selector = new interaction::Selector();
     m_selector->selectedPosition = glm::vec3(0, 1, 0);
     m_selector->currentSelected = false;
     m_selector->currentCopy = false;
     Texture* dft_texture = m_TextureList.give("log_acacia_top");
     std::vector<Texture*> dft_textures = { dft_texture, dft_texture, dft_texture, dft_texture, dft_texture, dft_texture };
-    m_selector->selectorCube = form::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0.5, 0.5, 0.5), form::COLORED, dft_textures);
+    m_selector->selectorCube = form::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0, 0.5, 0.5), form::COLORED, dft_textures);
 
     this->Create(m_selector->selectorCube);
     this->refresh();

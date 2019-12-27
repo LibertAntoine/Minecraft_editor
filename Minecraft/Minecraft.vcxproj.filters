@@ -354,6 +354,9 @@
     <ClInclude Include="src\Renderer\GroundSelectionRenderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\debug_break\debug_break.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\IMAC.png">

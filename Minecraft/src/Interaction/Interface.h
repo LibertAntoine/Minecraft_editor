@@ -25,7 +25,7 @@ namespace interaction {
 		/* MENU */
 		void MainActionMenu(interaction::CubeSelector& cubeSelector, camera::FreeflyCamera& Camera, interaction::LightManager& lightManager, glm::vec3& backgroundColor);
 		void MenuBarInterface(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector);
-		void MenuInfosInterface(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector);
+		void MenuInfosInterface(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector, renderer::CubeRenderer& cubeRenderer);
 		
 
 		/* CONTROLLER */
@@ -37,7 +37,7 @@ namespace interaction {
 
 
 		/* INFOS - SELECTOR CONTROLLER */
-		void InfosCurrentCubeInterface(interaction::CubeSelector& cubeSelector);
+		void InfosCurrentCubeInterface(interaction::CubeSelector& cubeSelector, renderer::CubeRenderer& cubeRenderer);
 		void InfosSelectorInterface(interaction::CubeSelector& cubeSelector);
 
 		void CameraKeyBoard(camera::FreeflyCamera& camera);

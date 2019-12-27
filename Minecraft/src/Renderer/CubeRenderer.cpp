@@ -11,19 +11,39 @@ CubeRenderer::CubeRenderer()
   m_ShaderTexture = std::make_unique<Shader>("res/shaders/3D.shader");
   m_ShaderColor = std::make_unique<Shader>("res/shaders/3Dcolor.shader");
   m_ShaderMultiTexture = std::make_unique<Shader>("res/shaders/3Dmultitexture.shader");
- 
+  m_ShaderGeometry = std::make_unique<Shader>("res/shaders/testGeometrie.shader");
 
   m_VAO = std::make_unique<VertexArray>();
   m_VertexBuffer =
       std::make_unique<VertexBuffer>(cubeData.datas, 6 * 4 * 8 * sizeof(int));
 
+
+
+  m_VertexBufferPosition = std::make_unique<VertexBuffer>(nullptr, 0);
+  this->updatePosition();
+
+  m_VertexBufferColor = std::make_unique<VertexBuffer>(nullptr, 0);
+  this->updateColor();
+
   VertexBufferLayout layout;
   layout.Push<int>(3);
   layout.Push<int>(3);
   layout.Push<int>(2);
+  
+  VertexBufferLayout layoutPosition;
+  layoutPosition.Push<int>(3);
 
+  VertexBufferLayout layoutColor;
+  layoutColor.Push<float>(3);
+  
+  
   m_VAO->AddBuffer(*m_VertexBuffer, layout);
+ 
   m_IndexBuffer = std::make_unique<IndexBuffer>(cubeData.indices, 6 * 6);
+
+  m_VAO->AddBuffer(*m_VertexBufferColor, layoutColor, 3, 1);
+  m_VAO->AddBuffer(*m_VertexBufferPosition, layoutPosition, 4, 1);
+  
 
   m_ShaderMultiTexture->Bind();
   m_ShaderMultiTexture->SetUniform1i("uTexture1", 0);
@@ -40,19 +60,28 @@ CubeRenderer::~CubeRenderer() {}
 form::Cube *CubeRenderer::add(const form::Cube &cube)
 {
   m_CubeList.push_back(cube);
+  this->updatePosition();
   return &m_CubeList.back();
 }
 
-void CubeRenderer::del(form::Cube *cube) { /*m_CubeList.remove(*cube);*/ }
-
-
-
-
-
+void CubeRenderer::del(form::Cube *cube) { 
+    /*m_CubeList.remove(*cube);*/ 
+    this->updatePosition();
+}
 
 void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager)
 {
   Renderer renderer;
+
+  glm::mat4 MVMatrix = view;
+
+  m_ShaderGeometry->Bind();
+  m_ShaderGeometry->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+  m_ShaderGeometry->Bind();
+  m_VAO->Bind(); // Fait le lien avec le vertex buffer
+  glDrawElementsInstanced(GL_POINTS, 6 * 4 * 8 * sizeof(int) + sizeof(glm::ivec3) + sizeof(glm::vec3), GL_UNSIGNED_INT, 0, m_CubeList.size());
+
+  /*
   std::for_each(
       m_CubeList.begin(), m_CubeList.end(),
       [this, &renderer, &view, &projection, &lightManager](form::Cube &cube) {
@@ -110,6 +139,7 @@ void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection, interaction::Light
 			cube.texture()[0]->Unbind();
 		}
       });
+      */
 }
 
 void CubeRenderer::drawSelector(const glm::vec3 &position, const int &scale,
@@ -137,5 +167,23 @@ void CubeRenderer::drawSelector(const glm::vec3 &position, const int &scale,
   glEnable(GL_DEPTH_TEST);
   texture->Bind();
 };
+
+    void CubeRenderer::updatePosition() {
+        std::vector<glm::ivec3> positions;
+        std::for_each(m_CubeList.begin(), m_CubeList.end(),
+            [&positions](form::Cube& cube) {
+            positions.push_back(cube.position());
+        });
+        m_VertexBufferPosition->Update(positions.data(), sizeof(glm::ivec3) * positions.size());
+    }
+
+    void CubeRenderer::updateColor() {
+        std::vector<glm::vec3> colors;
+        std::for_each(m_CubeList.begin(), m_CubeList.end(),
+            [&colors](form::Cube& cube) {
+            colors.push_back(cube.color());
+        });
+        m_VertexBufferColor->Update(colors.data(), sizeof(glm::vec3) * colors.size());
+    }
 
 } // namespace renderer

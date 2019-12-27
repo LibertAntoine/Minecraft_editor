@@ -20,7 +20,7 @@ void main()
 
 
 	vPosition_vs = vec3(uMVMatrix * vertexPosition);
-	vNormal_vs = vec3(uNormalMatrix * vertexNormal);
+	vNormal_vs = normal;
 	vTexCoords = texCoord;
 
 	gl_Position = uMVPMatrix * vertexPosition;
@@ -51,14 +51,11 @@ vec3 blinnPhong()
 {
 	return 
 		vec3(uLightIntensity * (
-			uKd * (dot(uLightDir_vs, vNormal_vs))
-			+ uKs * pow(dot(normalize(-vPosition_vs), vNormal_vs), uShininess)
+			uKd * max(dot(uLightDir_vs, vNormal_vs), 0.)
+			+ uKs * pow(max(dot(normalize(-vPosition_vs), vNormal_vs), 0.), uShininess)
 			));
 }
 
-
-
-void main()
-{
+void main() {
 	fFragTexture = texture(uTexture, vTexCoords) * vec4(blinnPhong(), 1);
 };

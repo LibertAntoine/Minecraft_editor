@@ -241,6 +241,7 @@
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\VertexBuffer.h" />
     <ClInclude Include="src\VertexBufferLayout.h" />
+    <ClInclude Include="vendor\debug_break\debug_break.h" />
     <ClInclude Include="vendor\glm\common.hpp" />
     <ClInclude Include="vendor\glm\exponential.hpp" />
     <ClInclude Include="vendor\glm\ext.hpp" />
