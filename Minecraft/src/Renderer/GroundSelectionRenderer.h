@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "App.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "IndexBuffer.h"
