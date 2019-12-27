@@ -132,9 +132,6 @@ namespace modes {
             }
           }
           m_frameBufferSelection.Unbind();        
-
-          // TODO: Detect IMGUI hover and do not triger selection
-          // TODO: Add floor checking
         }
         break;
     }
