@@ -7,27 +7,81 @@
 
 #include "glm/glm.hpp"
 
+namespace RBF_CALLBACKS
+{
+  struct Useless
+  {
+    double operator()(const double d) {
+      return d;
+    }
+  };
+
+  struct MultiQuadratic
+  {
+    double m_epsilon = 1.0;
+
+    double operator()(const double d) {
+      return sqrt(1.0 + pow( m_epsilon * d, 2 ));
+    }
+  };
+
+  struct InverseQuadratic
+  {
+    double m_epsilon = 1.0;
+
+    double operator()(const double d) {
+      return 1.0 / (1.0 + pow( m_epsilon * d, 2 ));
+    }
+  };
+
+  struct Gaussian
+  {
+    double m_epsilon = 1.0;
+
+    double operator()(const double d) {
+      return exp(-m_epsilon * d * d);
+    }
+  };
+};
+
 class RBF 
 {
   private:
+    //StdFreeFunc m_callback;
     std::string m_FilePath;
     std::vector<std::tuple<Eigen::Vector3i, double, double>> m_ControlPoints;
     std::vector<glm::vec3> m_Boundaries;
 
+    RBF_CALLBACKS::InverseQuadratic m_inverseQuadratic;
+    RBF_CALLBACKS::MultiQuadratic m_multiQuadratic;
+    RBF_CALLBACKS::Gaussian m_gaussian;
+    RBF_CALLBACKS::Useless m_useless;
+
+    std::function<double(double)> m_rbf;
+
   public:
     RBF(std::vector<std::pair<glm::vec3, double>> controlPoints);
     //RBF(const std::string& filepath);
-    //
     double computeDistance(const Eigen::Vector3i& pointA, const Eigen::Vector3i& pointB) const;
     void findOmega();
     Eigen::MatrixXd phiMatrix();
 
     void solveOmegas();
 
-    double getScalar(const glm::vec3& position, const double epsilon = 1.0) const;
+    // NOTE: switch the function pointer responsible for calculating the RBF
+    void switchRBFtoInverseQuadratic();
+    void switchRBFtoUseless();
+    void switchRBFtoMultiQuadratic();
+    void switchRBFtoGaussian();
+    
+    // NOTE: overload with epsilon update
+    void switchRBFtoInverseQuadratic(const double epsilon);
+    void switchRBFtoUseless(const double epsilon);
+    void switchRBFtoMultiQuadratic(const double epsilon);
+    void switchRBFtoGaussian(const double epsilon);
 
-    static double useless(const double d);
-    static double multiQuadratic(const double d, const double epsilon = 1.0);
-    static double inverseQuadratic(const double d, const double epsilon = 1.0);
-    static double gaussian(const double d, const double epsilon = 1.0);
+    double getScalar(const glm::vec3& position) const;
+
+    void updateEpsilon(const double newEpsilon);
+
 };

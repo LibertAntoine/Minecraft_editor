@@ -5,9 +5,9 @@
 int main( int argc, char *argv[] )
 {
   std::vector<std::pair<glm::vec3, double>> controlPoints;
-  controlPoints.push_back(std::make_pair(glm::vec3(0,0,0), 12));
-  controlPoints.push_back(std::make_pair(glm::vec3(1,1,1), 7));
-  controlPoints.push_back(std::make_pair(glm::vec3(1,6,1), 17));
+  controlPoints.push_back(std::make_pair(glm::vec3(0,0,0), 1));
+  //controlPoints.push_back(std::make_pair(glm::vec3(1,1,1), 7));
+  //controlPoints.push_back(std::make_pair(glm::vec3(1,6,1), 17));
 
   RBF rbf(controlPoints);
   rbf.solveOmegas();
@@ -17,6 +17,10 @@ int main( int argc, char *argv[] )
   test.y = atof( argv[2] );
   test.z = atof( argv[3] );
 
+  std::cout << rbf.getScalar(test) << std::endl;
+
+  rbf.switchRBFtoUseless();
+  rbf.solveOmegas();
   std::cout << rbf.getScalar(test) << std::endl;
   return 0;
 }
