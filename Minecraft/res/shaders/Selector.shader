@@ -4,7 +4,7 @@
 uniform vec3 uPosition;
 
 void main() {
-	gl_Position = vec4(position, 1);
+	gl_Position = vec4(uPosition, 1);
 }
 
 #shader fragment
@@ -18,7 +18,7 @@ uniform sampler2D uTex;
 
 void main()
 {
-	fFragTexture = vec4(texture(uTex, vec3(vTexCoords.xy, 0)));
+	fFragTexture = vec4(texture(uTex, tex_coord.xy));
 };
 
 
@@ -65,7 +65,7 @@ void main() {
 			for (int i = 0; i < 4; i++) {
 				int v = cubeIndices[i + k * 4];
 				gl_Position = uMVPMatrix * (gl_in[j].gl_Position + cubeVerts[v]);
-				data_gs.tex_coord = texc[i];
+				tex_coord = texc[i];
 				EmitVertex();
 			}
 			EndPrimitive();

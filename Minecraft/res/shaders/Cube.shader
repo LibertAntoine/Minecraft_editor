@@ -1,11 +1,11 @@
 #shader vertex
 #version 440 core
 
-layout(location = 4) in vec3 position;
-layout(location = 3) in vec3 color;
-layout(location = 5) in vec3 tex1;
-layout(location = 6) in vec3 tex2; 
-layout(location = 7) in int type;
+layout(location = 0) in vec3 position;
+layout(location = 1) in vec3 color;
+layout(location = 2) in vec3 tex1;
+layout(location = 3) in vec3 tex2; 
+layout(location = 4) in int type;
 
 out vData {
 	vec4 color;

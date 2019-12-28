@@ -200,7 +200,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\Basic.shader" />
     <None Include="vendor\octree\octree.tcc" />
   </ItemGroup>
   <ItemGroup>

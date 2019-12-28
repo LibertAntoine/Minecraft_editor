@@ -122,7 +122,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\Basic.shader" />
     <None Include="vendor\octree\octree.tcc" />
   </ItemGroup>
   <ItemGroup>
