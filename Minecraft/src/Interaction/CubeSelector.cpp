@@ -183,7 +183,7 @@ namespace interaction {
         for ( int y = 0; y < 10; y++ ) {
           glm::vec3 position(x, y, z);
           if ( m_rbf.isThereACubeHere(position) ) {
-            form::Cube newCube(position, 1);
+            form::Cube newCube(position, 1, m_selector->selectorCube.color(), m_selector->selectorCube.type(), m_selector->selectorCube.texture());
             this->Create(newCube);
           }
         }
