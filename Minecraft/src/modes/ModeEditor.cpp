@@ -229,7 +229,7 @@ namespace modes {
           m_frameBufferSelection.Bind();
           GLCall(glReadBuffer(GL_COLOR_ATTACHMENT0));
           GLuint pixels[4] = {0,0,0,0};
-          GLCall( glReadPixels(e.button.x, 960-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_UNSIGNED_INT, pixels) );
+          GLCall( glReadPixels(e.button.x, WINDOW_HEIGHT-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_UNSIGNED_INT, pixels) );
           //std::cout << pixels[0] << "," << pixels[1] << "," << pixels[2] << "," << pixels[3] << std::endl;
           if ( pixels[3] != 0 ) {
             form::Cube* selectionAddress;
@@ -239,7 +239,7 @@ namespace modes {
           } else {
             GLint position[4];
             GLCall( glReadBuffer(GL_COLOR_ATTACHMENT1); );
-            GLCall( glReadPixels(e.button.x, 960-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_INT, position) );
+            GLCall( glReadPixels(e.button.x, WINDOW_HEIGHT-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_INT, position) );
             //std::cout << "PosX: " << position[0] << ", PosY: " << position[1] << std::endl;
             if ( position[3] != 0 ) {
               m_CubeSelector.SetSelector(glm::ivec3(position[0], 0, position[1]));
