@@ -10,6 +10,7 @@
 #include <octree/octree.h>
 #include <Renderer/CubeRenderer.h>
 #include "CubeTextureList.h"
+#include "RBF.h"
 
 namespace interaction {
 
@@ -37,7 +38,10 @@ namespace interaction {
 		interaction::CubeTextureList m_TextureList;
 		bool m_activeGrid[3];
 
+
 	public:
+                RBF m_rbf; //TODO: go to private w/ getter
+
 		CubeSelector() = delete;
 		CubeSelector(renderer::CubeRenderer& renderer, const int& capacity = 2024);
 		~CubeSelector();
@@ -63,6 +67,8 @@ namespace interaction {
 		void MoveOut();
 		void AddToSelector();
 		void DeleteToSelector();
+
+		void ApplyRBF();
 
 		void Extrude();
 		void Dig();

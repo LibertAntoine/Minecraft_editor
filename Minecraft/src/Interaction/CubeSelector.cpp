@@ -149,8 +149,6 @@ namespace interaction {
     this->SetSelector(position);
   }
 
-
-
   void CubeSelector::MoveSelector(const glm::ivec3& deplacement) {
     m_selector->selectorCube.position() += deplacement;
     if (m_selector->selectorCube.position().y < 0)
@@ -171,6 +169,26 @@ namespace interaction {
 
   void CubeSelector::DeleteToSelector() {
     this->Delete(m_selector->currentCube);
+  }
+
+  // TODO: make boundaries dynamic
+  // TODO: Optimise rendering for large scenes
+  /// @brief Generate the world using the current RBF
+  void CubeSelector::ApplyRBF()
+  {
+    m_rbf.parseSelectedRBFFile();
+    m_rbf.solveOmegas();
+    for ( int x = -20; x < 20; x++ ) {
+      for ( int z = -10; z < 10; z++ ) {
+        for ( int y = 0; y < 10; y++ ) {
+          glm::vec3 position(x, y, z);
+          if ( m_rbf.isThereACubeHere(position) ) {
+            form::Cube newCube(position, 1);
+            this->Create(newCube);
+          }
+        }
+      }
+    }
   }
 
 }
