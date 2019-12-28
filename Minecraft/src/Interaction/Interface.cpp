@@ -65,6 +65,8 @@ namespace interaction {
 				ImGui::EndMenu();
 			}
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			ImGui::SameLine();
+			ImGui::Text("SCROLL WHEEL for zooming in/out, hold MIDDLE MOUSE BUTTON to rotate view and hold on SHIFT and MIDDLE MOUSE BUTTON for camera shifting");
 			ImGui::EndMainMenuBar();
 		}
 	}
