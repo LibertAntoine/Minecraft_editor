@@ -25,7 +25,7 @@
 
 namespace modes {
 
-class ModePlanette : public Mode
+class ModeEditor : public Mode
 {
 private:
   glm::vec3 m_backgroundColor;
@@ -49,8 +49,8 @@ private:
 
 
 public:
-  ModePlanette();
-  ~ModePlanette();
+  ModeEditor();
+  ~ModeEditor();
   void OnUpdate(float deltaTime) override;
   void OnEvent(const SDL_Event &e) override;
   void OnRender() override;

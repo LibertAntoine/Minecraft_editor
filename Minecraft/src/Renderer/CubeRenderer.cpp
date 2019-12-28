@@ -9,8 +9,6 @@ CubeRenderer::CubeRenderer()
   form::CubeData cubeData;
 
   m_ShaderTexture = std::make_unique<Shader>("res/shaders/3D.shader");
-  m_ShaderColor = std::make_unique<Shader>("res/shaders/3Dcolor.shader");
-  m_ShaderMultiTexture = std::make_unique<Shader>("res/shaders/3Dmultitexture.shader");
   m_ShaderGeometry = std::make_unique<Shader>("res/shaders/Cube.shader");
 
   m_VAO = std::make_unique<VertexArray>();

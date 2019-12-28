@@ -24,9 +24,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "modes/ModeClearColor.h"
-#include "modes/ModeTexture2D.h"
-#include "modes/ModePlanette.h"
+#include "modes/ModeEditor.h"
 #include "modes/ModeImGUITest.h"
 
 int main(int argc, char* argv[])
@@ -40,8 +38,7 @@ int main(int argc, char* argv[])
   modes::ModeMenu* modeMenu = new modes::ModeMenu(currentMode);
   currentMode = modeMenu;
 
-  modeMenu->RegisterMode<modes::ModeClearColor>("Clear Color");
-  modeMenu->RegisterMode<modes::ModePlanette>("Cube");
+  modeMenu->RegisterMode<modes::ModeEditor>("Cube");
   modeMenu->RegisterMode<modes::ModeImGUITest>("ImGUI Demo");
 
 

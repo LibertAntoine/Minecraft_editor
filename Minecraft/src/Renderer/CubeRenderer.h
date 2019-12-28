@@ -24,9 +24,6 @@ namespace renderer {
       std::unique_ptr<VertexBuffer> m_VertexBufferTexture;
       std::unique_ptr<VertexBuffer> m_VertexBufferType;
       std::unique_ptr<Shader> m_ShaderTexture;
-
-      std::unique_ptr<Shader> m_ShaderColor;
-	  std::unique_ptr<Shader> m_ShaderMultiTexture;
 	  std::unique_ptr<Shader> m_ShaderGeometry;
       std::unique_ptr<Texture> m_Texture;
 

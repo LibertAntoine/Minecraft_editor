@@ -1,4 +1,4 @@
-#include "ModePlanette.h"
+#include "ModeEditor.h"
 #include <stdint.h>
 #include "ImGUI/imgui.h"
 #include "Renderer.h"
@@ -11,7 +11,7 @@
 
 namespace modes {
 
-  ModePlanette::ModePlanette()
+    ModeEditor::ModeEditor()
     :m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
     m_GridRenderer(200, glm::vec3(0.5f, 0.5f, 0.5f)), m_CubeRenderer(),
     m_textureArray(32, 32),
@@ -148,11 +148,11 @@ namespace modes {
     m_CubeRenderer.updateType();
   }
 
-  ModePlanette::~ModePlanette() {}
+  ModeEditor::~ModeEditor() {}
 
-  void ModePlanette::OnUpdate(float deltaTime) {}
+  void ModeEditor::OnUpdate(float deltaTime) {}
 
-  void ModePlanette::OnRender()
+  void ModeEditor::OnRender()
   {
 
     GLCall(glClearColor(m_backgroundColor.x, m_backgroundColor.y,
@@ -173,7 +173,7 @@ namespace modes {
 
   }
 
-  void ModePlanette::OnEvent(const SDL_Event &e)
+  void ModeEditor::OnEvent(const SDL_Event &e)
   {
     switch(e.type) {
       case SDL_MOUSEWHEEL:
@@ -253,7 +253,7 @@ namespace modes {
 
 
 
-  void ModePlanette::OnImGuiRender()
+  void ModeEditor::OnImGuiRender()
   {
     m_Interface.MenuBarInterface();
     m_Interface.MainActionMenu();
