@@ -150,7 +150,7 @@ namespace modes {
 
   ModeEditor::~ModeEditor() {}
 
-  void ModeEditor::OnUpdate(float deltaTime) {}
+  void ModeEditor::OnUpdate(float ) {}
 
   void ModeEditor::OnRender()
   {
@@ -162,13 +162,13 @@ namespace modes {
 
     m_GridRenderer.draw(m_FreeCam, m_ProjMatrix, m_CubeSelector.activeGrid());
 	m_LightManager.dirLight().lightDirection = glm::vec3(glm::mat4(1.0f) * glm::vec4(m_LightManager.direction(), 0));
-    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_LightManager, m_textureArray);
+    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_textureArray);
     m_CubeSelector.Show(m_FreeCam.getViewMatrix(), m_ProjMatrix);
 
     // NOTE: Generating offscreen selection texture
     m_frameBufferSelection.Bind();
     m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
-    m_GroundSelectionRenderer.draw(m_FreeCam, m_ProjMatrix, m_CubeSelector.activeGrid());
+    m_GroundSelectionRenderer.draw(m_FreeCam, m_ProjMatrix);
     m_frameBufferSelection.Unbind();
 
   }
@@ -204,7 +204,7 @@ namespace modes {
         }
         break;
       case SDL_KEYDOWN:
-        if ( e.key.keysym.sym ==  SDLK_LSHIFT ) {
+        if ( e.key.keysym.sym == SDLK_LSHIFT ) {
           m_moveShift = true;
         }
         break;
@@ -212,6 +212,7 @@ namespace modes {
         if ( e.key.keysym.sym == SDLK_LSHIFT ) {
           m_moveShift = false;
         }
+				break;
       case SDL_MOUSEBUTTONDOWN:
         if ( e.button.button == SDL_BUTTON_MIDDLE ) {
           m_moveCamEye = true;

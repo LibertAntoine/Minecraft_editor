@@ -46,10 +46,10 @@ namespace form {
 
     private:
       glm::ivec3 m_position;
+      std::vector<unsigned int> m_textures;
       int m_scale;
       glm::vec3 m_color;
       CubeType m_type;
-      std::vector<unsigned int> m_textures;
   };
 }
 

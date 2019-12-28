@@ -171,8 +171,9 @@ namespace interaction {
 			ImGui::InputInt("Scale Cube", m_cubeSelector->selector()->currentCube->scalePtr(), 1, 100);
 			ImGui::Text("Cube Position : ");
 			if (ImGui::DragInt3("##DragCubePosition", &m_cubeSelector->selectorCube().position().x, 1, -m_cubeSelector->sizeWorld() / 2, m_cubeSelector->sizeWorld() / 2)) {
-				if (m_cubeSelector->selectorCube().position().y < 0)
+				if (m_cubeSelector->selectorCube().position().y < 0) {
 					m_cubeSelector->selectorCube().position().y = 0;
+				}
 					m_cubeSelector->Move(m_cubeSelector->currentCube(), m_cubeSelector->selectorCube().position());
 			};
 			int r = m_cubeSelector->currentCube()->type();
@@ -332,17 +333,19 @@ namespace interaction {
 	void Interface::ComboTexture(std::vector<unsigned int>& textures, const char* label) {
 		ImVec2 combo_pos = ImGui::GetCursorScreenPos();
 		if (ImGui::BeginCombo(label, "")) {
-			for (int i = 0; i < m_textureArray->nameList().size(); ++i)
+			for (size_t i = 0; i < m_textureArray->nameList().size(); ++i)
 			{
 				bool is_selected = (textures[0] == m_textureArray->give(m_textureArray->nameList()[i]));
 				ImGui::Image((void*)(intptr_t)m_textureArray->giveProxi(m_textureArray->nameList()[i])->GetTexId(), ImVec2(20, 20));
 				ImGui::SameLine();
 				bool selectable = ImGui::Selectable(m_textureArray->nameList()[i].c_str(), is_selected);
-				if (selectable)
+				if (selectable) {
 					textures[0] = m_textureArray->give(m_textureArray->nameList()[i]);
-					m_cubeRenderer->updateTexture();
-				if (is_selected)
+				}
+				m_cubeRenderer->updateTexture();
+				if (is_selected) {
 					ImGui::SetItemDefaultFocus();
+				}
 			}
 			ImGui::EndCombo();
 		}
@@ -374,17 +377,19 @@ namespace interaction {
 		for (int j = 0; j < 6; ++j) {
 			ImVec2 combo_pos = ImGui::GetCursorScreenPos();
 			if (ImGui::BeginCombo(labels[j], "")) {
-				for (int i = 0; i < m_textureArray->nameList().size(); ++i)
+				for (size_t i = 0; i < m_textureArray->nameList().size(); ++i)
 				{
 					bool is_selected = (textures[j] == m_textureArray->give(m_textureArray->nameList()[i]));
 					ImGui::Image((void*)(intptr_t)m_textureArray->giveProxi(m_textureArray->nameList()[i])->GetTexId(), ImVec2(20, 20));
 					ImGui::SameLine();
 					bool selectable = ImGui::Selectable(m_textureArray->nameList()[i].c_str(), is_selected);
-					if (selectable)
+					if (selectable) {
 						textures[j] = m_textureArray->give(m_textureArray->nameList()[i]);
-						m_cubeRenderer->updateTexture();
-					if (is_selected)
+					}
+					m_cubeRenderer->updateTexture();
+					if (is_selected) {
 						ImGui::SetItemDefaultFocus();
+					}
 				}
 				ImGui::EndCombo();
 			}
@@ -396,7 +401,7 @@ namespace interaction {
 		}
 	}
 
-	bool Interface::DragIntSameLine(const char* label, const int& nb, int* value, const int& step, const int& min, const int& max, const char* symbol) {
+	bool Interface::DragIntSameLine(const int& nb, int* value, const int& step, const int& min, const int& max, const char* symbol) {
 
 		bool value_changed = false;
 		ImGui::BeginGroup();

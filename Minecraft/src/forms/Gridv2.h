@@ -18,8 +18,8 @@ namespace form {
       inline const std::vector<unsigned int> indices() const { return m_indices; };
 
     private:
-      unsigned int m_size;
       glm::vec3 m_color;
+      unsigned int m_size;
       std::vector<GLfloat> m_datas;
       std::vector<unsigned int> m_indices;
   };

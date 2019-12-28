@@ -31,6 +31,6 @@ namespace renderer {
     public:
       GroundSelectionRenderer(const unsigned int &half_size);
       ~GroundSelectionRenderer();
-      void draw(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active);
+      void draw(const camera::FreeflyCamera& camera, const glm::mat4& projection);
   };
 }

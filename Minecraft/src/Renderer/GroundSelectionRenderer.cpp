@@ -25,7 +25,7 @@ namespace renderer {
   }
 
 
-  void GroundSelectionRenderer::draw(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active)
+  void GroundSelectionRenderer::draw(const camera::FreeflyCamera& camera, const glm::mat4& projection)
   {
     int gridWidth = m_grid.size();
 
