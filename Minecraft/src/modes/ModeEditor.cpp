@@ -177,16 +177,17 @@ namespace modes {
   {
     switch(e.type) {
       case SDL_MOUSEWHEEL:
-        m_FreeCam.moveFront(e.wheel.y);
+				if ( ImGui::IsAnyWindowHovered() == false ) {
+					m_FreeCam.moveFront(e.wheel.y);
+				}
         break;
-        
       case SDL_MOUSEBUTTONUP:
         if ( e.button.button == SDL_BUTTON_MIDDLE ) {
           m_moveCamEye = false;
         }
         break;
       case SDL_MOUSEMOTION:
-        if ( m_moveCamEye && m_moveShift ) {
+        if ( m_moveCamEye && m_moveShift && ImGui::IsAnyWindowHovered() == false) {
           if ( e.motion.xrel != 0 ) {
             m_FreeCam.moveLeft( float(e.motion.xrel) * 0.01);
           }
@@ -194,7 +195,7 @@ namespace modes {
             m_FreeCam.moveUp( float(e.motion.yrel) * 0.01);
           }
         }
-        else if ( m_moveCamEye ) {
+        else if ( m_moveCamEye && ImGui::IsAnyWindowHovered() == false) {
           if ( e.motion.xrel != 0 ) {
             m_FreeCam.rotateLeft( float(e.motion.xrel) * 0.5);
           }
