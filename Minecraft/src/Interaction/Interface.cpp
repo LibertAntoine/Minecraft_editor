@@ -13,7 +13,7 @@ namespace interaction {
 
 
 	/* MENUS */
-	void Interface::MainActionMenu(interaction::CubeSelector& cubeSelector, camera::FreeflyCamera& camera, interaction::LightManager& lightManager, glm::vec3& backgroundColor) {
+	void Interface::MainActionMenu() {
 		ImGui::SetNextWindowSizeConstraints({ 200.0f,  (float)App::WINDOW_HEIGHT - 20 }, { 500.0f,  (float)App::WINDOW_HEIGHT - 20 });
 		ImGui::Begin("ControllerWindow", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
 			m_actionMenuWitdh = ImGui::GetWindowWidth();
