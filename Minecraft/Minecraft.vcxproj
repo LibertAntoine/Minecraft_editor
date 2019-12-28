@@ -175,11 +175,13 @@
     <ClCompile Include="src\Interaction\CubeSelector.cpp" />
     <ClCompile Include="src\Interaction\Interface.cpp" />
     <ClCompile Include="src\Interaction\LightManager.cpp" />
+    <ClCompile Include="src\Interaction\RBF.cpp" />
     <ClCompile Include="src\modes\ModeImGUITest.cpp" />
     <ClCompile Include="src\modes\Mode.cpp" />
     <ClCompile Include="src\modes\ModeClearColor.cpp" />
     <ClCompile Include="src\modes\ModePlanette.cpp" />
     <ClCompile Include="src\modes\ModeTexture2D.cpp" />
+    <ClCompile Include="src\RBF\RBF.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Renderer\CubeRenderer.cpp" />
     <ClCompile Include="src\Renderer\CubeSelectionRenderer.cpp" />
@@ -214,11 +216,13 @@
     <ClInclude Include="src\Interaction\CubeSelector.h" />
     <ClInclude Include="src\Interaction\Interface.h" />
     <ClInclude Include="src\Interaction\LightManager.h" />
+    <ClInclude Include="src\Interaction\RBF.h" />
     <ClInclude Include="src\modes\ModeImGUITest.h" />
     <ClInclude Include="src\modes\Mode.h" />
     <ClInclude Include="src\modes\ModeClearColor.h" />
     <ClInclude Include="src\modes\ModePlanette.h" />
     <ClInclude Include="src\modes\ModeTexture2D.h" />
+    <ClInclude Include="src\RBF\RBF.h" />
     <ClInclude Include="src\Renderer\CubeRenderer.h" />
     <ClInclude Include="src\Renderer\CubeSelectionRenderer.h" />
     <ClInclude Include="src\Renderer\GridRenderer.h" />

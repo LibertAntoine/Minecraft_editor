@@ -74,7 +74,7 @@ form::Cube *CubeRenderer::add(const form::Cube& cube)
 }
 
 void CubeRenderer::del(form::Cube* cube) { 
-    m_CubeList.remove(*cube);
+    /*m_CubeList.remove(*cube)*/;
     this->updatePosition();
     this->updateColor();
     this->updateTexture();

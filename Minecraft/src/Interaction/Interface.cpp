@@ -39,7 +39,7 @@ namespace interaction {
 				this->LightController();
 			}
 			if (ImGui::CollapsingHeader("RBF", ImGuiTreeNodeFlags_DefaultOpen)) {
-				this->RBFController(cubeSelector);
+				this->RBFController(*m_cubeSelector);
 			}
 		ImGui::End();
 

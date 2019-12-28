@@ -9,7 +9,6 @@
 #include "forms/Cube.h"
 #include <octree/octree.h>
 #include <Renderer/CubeRenderer.h>
-#include "CubeTextureList.h"
 #include "RBF.h"
 
 namespace interaction {
