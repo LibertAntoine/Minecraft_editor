@@ -81,7 +81,7 @@ void CubeRenderer::drawSelector(const glm::vec3 &position, const int &scale,
                                 std::shared_ptr<Texture> texture,
                                 glm::mat4 view, glm::mat4 projection)
 {
-  Renderer renderer;
+  //Renderer renderer;
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glDisable(GL_DEPTH_TEST);
   GLCall(glLineWidth(5));
