@@ -3,7 +3,13 @@
 #include <string>
 #include <tuple>
 #include <vector>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include <eigen3/Eigen/Dense>
+#include <random>
+#include <chrono>
+#include <math.h>
 
 #include "glm/glm.hpp"
 
@@ -47,7 +53,6 @@ namespace RBF_CALLBACKS
 class RBF 
 {
   private:
-    //StdFreeFunc m_callback;
     std::string m_FilePath;
     std::vector<std::tuple<Eigen::Vector3i, double, double>> m_ControlPoints;
     std::vector<glm::vec3> m_Boundaries;
@@ -59,9 +64,11 @@ class RBF
 
     std::function<double(double)> m_rbf;
 
+    double m_epsilon = 1.0;
+
   public:
     RBF(std::vector<std::pair<glm::vec3, double>> controlPoints);
-    //RBF(const std::string& filepath);
+    RBF(const std::string& filepath);
     double computeDistance(const Eigen::Vector3i& pointA, const Eigen::Vector3i& pointB) const;
     void findOmega();
     Eigen::MatrixXd phiMatrix();
@@ -81,6 +88,8 @@ class RBF
     void switchRBFtoGaussian(const double epsilon);
 
     double getScalar(const glm::vec3& position) const;
+
+    bool isThereACubeHere(const glm::vec3& position) const;
 
     void updateEpsilon(const double newEpsilon);
 

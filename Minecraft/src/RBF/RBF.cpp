@@ -1,11 +1,73 @@
 #include "RBF.h"
 
 RBF::RBF(std::vector<std::pair<glm::vec3, double>> controlPoints)
-  :m_rbf(m_gaussian)
+  :m_rbf(m_useless)
 {
   for (auto controlPoint : controlPoints) {
     Eigen::Vector3i pointCoords(controlPoint.first.x, controlPoint.first.y, controlPoint.first.z);
-    m_ControlPoints.push_back(std::tuple<Eigen::Vector3i, double, double>(pointCoords, controlPoint.second, 0.f));
+    m_ControlPoints.push_back(std::tuple<Eigen::Vector3i, double, double>(pointCoords, controlPoint.second, 0.0));
+  }
+}
+
+RBF::RBF(const std::string& filepath)
+{
+  std::ifstream stream(filepath);
+  enum class DataType { NONE = -1, BOUNDARIES = 0, CONTROL_POINTS = 1, RBF = 2};
+  DataType type = DataType::NONE;
+  std::string line;
+  while (std::getline(stream, line)) {
+    if (line.find("#boundaries") != std::string::npos) {
+        type = DataType::BOUNDARIES;
+    }
+    else if (line.find("#controlpoints") != std::string::npos) {
+        type = DataType::CONTROL_POINTS;
+    }
+    else if (line.find("#rbf") != std::string::npos) {
+        type = DataType::RBF;
+    }
+
+    else if (type != DataType::NONE && line != ""){
+      std::stringstream streamRBF(line);
+
+      if ( type == DataType::BOUNDARIES ) {
+        glm::vec3 point;
+        streamRBF >> point.x;
+        streamRBF >> point.y;
+        streamRBF >> point.z;
+
+        m_Boundaries.push_back(point);
+      }
+      else if ( type == DataType::CONTROL_POINTS ) {
+        Eigen::Vector3i point;
+        double weight;
+        streamRBF >> point(0);
+        streamRBF >> point(1);
+        streamRBF >> point(2);
+
+        streamRBF >> weight;
+        m_ControlPoints.push_back(std::tuple<Eigen::Vector3i, double, double>(point, weight, 0.0));
+      }
+      else if ( type == DataType::RBF ) {
+        std::string rbf;
+
+        streamRBF >> rbf;
+        if ( rbf == "gaussian" ) {
+          this->switchRBFtoGaussian();
+        } else if ( rbf == "multiquadratic" ) {
+          this->switchRBFtoMultiQuadratic();
+        } else if ( rbf == "inversquadratic" ) {
+          this->switchRBFtoInverseQuadratic();
+        } else {
+          this->switchRBFtoUseless();
+        }
+
+        if ( streamRBF ) {
+          double epsilon;
+          streamRBF >> epsilon;
+          this->updateEpsilon(epsilon);
+        }
+      }
+    }
   }
 }
 
@@ -37,6 +99,7 @@ void RBF::switchRBFtoGaussian(const double epsilon)
 
 void RBF::updateEpsilon(const double newEpsilon)
 {
+  m_epsilon = newEpsilon;
   m_gaussian.m_epsilon = newEpsilon;
   m_multiQuadratic.m_epsilon = newEpsilon;
   m_inverseQuadratic.m_epsilon = newEpsilon;
@@ -82,3 +145,30 @@ double RBF::getScalar(const glm::vec3& position) const
   }
   return scalar;
 }
+
+bool RBF::isThereACubeHere(const glm::vec3& position) const
+{
+  bool cube;
+  double chances = this->getScalar(position);
+  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+  // Select a random generator engine
+  std::default_random_engine generator(seed);
+  // uniform real distribution
+  std::uniform_real_distribution<double> uniformRealDistribution(0, abs( chances * 0.5 ));
+
+  if ( chances < 0 ) {
+    cube = false;
+    if ( trunc( uniformRealDistribution(generator) ) ) {
+      cube = true;
+    } 
+  }
+  else {
+    cube = true;
+    if ( trunc( uniformRealDistribution(generator) ) ) {
+      cube = false;
+    } 
+  }
+
+  return cube;
+}
+
