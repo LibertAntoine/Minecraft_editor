@@ -15,10 +15,13 @@ out vData {
 } data_vs;
 
 void main() {
+	if (type == 1) {
+		gl_Position = ivec4(position, 1);
+	}
 	data_vs.color = vec4(color, 1);
 	data_vs.tex1 = tex1;
 	data_vs.tex2 = tex2;
-	data_vs.type = type;
+	//data_vs.type = type;
 }
 
 #shader fragment

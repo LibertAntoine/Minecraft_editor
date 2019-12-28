@@ -56,7 +56,7 @@ CubeRenderer::CubeRenderer()
   m_VAO->AddBuffer(*m_VertexBufferColor, layoutColor, 3, 1);
   m_VAO->AddBuffer(*m_VertexBufferTexture, layoutTexture, 5, 1);
   m_VAO->AddBuffer(*m_VertexBufferPosition, layoutPosition, 4, 1);
-  m_VAO->AddBuffer(*m_VertexBufferType, layoutType, 7, 1);
+  m_VAO->AddBuffer(*m_VertexBufferType, layoutType, 7, 1, 2);
  
   
 
