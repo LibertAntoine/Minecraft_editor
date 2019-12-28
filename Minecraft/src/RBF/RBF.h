@@ -1,0 +1,96 @@
+#pragma once
+
+#include <string>
+#include <tuple>
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <eigen3/Eigen/Dense>
+#include <random>
+#include <chrono>
+#include <math.h>
+
+#include "glm/glm.hpp"
+
+namespace RBF_CALLBACKS
+{
+  struct Useless
+  {
+    double operator()(const double d) {
+      return d;
+    }
+  };
+
+  struct MultiQuadratic
+  {
+    double m_epsilon = 1.0;
+
+    double operator()(const double d) {
+      return sqrt(1.0 + pow( m_epsilon * d, 2 ));
+    }
+  };
+
+  struct InverseQuadratic
+  {
+    double m_epsilon = 1.0;
+
+    double operator()(const double d) {
+      return 1.0 / (1.0 + pow( m_epsilon * d, 2 ));
+    }
+  };
+
+  struct Gaussian
+  {
+    double m_epsilon = 1.0;
+
+    double operator()(const double d) {
+      return exp(-m_epsilon * d * d);
+    }
+  };
+};
+
+class RBF 
+{
+  private:
+    std::string m_FilePath;
+    std::vector<std::tuple<Eigen::Vector3i, double, double>> m_ControlPoints;
+    std::vector<glm::vec3> m_Boundaries;
+
+    RBF_CALLBACKS::InverseQuadratic m_inverseQuadratic;
+    RBF_CALLBACKS::MultiQuadratic m_multiQuadratic;
+    RBF_CALLBACKS::Gaussian m_gaussian;
+    RBF_CALLBACKS::Useless m_useless;
+
+    std::function<double(double)> m_rbf;
+
+    double m_epsilon = 1.0;
+
+  public:
+    RBF(std::vector<std::pair<glm::vec3, double>> controlPoints);
+    RBF(const std::string& filepath);
+    double computeDistance(const Eigen::Vector3i& pointA, const Eigen::Vector3i& pointB) const;
+    void findOmega();
+    Eigen::MatrixXd phiMatrix();
+
+    void solveOmegas();
+
+    // NOTE: switch the function pointer responsible for calculating the RBF
+    void switchRBFtoInverseQuadratic();
+    void switchRBFtoUseless();
+    void switchRBFtoMultiQuadratic();
+    void switchRBFtoGaussian();
+    
+    // NOTE: overload with epsilon update
+    void switchRBFtoInverseQuadratic(const double epsilon);
+    void switchRBFtoUseless(const double epsilon);
+    void switchRBFtoMultiQuadratic(const double epsilon);
+    void switchRBFtoGaussian(const double epsilon);
+
+    double getScalar(const glm::vec3& position) const;
+
+    bool isThereACubeHere(const glm::vec3& position) const;
+
+    void updateEpsilon(const double newEpsilon);
+
+};

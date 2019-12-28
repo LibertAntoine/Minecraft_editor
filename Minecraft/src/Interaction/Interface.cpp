@@ -34,6 +34,9 @@ namespace interaction {
 			if (ImGui::CollapsingHeader("Light Controller", ImGuiTreeNodeFlags_DefaultOpen)) {
 				this->LightController(cubeSelector, lightManager);
 			}
+			if (ImGui::CollapsingHeader("RBF", ImGuiTreeNodeFlags_DefaultOpen)) {
+				this->RBFController(cubeSelector);
+			}
 		ImGui::End();
 
 		/* Activation KeyBoard Controllers */
@@ -91,6 +94,13 @@ namespace interaction {
 		if (ImGui::ColorEdit3("##BackgroundColor", color)) {
 			backgroundColor = glm::vec3(color[0], color[1], color[2]);
 		};
+	}
+
+	void Interface::RBFController(interaction::CubeSelector& cubeSelector) {
+		if (ImGui::Button("Apply RBF")) cubeSelector.ApplyRBF();
+                std::vector<std::string> filePaths;
+                filePaths.push_back("res/rbf.txt");
+                this->RBFFile(cubeSelector, "Select a RBF file");
 	}
 
 	void Interface::CubeController(interaction::CubeSelector& cubeSelector) {
@@ -324,6 +334,18 @@ namespace interaction {
 		ImGui::Image((void*)(intptr_t)textures[0]->GetTexId(), ImVec2(h, h));
 		ImGui::SameLine();
 		ImGui::Text(textures[0]->name().c_str());
+	}
+
+	void Interface::RBFFile(interaction::CubeSelector& cubeSelector, const char* label) {
+          // TODO: Optimize transforms between strig to char pointers
+          // Don't do it on every frame, maybe store it as is in class
+          std::vector<char*> filePaths(cubeSelector.m_rbf.m_FilePaths.size() + 1);
+          for ( size_t i = 0; i != cubeSelector.m_rbf.m_FilePaths.size(); ++i) {
+            filePaths[i] = &cubeSelector.m_rbf.m_FilePaths[i][0];
+          }
+
+          ImGui::Combo(label, &cubeSelector.m_rbf.m_RBFFileId, filePaths.data(), cubeSelector.m_rbf.m_FilePaths.size());
+
 	}
 
 	void Interface::ComboMultiTexture(interaction::CubeSelector& cubeSelector, std::vector<Texture*>& textures, const char* label) {
