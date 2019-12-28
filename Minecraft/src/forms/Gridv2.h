@@ -14,7 +14,7 @@ namespace form {
 
       inline const glm::vec3 color() const { return m_color; };
       inline const std::vector<GLfloat> datas() const { return m_datas; };
-      inline const unsigned int size() const { return m_size; };
+      inline unsigned int size() const { return m_size; };
       inline const std::vector<unsigned int> indices() const { return m_indices; };
 
     private:

@@ -13,11 +13,11 @@ namespace interaction {
 
 
 	/* MENUS */
-	void Interface::MainActionMenu() {
-		ImGui::SetNextWindowSizeConstraints({ 200.0f,  (float)WINDOW_HEIGHT - 20 }, { 500.0f,  (float)WINDOW_HEIGHT - 20 });
+	void Interface::MainActionMenu(interaction::CubeSelector& cubeSelector, camera::FreeflyCamera& camera, interaction::LightManager& lightManager, glm::vec3& backgroundColor) {
+		ImGui::SetNextWindowSizeConstraints({ 200.0f,  (float)App::WINDOW_HEIGHT - 20 }, { 500.0f,  (float)App::WINDOW_HEIGHT - 20 });
 		ImGui::Begin("ControllerWindow", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
 			m_actionMenuWitdh = ImGui::GetWindowWidth();
-			ImGui::SetWindowPos(ImVec2((float)WINDOW_WIDTH - m_actionMenuWitdh, 20), true);
+			ImGui::SetWindowPos(ImVec2((float)App::WINDOW_WIDTH - m_actionMenuWitdh, 20), true);
 
 			if (ImGui::CollapsingHeader("World", ImGuiTreeNodeFlags_DefaultOpen)) {
 				this->WorldController();
@@ -77,9 +77,9 @@ namespace interaction {
 
 	void Interface::MenuInfosInterface() {
 
-		ImGui::SetNextWindowSizeConstraints({ (float)WINDOW_WIDTH - m_actionMenuWitdh,  100.0f }, { (float)WINDOW_WIDTH - m_actionMenuWitdh,  300.0f });
+		ImGui::SetNextWindowSizeConstraints({ (float)App::WINDOW_WIDTH - m_actionMenuWitdh,  100.0f }, { (float)App::WINDOW_WIDTH - m_actionMenuWitdh,  300.0f });
 		ImGui::Begin("Selector Infos", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
-		ImGui::SetWindowPos(ImVec2(0, (float)WINDOW_HEIGHT - ImGui::GetWindowHeight()), true);
+		ImGui::SetWindowPos(ImVec2(0, (float)App::WINDOW_HEIGHT - ImGui::GetWindowHeight()), true);
 
 		ImGui::Columns(2, "Infos");
 		this->InfosCurrentCubeInterface();

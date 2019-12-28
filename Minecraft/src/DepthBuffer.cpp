@@ -21,7 +21,7 @@ void DepthBuffer::Unbind() const
   GLCall(glBindRenderbuffer(GL_RENDERBUFFER, 0));
 }
 
-const unsigned int DepthBuffer::getDepthBufferId() const
+unsigned int DepthBuffer::getDepthBufferId() const
 {
   return m_DepthBufferId;
 }

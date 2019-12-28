@@ -14,7 +14,7 @@ target_link_libraries(Minecraft
 if (MSVC)
 	target_compile_options(Minecraft PRIVATE /W4 /WX)
 else()
-	target_compile_options(Minecraft PRIVATE -W -Wall -Werror)
+	target_compile_options(Minecraft PRIVATE -W -Wall)
 endif()
 
 

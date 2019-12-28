@@ -38,6 +38,9 @@ public:
 	inline SDL_GLContext glContext() const { return m_glContext; }
 	inline const char* glsl_version() const { return m_glsl_version; }
 
+	static const unsigned int WINDOW_HEIGHT = 960;
+	static const unsigned int WINDOW_WIDTH = 1440;
+
 private:
 	void initSDL();
 	void initGlew();

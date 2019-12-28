@@ -15,8 +15,8 @@ namespace modes {
 		Mode() {}
 		virtual ~Mode() {}
 
-		virtual void OnUpdate(float deltaTime) {}
-		virtual void OnEvent(const SDL_Event& e) {}
+		virtual void OnUpdate(float ) {}
+		virtual void OnEvent(const SDL_Event& ) {}
 		virtual void OnRender() {}
 		virtual void OnImGuiRender() {}
 	};

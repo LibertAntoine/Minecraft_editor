@@ -11,5 +11,5 @@ class FrameBuffer {
     ~FrameBuffer();
     void Bind() const;
     void Unbind() const;
-    const GLuint GetFrameBufferId() const;
+    GLuint GetFrameBufferId() const;
 };

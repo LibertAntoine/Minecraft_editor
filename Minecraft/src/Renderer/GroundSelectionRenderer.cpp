@@ -33,7 +33,7 @@ namespace renderer {
     GLCall(glLineWidth(1));
     GLCall(glDrawBuffer(GL_COLOR_ATTACHMENT1));
     glClearColor(1, 1, 1, 0); // White for unselectable air
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    glViewport(0, 0, App::WINDOW_WIDTH, App::WINDOW_HEIGHT);
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
     glm::mat4 MVMatrix;
