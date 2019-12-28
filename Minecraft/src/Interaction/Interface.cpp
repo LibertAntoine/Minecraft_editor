@@ -350,7 +350,7 @@ namespace interaction {
 		float h = ImGui::GetTextLineHeight();
 		ImGui::Image((void*)(intptr_t)m_textureArray->giveProxi(m_textureArray->nameList()[textures[0]])->GetTexId(), ImVec2(h, h));
 		ImGui::SameLine();
-		ImGui::Text(m_textureArray->nameList()[textures[0]].c_str());
+		ImGui::TextUnformatted(m_textureArray->nameList()[textures[0]].c_str());
 	}
 
 	void Interface::RBFFile(interaction::CubeSelector& cubeSelector, const char* label) {
@@ -370,7 +370,7 @@ namespace interaction {
 			"Right Face", "Left Face",
 			"Top Face", "Bottom Face",
 		};
-		ImGui::Text(label);
+		ImGui::TextUnformatted(label);
 		for (int j = 0; j < 6; ++j) {
 			ImVec2 combo_pos = ImGui::GetCursorScreenPos();
 			if (ImGui::BeginCombo(labels[j], "")) {
@@ -392,7 +392,7 @@ namespace interaction {
 			float h = ImGui::GetTextLineHeight();
 			ImGui::Image((void*)(intptr_t)m_textureArray->giveProxi(m_textureArray->nameList()[textures[j]])->GetTexId(), ImVec2(h, h));
 			ImGui::SameLine();
-			ImGui::Text(m_textureArray->nameList()[textures[j]].c_str());
+			ImGui::TextUnformatted(m_textureArray->nameList()[textures[j]].c_str());
 		}
 	}
 
