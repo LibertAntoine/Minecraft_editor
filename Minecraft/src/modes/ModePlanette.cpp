@@ -101,8 +101,47 @@ namespace modes {
   void ModePlanette::OnEvent(const SDL_Event &e)
   {
     switch(e.type) {
+      case SDL_MOUSEWHEEL:
+        m_FreeCam.moveFront(e.wheel.y);
+        break;
+        
+      case SDL_MOUSEBUTTONUP:
+        if ( e.button.button == SDL_BUTTON_MIDDLE ) {
+          m_moveCamEye = false;
+        }
+        break;
+      case SDL_MOUSEMOTION:
+        if ( m_moveCamEye && m_moveShift ) {
+          if ( e.motion.xrel != 0 ) {
+            m_FreeCam.moveLeft( float(e.motion.xrel) * 0.01);
+          }
+          if ( e.motion.yrel != 0 ) {
+            m_FreeCam.moveUp( float(e.motion.yrel) * 0.01);
+          }
+        }
+        else if ( m_moveCamEye ) {
+          if ( e.motion.xrel != 0 ) {
+            m_FreeCam.rotateLeft( float(e.motion.xrel) * 0.5);
+          }
+          if ( e.motion.yrel != 0 ) {
+            m_FreeCam.rotateUp( float(e.motion.yrel) * 0.5);
+          }
+        }
+        break;
+      case SDL_KEYDOWN:
+        if ( e.key.keysym.sym ==  SDLK_LSHIFT ) {
+          m_moveShift = true;
+        }
+        break;
+      case SDL_KEYUP:
+        if ( e.key.keysym.sym == SDLK_LSHIFT ) {
+          m_moveShift = false;
+        }
       case SDL_MOUSEBUTTONDOWN:
-        if ( e.button.button == SDL_BUTTON_LEFT  && ImGui::IsAnyWindowHovered() == false ) {
+        if ( e.button.button == SDL_BUTTON_MIDDLE ) {
+          m_moveCamEye = true;
+        }
+        else if ( e.button.button == SDL_BUTTON_LEFT  && ImGui::IsAnyWindowHovered() == false ) {
 
           /* NOTE: check which FrameBuffer is currently bound
              GLint drawFboId = 0, readFboId = 0;

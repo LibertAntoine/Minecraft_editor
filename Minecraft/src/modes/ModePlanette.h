@@ -41,6 +41,8 @@ private:
   //DepthBuffer m_depthBufferSelection;
   Texture m_textureSelectionCube; /// Offscreen texture that contains mouse selectable(visible) Cubes
   Texture m_textureSelectionGround; /// Offscreen texture that contains mouse selectable (visible) ground
+  bool m_moveCamEye = false;
+  bool m_moveShift = false;
 
 public:
   ModePlanette();
