@@ -173,7 +173,6 @@
     <ClCompile Include="src\FrameBuffer.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Interaction\CubeSelector.cpp" />
-    <ClCompile Include="src\Interaction\CubeTextureList.cpp" />
     <ClCompile Include="src\Interaction\Interface.cpp" />
     <ClCompile Include="src\Interaction\LightManager.cpp" />
     <ClCompile Include="src\modes\ModeImGUITest.cpp" />
@@ -188,6 +187,7 @@
     <ClCompile Include="src\Renderer\GroundSelectionRenderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\TextureArray.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
     <ClCompile Include="src\VertexBufferLayout.cpp" />
@@ -212,7 +212,6 @@
     <ClInclude Include="src\forms\Gridv2.h" />
     <ClInclude Include="src\FrameBuffer.h" />
     <ClInclude Include="src\Interaction\CubeSelector.h" />
-    <ClInclude Include="src\Interaction\CubeTextureList.h" />
     <ClInclude Include="src\Interaction\Interface.h" />
     <ClInclude Include="src\Interaction\LightManager.h" />
     <ClInclude Include="src\modes\ModeImGUITest.h" />
@@ -226,6 +225,7 @@
     <ClInclude Include="src\Renderer\GroundSelectionRenderer.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture.h" />
+    <ClInclude Include="src\TextureArray.h" />
     <ClInclude Include="src\vendor\glm\simd\common.h" />
     <ClInclude Include="src\vendor\glm\simd\exponential.h" />
     <ClInclude Include="src\vendor\glm\simd\geometric.h" />

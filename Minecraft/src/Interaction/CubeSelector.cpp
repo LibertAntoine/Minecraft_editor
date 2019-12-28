@@ -3,28 +3,21 @@
 
 namespace interaction {
 
-  CubeSelector::CubeSelector(renderer::CubeRenderer& renderer, const int& capacity)
-    :m_Cuberenderer(&renderer), m_SizeWorld(capacity), m_CubeWorld(capacity * 2, nullptr)
+  CubeSelector::CubeSelector(renderer::CubeRenderer& renderer, TextureArray& textureArray, const int& capacity)
+    :m_Cuberenderer(&renderer), m_TextureArray(&textureArray), m_SizeWorld(capacity), m_CubeWorld(capacity * 2, nullptr),
+      m_textSelector(std::make_unique<Texture>("res/textures/Cube/Texture_Selection.png", "Selection_Texture")),
+      m_textSelected(std::make_unique<Texture>("res/textures/Cube/Texture_Selected.png", "Selected_Texture")),
+      m_textCopy(std::make_unique<Texture>("res/textures/Cube/Texture_Selected.png", "Copy_Texture"))
   {
-
-    m_TextureList.addToList("res/textures/blocks/log_acacia_top.png");
-    m_TextureList.addToList("res/textures/blocks/piston_bottom.png");
-    m_TextureList.addToList("res/textures/blocks/red_sandstone_bottom.png");
-    m_TextureList.addToList("res/textures/blocks/lava_placeholder.png");
-
     m_activeGrid[0] = true;
     m_activeGrid[1] = false;
     m_activeGrid[2] = false;
-
-
 
     m_selector = new interaction::Selector();
     m_selector->selectedPosition = glm::vec3(0, 1, 0);
     m_selector->currentSelected = false;
     m_selector->currentCopy = false;
-    Texture* dft_texture = m_TextureList.give("log_acacia_top");
-    std::vector<Texture*> dft_textures = { dft_texture, dft_texture, dft_texture, dft_texture, dft_texture, dft_texture };
-    m_selector->selectorCube = form::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0.5, 0.5, 0.5), form::COLORED, dft_textures);
+    m_selector->selectorCube = form::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0, 0.5, 0.5), form::COLORED, { 0,0,0,0,0,0 });
 
     this->Create(m_selector->selectorCube);
     this->refresh();
@@ -77,9 +70,9 @@ namespace interaction {
     if (m_selector->currentSelected == true)
       m_Cuberenderer->drawSelector(m_selector->selectedPosition, 
           m_selector->selectorCube.scale(),
-          m_TextureList.selected(), view, projection);
+          m_textSelected, view, projection);
     m_Cuberenderer->drawSelector(m_selector->selectorCube.position(),
-        m_selector->selectorCube.scale(), m_TextureList.selector(),
+        m_selector->selectorCube.scale(), m_textSelector,
         view, projection);
   }
 
@@ -104,6 +97,7 @@ namespace interaction {
       m_CubeWorld.erase(cube->position().x + m_SizeWorld, cube->position().y + m_SizeWorld, cube->position().z + m_SizeWorld);
       m_CubeWorld.set(newPosition.x + m_SizeWorld, newPosition.y + m_SizeWorld, newPosition.z + m_SizeWorld, cube);
       cube->position(newPosition);
+      m_Cuberenderer->updatePosition();
     }
   }
 

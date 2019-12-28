@@ -7,20 +7,91 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include <SDL.h>
 #include <string>
+#include "stb_image/stb_image.h"
 
 namespace modes {
 
   ModePlanette::ModePlanette()
-    : m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
+    :m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
     m_GridRenderer(200, glm::vec3(0.5f, 0.5f, 0.5f)), m_CubeRenderer(),
-    m_CubeSelector(m_CubeRenderer, 2048), // Obligatoirement une puissance de deux.
+    m_textureArray(32, 32),
+    m_CubeSelector(m_CubeRenderer, m_textureArray, 2048), // Obligatoirement une puissance de deux.
     m_backgroundColor(0.3f, 0.3f, 0.3f),
-    m_GroundSelectionRenderer(200)
-
+    m_GroundSelectionRenderer(200),
+    m_Interface(m_CubeRenderer, m_CubeSelector, m_textureArray, m_FreeCam, m_LightManager, m_backgroundColor)
   {
     constexpr float fov = glm::radians(70.f);
     float ratio = 1080. / 720.;
     m_ProjMatrix = glm::perspective(fov, ratio, 0.1f, 100.f);
+
+
+    m_textureArray.AddTexture("res/textures/Cube/log_acacia_top.png", "res/textures/Cube/log_acacia_top_proxi.png");
+    m_textureArray.AddTexture("res/textures/Cube/piston_bottom.png", "res/textures/Cube/piston_bottom_proxi.png");
+    m_textureArray.AddTexture("res/textures/Cube/lava_placeholder.png", "res/textures/Cube/lava_placeholder_proxi.png");
+    
+    /*
+    int Width;
+    int Height;
+    int BPP;
+
+
+    unsigned char* LocalBuffer = stbi_load("res/textures/blocks/log_acacia_top.png", &Width, &Height, &BPP, 4);
+
+
+    GLCall(glGenTextures(1, &m_textureArray));
+    GLCall(glActiveTexture(GL_TEXTURE0));
+    GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, m_textureArray));
+    GLCall(glTexStorage3D(GL_TEXTURE_2D_ARRAY,
+        1,                    //5 mipmaps
+        GL_RGBA8,               //Internal format
+        Width, Height,           //width,height
+        4                  //Number of layers
+    ));
+
+    GLubyte color[3] = { 0, 0,255};
+    
+
+
+
+   
+    GLCall(glTexSubImage3D(GL_TEXTURE_2D_ARRAY,
+        0,                      //Mipmap number
+        0, 0, 0, //xoffset, yoffset, zoffset
+        Width , Height , 1,          //width, height, depth
+        GL_RGBA,                 //format
+        GL_UNSIGNED_BYTE,       //type
+        LocalBuffer)); //pointer to data
+
+    GLubyte color2[12] = { 255, 0, 0,  255, 0, 0, 255, 0, 0, 255, 0, 0, };
+
+    GLCall(glTexSubImage3D(GL_TEXTURE_2D_ARRAY,
+        0,                      //Mipmap number
+        0, 0, 1, //xoffset, yoffset, zoffset
+        1, 1, 1,         //width, height, depth
+        GL_RGB,                 //format
+        GL_UNSIGNED_BYTE,       //type
+        color2)); //pointer to data
+
+
+    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+
+
+
+  
+
+    */
+
+
+
+    
+
+    //GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, m_textureArray));
+    //GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
+
+    //GLCall(glGenerateMipmap(GL_TEXTURE_2D_ARRAY));
 
 
 
@@ -71,6 +142,10 @@ namespace modes {
     m_textureSelectionGround.Unbind();
     m_frameBufferSelection.Unbind();
     //m_depthBufferSelection.Unbind();
+
+    m_CubeRenderer.updateColor();
+    m_CubeRenderer.updateTexture();
+    m_CubeRenderer.updateType();
   }
 
   ModePlanette::~ModePlanette() {}
@@ -86,8 +161,8 @@ namespace modes {
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
     m_GridRenderer.draw(m_FreeCam, m_ProjMatrix, m_CubeSelector.activeGrid());
-	//m_LightManager.dirLight().lightDirection = glm::vec3(m_FreeCam.getViewMatrix() * glm::vec4(m_LightManager.direction(), 0));
-    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_LightManager);
+	m_LightManager.dirLight().lightDirection = glm::vec3(glm::mat4(1.0f) * glm::vec4(m_LightManager.direction(), 0));
+    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_LightManager, m_textureArray);
     m_CubeSelector.Show(m_FreeCam.getViewMatrix(), m_ProjMatrix);
 
     // NOTE: Generating offscreen selection texture
@@ -180,8 +255,8 @@ namespace modes {
 
   void ModePlanette::OnImGuiRender()
   {
-    m_Interface.MenuBarInterface(m_FreeCam, m_CubeSelector);
-    m_Interface.MainActionMenu(m_CubeSelector, m_FreeCam, m_LightManager, m_backgroundColor);
-    m_Interface.MenuInfosInterface(m_FreeCam, m_CubeSelector);
+    m_Interface.MenuBarInterface();
+    m_Interface.MainActionMenu();
+    m_Interface.MenuInfosInterface();
   }
 } // namespace modes

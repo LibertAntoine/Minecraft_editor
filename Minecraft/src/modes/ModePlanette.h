@@ -16,6 +16,7 @@
 #include "VertexBufferLayout.h"
 #include "forms/Cube.h"
 #include "Interaction/LightManager.h"
+#include "TextureArray.h"
 #include <algorithm>
 #include <vector>
 
@@ -43,6 +44,9 @@ private:
   Texture m_textureSelectionGround; /// Offscreen texture that contains mouse selectable (visible) ground
   bool m_moveCamEye = false;
   bool m_moveShift = false;
+  TextureArray m_textureArray;
+
+
 
 public:
   ModePlanette();

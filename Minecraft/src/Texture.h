@@ -31,6 +31,7 @@ public:
 	inline int GetWidth() const { return m_Width; }
 	inline int GetHeight() const { return m_Height; }
 	inline int GetTexId() const { return m_TextureID; }
+	inline unsigned char* GetData() const { return m_LocalBuffer; }
 
 	inline std::string name() { return m_Name; }
 	inline void SetName(const std::string& name) { m_Name = name; }
