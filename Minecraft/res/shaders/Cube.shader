@@ -1,7 +1,7 @@
 #shader vertex
 #version 440 core
 
-layout(location = 4) in ivec3 position;
+layout(location = 4) in vec3 position;
 layout(location = 3) in vec3 color;
 layout(location = 5) in vec3 tex1;
 layout(location = 6) in vec3 tex2; 
@@ -15,13 +15,11 @@ out vData {
 } data_vs;
 
 void main() {
-	if (type == 1) {
-		gl_Position = ivec4(position, 1);
-	}
+	gl_Position = vec4(position, 1);
 	data_vs.color = vec4(color, 1);
 	data_vs.tex1 = tex1;
 	data_vs.tex2 = tex2;
-	//data_vs.type = type;
+	data_vs.type = type;
 }
 
 #shader fragment
@@ -43,9 +41,8 @@ void main()
 {
 	if (data_gs.type == 0)
 		fFragTexture = data_gs.color;
-	else if (data_gs.type == 1)
+	else if (data_gs.type == 1 || data_gs.type == 2)
 		fFragTexture = vec4(texture(uTexArray, vec3(data_gs.tex_coord.xy, data_gs.textureLayer)));
-	else {}
 };
 
 

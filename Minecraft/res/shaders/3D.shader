@@ -43,7 +43,7 @@ uniform float uShininess;
 uniform vec3 uLightDir_vs;
 uniform vec3 uLightIntensity;
 
-uniform sampler2DArray uTexArray;
+uniform sampler2D uTex;
 
 out vec4 fFragTexture;
 
@@ -57,5 +57,5 @@ vec3 blinnPhong()
 }
 
 void main() {
-	fFragTexture = vec4(texture(uTexArray, vec3( vTexCoords.xy, 0)));
+	fFragTexture = texture(uTex, vTexCoords);
 };

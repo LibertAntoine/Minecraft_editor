@@ -4,7 +4,10 @@
 namespace interaction {
 
   CubeSelector::CubeSelector(renderer::CubeRenderer& renderer, TextureArray& textureArray, const int& capacity)
-    :m_Cuberenderer(&renderer), m_TextureArray(&textureArray), m_SizeWorld(capacity), m_CubeWorld(capacity * 2, nullptr)
+    :m_Cuberenderer(&renderer), m_TextureArray(&textureArray), m_SizeWorld(capacity), m_CubeWorld(capacity * 2, nullptr),
+      m_textSelector(std::make_unique<Texture>("res/textures/Cube/Texture_Selection.png", "Selection_Texture")),
+      m_textSelected(std::make_unique<Texture>("res/textures/Cube/Texture_Selected.png", "Selected_Texture")),
+      m_textCopy(std::make_unique<Texture>("res/textures/Cube/Texture_Selected.png", "Copy_Texture"))
   {
     m_activeGrid[0] = true;
     m_activeGrid[1] = false;
@@ -67,9 +70,9 @@ namespace interaction {
     if (m_selector->currentSelected == true)
       m_Cuberenderer->drawSelector(m_selector->selectedPosition, 
           m_selector->selectorCube.scale(),
-          m_TextureList.selected(), view, projection);
+          m_textSelected, view, projection);
     m_Cuberenderer->drawSelector(m_selector->selectorCube.position(),
-        m_selector->selectorCube.scale(), m_TextureList.selector(),
+        m_selector->selectorCube.scale(), m_textSelector,
         view, projection);
   }
 

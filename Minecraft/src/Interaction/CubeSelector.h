@@ -9,7 +9,6 @@
 #include "forms/Cube.h"
 #include <octree/octree.h>
 #include <Renderer/CubeRenderer.h>
-#include "CubeTextureList.h"
 
 namespace interaction {
 
@@ -35,8 +34,12 @@ namespace interaction {
 		Octree<form::Cube*> m_CubeWorld; // Documentation : https://nomis80.org/code/doc/classOctree.html
 		int m_SizeWorld;
 		Selector* m_selector;
-		interaction::CubeTextureList m_TextureList;
 		bool m_activeGrid[3];
+
+		std::shared_ptr<Texture> m_textSelector;
+		std::shared_ptr<Texture> m_textSelected;
+		std::shared_ptr<Texture> m_textCopy;
+
 
 	public:
 		CubeSelector() = delete;
@@ -46,7 +49,6 @@ namespace interaction {
 		inline Selector* selector() { return m_selector; };
 		inline form::Cube* currentCube() { return m_selector->currentCube; };
 		inline form::Cube& selectorCube() { return m_selector->selectorCube; };
-		inline interaction::CubeTextureList* textureList() { return &m_TextureList; };
 		inline const int sizeWorld() const { return m_SizeWorld; };
 		inline const bool* activeGrid() const { return m_activeGrid; };
 		inline bool* activeGrid() { return m_activeGrid; };
@@ -69,10 +71,6 @@ namespace interaction {
 		void Dig();
 
 		void Show(glm::mat4 view, glm::mat4 projection);
-
-
-
-
 	};
 
 }

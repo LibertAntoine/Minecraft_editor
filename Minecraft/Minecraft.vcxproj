@@ -173,7 +173,6 @@
     <ClCompile Include="src\FrameBuffer.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\Interaction\CubeSelector.cpp" />
-    <ClCompile Include="src\Interaction\CubeTextureList.cpp" />
     <ClCompile Include="src\Interaction\Interface.cpp" />
     <ClCompile Include="src\Interaction\LightManager.cpp" />
     <ClCompile Include="src\modes\ModeImGUITest.cpp" />
@@ -213,7 +212,6 @@
     <ClInclude Include="src\forms\Gridv2.h" />
     <ClInclude Include="src\FrameBuffer.h" />
     <ClInclude Include="src\Interaction\CubeSelector.h" />
-    <ClInclude Include="src\Interaction\CubeTextureList.h" />
     <ClInclude Include="src\Interaction\Interface.h" />
     <ClInclude Include="src\Interaction\LightManager.h" />
     <ClInclude Include="src\modes\ModeImGUITest.h" />
