@@ -16,12 +16,12 @@ namespace modes {
 
 	}
 
-	void ModeImGUITest::OnEvent(const SDL_Event& e)
+	void ModeImGUITest::OnEvent(const SDL_Event& )
 	{
 
 	}
 
-	void ModeImGUITest::OnUpdate(float deltaTime)
+	void ModeImGUITest::OnUpdate(float )
 	{
 
 	}

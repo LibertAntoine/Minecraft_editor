@@ -24,10 +24,10 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 		const auto& element = elements[i];
 		GLCall(glEnableVertexAttribArray(i + place));
 		if (test == 2) {
-			GLCall(glVertexAttribIPointer(i + place, element.count, element.type, layout.GetStride(), (const void*)offset));
+			GLCall(glVertexAttribIPointer(i + place, element.count, element.type, layout.GetStride(), (const void*)(intptr_t)offset));
 		}
 		else {
-			GLCall(glVertexAttribPointer(i + place, element.count, element.type, element.normalized, layout.GetStride(), (const void*)offset));
+			GLCall(glVertexAttribPointer(i + place, element.count, element.type, element.normalized, layout.GetStride(), (const void*)(intptr_t)offset));
 		}
 		if (divisor > 0) GLCall(glVertexAttribDivisor(i + place, divisor));
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);

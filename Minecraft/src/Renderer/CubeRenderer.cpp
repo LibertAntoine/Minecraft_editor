@@ -62,9 +62,9 @@ void CubeRenderer::del(form::Cube* cube) {
     this->updateType();
 }
 
-void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager, const TextureArray& texture)
+void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection, const TextureArray& texture)
 {
-  Renderer renderer;
+  //Renderer renderer;
   
   glm::mat4 MVMatrix = view;
   MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
@@ -81,7 +81,7 @@ void CubeRenderer::drawSelector(const glm::vec3 &position, const int &scale,
                                 std::shared_ptr<Texture> texture,
                                 glm::mat4 view, glm::mat4 projection)
 {
-  Renderer renderer;
+  //Renderer renderer;
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glDisable(GL_DEPTH_TEST);
   GLCall(glLineWidth(5));

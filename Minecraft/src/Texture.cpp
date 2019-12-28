@@ -6,7 +6,7 @@ void Texture::EmptyTextureUI()
   GLCall(glGenTextures(1, &m_TextureID));
   GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureID));
 
-  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32UI, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGBA_INTEGER, GL_UNSIGNED_INT, 0));
+  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32UI, App::WINDOW_WIDTH, App::WINDOW_HEIGHT, 0, GL_RGBA_INTEGER, GL_UNSIGNED_INT, 0));
   //GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, 1080, 720, 0, GL_RGB, GL_UNSIGNED_BYTE, 0));
   GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
@@ -17,7 +17,7 @@ void Texture::EmptyTextureF()
   GLCall(glGenTextures(1, &m_TextureID));
   GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureID));
 
-  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGBA, GL_FLOAT, 0));
+  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, App::WINDOW_WIDTH, App::WINDOW_HEIGHT, 0, GL_RGBA, GL_FLOAT, 0));
   GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 
 }
@@ -26,7 +26,7 @@ void Texture::EmptyTextureI()
   GLCall(glGenTextures(1, &m_TextureID));
   GLCall(glBindTexture(GL_TEXTURE_2D, m_TextureID));
 
-  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32I, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGBA_INTEGER, GL_INT, 0));
+  GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32I, App::WINDOW_WIDTH, App::WINDOW_HEIGHT, 0, GL_RGBA_INTEGER, GL_INT, 0));
   //GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, 1080, 720, 0, GL_RGB, GL_UNSIGNED_BYTE, 0));
   GLCall(glBindTexture(GL_TEXTURE_2D, 0));
 

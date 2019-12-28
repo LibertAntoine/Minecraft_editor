@@ -194,8 +194,8 @@ double RBF::computeDistance(const Eigen::Vector3i& pointA, const Eigen::Vector3i
 Eigen::MatrixXd RBF::phiMatrix()
 {
   Eigen::MatrixXd phis(m_ControlPoints.size(), m_ControlPoints.size());
-  for ( int i = 0; i < m_ControlPoints.size() ; i++ ) {
-    for ( int j = 0; j < m_ControlPoints.size(); j++ ) {
+  for ( size_t i = 0; i < m_ControlPoints.size() ; i++ ) {
+    for ( size_t j = 0; j < m_ControlPoints.size(); j++ ) {
       phis(i, j) = m_rbf(computeDistance(std::get<0>( m_ControlPoints[i] ), std::get<0>( m_ControlPoints[j] )));
     }
   }
@@ -207,11 +207,11 @@ void RBF::solveOmegas()
   Eigen::MatrixXd phis = phiMatrix();
   Eigen::VectorXd omega(phis.rows());
   Eigen::VectorXd solutions(phis.rows());
-  for ( int i = 0; i < m_ControlPoints.size(); i++ ) {
+  for ( size_t i = 0; i < m_ControlPoints.size(); i++ ) {
     solutions(i) = std::get<1>(m_ControlPoints[i]);
   }
   omega = phis.colPivHouseholderQr().solve(solutions);
-  for ( int i = 0; i < solutions.size(); i++ ) {
+  for ( long int i = 0; i < solutions.size(); i++ ) {
     std::get<2>(m_ControlPoints[i]) = solutions(i);
   }
 }
@@ -220,7 +220,7 @@ double RBF::getScalar(const glm::vec3& position) const
 {
   double scalar = 0;
   Eigen::Vector3i positionVector(position.x, position.y, position.z);
-  for ( int i = 0; i < m_ControlPoints.size(); i++ ) {
+  for ( size_t i = 0; i < m_ControlPoints.size(); i++ ) {
     scalar += std::get<2>(m_ControlPoints[i]) * m_rbf(computeDistance(positionVector, std::get<0>( m_ControlPoints[i] )));
   }
   return scalar;

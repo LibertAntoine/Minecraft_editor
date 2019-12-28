@@ -14,10 +14,10 @@ namespace interaction {
 
 	/* MENUS */
 	void Interface::MainActionMenu() {
-		ImGui::SetNextWindowSizeConstraints({ 200.0f,  (float)WINDOW_HEIGHT - 20 }, { 500.0f,  (float)WINDOW_HEIGHT - 20 });
+		ImGui::SetNextWindowSizeConstraints({ 200.0f,  (float)App::WINDOW_HEIGHT - 20 }, { 500.0f,  (float)App::WINDOW_HEIGHT - 20 });
 		ImGui::Begin("ControllerWindow", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
 			m_actionMenuWitdh = ImGui::GetWindowWidth();
-			ImGui::SetWindowPos(ImVec2((float)WINDOW_WIDTH - m_actionMenuWitdh, 20), true);
+			ImGui::SetWindowPos(ImVec2((float)App::WINDOW_WIDTH - m_actionMenuWitdh, 20), true);
 
 			if (ImGui::CollapsingHeader("World", ImGuiTreeNodeFlags_DefaultOpen)) {
 				this->WorldController();
@@ -77,9 +77,9 @@ namespace interaction {
 
 	void Interface::MenuInfosInterface() {
 
-		ImGui::SetNextWindowSizeConstraints({ (float)WINDOW_WIDTH - m_actionMenuWitdh,  100.0f }, { (float)WINDOW_WIDTH - m_actionMenuWitdh,  300.0f });
+		ImGui::SetNextWindowSizeConstraints({ (float)App::WINDOW_WIDTH - m_actionMenuWitdh,  100.0f }, { (float)App::WINDOW_WIDTH - m_actionMenuWitdh,  300.0f });
 		ImGui::Begin("Selector Infos", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
-		ImGui::SetWindowPos(ImVec2(0, (float)WINDOW_HEIGHT - ImGui::GetWindowHeight()), true);
+		ImGui::SetWindowPos(ImVec2(0, (float)App::WINDOW_HEIGHT - ImGui::GetWindowHeight()), true);
 
 		ImGui::Columns(2, "Infos");
 		this->InfosCurrentCubeInterface();
@@ -171,8 +171,9 @@ namespace interaction {
 			ImGui::InputInt("Scale Cube", m_cubeSelector->selector()->currentCube->scalePtr(), 1, 100);
 			ImGui::Text("Cube Position : ");
 			if (ImGui::DragInt3("##DragCubePosition", &m_cubeSelector->selectorCube().position().x, 1, -m_cubeSelector->sizeWorld() / 2, m_cubeSelector->sizeWorld() / 2)) {
-				if (m_cubeSelector->selectorCube().position().y < 0)
+				if (m_cubeSelector->selectorCube().position().y < 0) {
 					m_cubeSelector->selectorCube().position().y = 0;
+				}
 					m_cubeSelector->Move(m_cubeSelector->currentCube(), m_cubeSelector->selectorCube().position());
 			};
 			int r = m_cubeSelector->currentCube()->type();
@@ -332,17 +333,19 @@ namespace interaction {
 	void Interface::ComboTexture(std::vector<unsigned int>& textures, const char* label) {
 		ImVec2 combo_pos = ImGui::GetCursorScreenPos();
 		if (ImGui::BeginCombo(label, "")) {
-			for (int i = 0; i < m_textureArray->nameList().size(); ++i)
+			for (size_t i = 0; i < m_textureArray->nameList().size(); ++i)
 			{
 				bool is_selected = (textures[0] == m_textureArray->give(m_textureArray->nameList()[i]));
 				ImGui::Image((void*)(intptr_t)m_textureArray->giveProxi(m_textureArray->nameList()[i])->GetTexId(), ImVec2(20, 20));
 				ImGui::SameLine();
 				bool selectable = ImGui::Selectable(m_textureArray->nameList()[i].c_str(), is_selected);
-				if (selectable)
+				if (selectable) {
 					textures[0] = m_textureArray->give(m_textureArray->nameList()[i]);
-					m_cubeRenderer->updateTexture();
-				if (is_selected)
+				}
+				m_cubeRenderer->updateTexture();
+				if (is_selected) {
 					ImGui::SetItemDefaultFocus();
+				}
 			}
 			ImGui::EndCombo();
 		}
@@ -350,7 +353,7 @@ namespace interaction {
 		float h = ImGui::GetTextLineHeight();
 		ImGui::Image((void*)(intptr_t)m_textureArray->giveProxi(m_textureArray->nameList()[textures[0]])->GetTexId(), ImVec2(h, h));
 		ImGui::SameLine();
-		ImGui::Text(m_textureArray->nameList()[textures[0]].c_str());
+		ImGui::TextUnformatted(m_textureArray->nameList()[textures[0]].c_str());
 	}
 
 	void Interface::RBFFile(interaction::CubeSelector& cubeSelector, const char* label) {
@@ -370,21 +373,23 @@ namespace interaction {
 			"Right Face", "Left Face",
 			"Top Face", "Bottom Face",
 		};
-		ImGui::Text(label);
+		ImGui::TextUnformatted(label);
 		for (int j = 0; j < 6; ++j) {
 			ImVec2 combo_pos = ImGui::GetCursorScreenPos();
 			if (ImGui::BeginCombo(labels[j], "")) {
-				for (int i = 0; i < m_textureArray->nameList().size(); ++i)
+				for (size_t i = 0; i < m_textureArray->nameList().size(); ++i)
 				{
 					bool is_selected = (textures[j] == m_textureArray->give(m_textureArray->nameList()[i]));
 					ImGui::Image((void*)(intptr_t)m_textureArray->giveProxi(m_textureArray->nameList()[i])->GetTexId(), ImVec2(20, 20));
 					ImGui::SameLine();
 					bool selectable = ImGui::Selectable(m_textureArray->nameList()[i].c_str(), is_selected);
-					if (selectable)
+					if (selectable) {
 						textures[j] = m_textureArray->give(m_textureArray->nameList()[i]);
-						m_cubeRenderer->updateTexture();
-					if (is_selected)
+					}
+					m_cubeRenderer->updateTexture();
+					if (is_selected) {
 						ImGui::SetItemDefaultFocus();
+					}
 				}
 				ImGui::EndCombo();
 			}
@@ -392,11 +397,11 @@ namespace interaction {
 			float h = ImGui::GetTextLineHeight();
 			ImGui::Image((void*)(intptr_t)m_textureArray->giveProxi(m_textureArray->nameList()[textures[j]])->GetTexId(), ImVec2(h, h));
 			ImGui::SameLine();
-			ImGui::Text(m_textureArray->nameList()[textures[j]].c_str());
+			ImGui::TextUnformatted(m_textureArray->nameList()[textures[j]].c_str());
 		}
 	}
 
-	bool Interface::DragIntSameLine(const char* label, const int& nb, int* value, const int& step, const int& min, const int& max, const char* symbol) {
+	bool Interface::DragIntSameLine(const int& nb, int* value, const int& step, const int& min, const int& max, const char* symbol) {
 
 		bool value_changed = false;
 		ImGui::BeginGroup();

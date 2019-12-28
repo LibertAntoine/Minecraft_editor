@@ -3,7 +3,7 @@
 #include <regex>
 
 TextureArray::TextureArray(const unsigned int& witdh, const unsigned int& height)
-    :m_Height(height), m_Width(witdh), m_layerCount(0), m_LocalBuffer(nullptr)
+    :m_Width(witdh), m_Height(height), m_layerCount(0), m_LocalBuffer(nullptr)
 {
     GLCall(glGenTextures(1, &m_TextureArrayID));
     this->Bind();
@@ -83,7 +83,7 @@ void TextureArray::Bind(unsigned int slot /*= 0*/) const {
 void TextureArray::Unbind() const { GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, 0)); }
 
 std::string TextureArray::nammed(const std::string& path) {
-    std::regex name_regex("[a-zA-Z0-9_]*\.png");
+    std::regex name_regex("[a-zA-Z0-9_]*\\.png");
     std::smatch name_match;
     if (std::regex_search(path, name_match, name_regex)) {
         std::string name = name_match.str().substr(0, name_match.length() - 4);
@@ -93,6 +93,7 @@ std::string TextureArray::nammed(const std::string& path) {
     }
     else {
         assert("texture has not a png extension");
+				return "0";
     }
 }
 
