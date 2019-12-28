@@ -10,6 +10,13 @@ target_link_libraries(Minecraft
     ${ALL_LIBRARIES}
 )
 
+# https://stackoverflow.com/a/50882216/11106413
+if (MSVC)
+	target_compile_options(Minecraft PRIVATE /W4 /WX)
+else()
+	target_compile_options(Minecraft PRIVATE -W -Wall -Werror)
+endif()
+
 
 file(COPY ${CMAKE_SOURCE_DIR}/WinDependencies/glew-2.1.0/bin/${CMAKE_BUILD_TYPE}/x64/glew32d.dll
 DESTINATION ./
