@@ -120,6 +120,9 @@
     <ClCompile Include="src\Renderer\GroundSelectionRenderer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextureArray.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\Basic.shader" />
@@ -354,7 +357,7 @@
     <ClInclude Include="src\Renderer\GroundSelectionRenderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\debug_break\debug_break.h">
+    <ClInclude Include="src\TextureArray.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

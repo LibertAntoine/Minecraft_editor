@@ -31,6 +31,7 @@ namespace interaction {
 	{
 	private:
 		renderer::CubeRenderer* m_Cuberenderer;
+		TextureArray* m_TextureArray;
 		Octree<form::Cube*> m_CubeWorld; // Documentation : https://nomis80.org/code/doc/classOctree.html
 		int m_SizeWorld;
 		Selector* m_selector;
@@ -39,7 +40,7 @@ namespace interaction {
 
 	public:
 		CubeSelector() = delete;
-		CubeSelector(renderer::CubeRenderer& renderer, const int& capacity = 2024);
+		CubeSelector(renderer::CubeRenderer& renderer, TextureArray& textureArray, const int& capacity = 2024);
 		~CubeSelector();
 
 		inline Selector* selector() { return m_selector; };

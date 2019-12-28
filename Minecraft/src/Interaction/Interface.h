@@ -15,38 +15,46 @@ namespace interaction {
 	class Interface
 	{
 	private:
+		std::shared_ptr<renderer::CubeRenderer> m_cubeRenderer;
+		std::shared_ptr<interaction::CubeSelector> m_cubeSelector;
+		std::shared_ptr<TextureArray> m_textureArray;
+		std::shared_ptr<camera::FreeflyCamera> m_camera;
+		std::shared_ptr<interaction::LightManager> m_light;
+		std::shared_ptr<glm::vec3> m_backgroundColor;
 		float m_actionMenuWitdh;
 		bool m_open;
 
 	public:
-		Interface();
+		Interface(renderer::CubeRenderer& renderer, interaction::CubeSelector& selector, TextureArray& textureArray, 
+			camera::FreeflyCamera& camera, interaction::LightManager& light, glm::vec3& backgroundColor);
 		~Interface();
 
 		/* MENU */
-		void MainActionMenu(interaction::CubeSelector& cubeSelector, camera::FreeflyCamera& Camera, interaction::LightManager& lightManager, glm::vec3& backgroundColor);
-		void MenuBarInterface(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector);
-		void MenuInfosInterface(camera::FreeflyCamera& Camera, interaction::CubeSelector& cubeSelector, renderer::CubeRenderer& cubeRenderer);
+		void MainActionMenu();
+		void MenuBarInterface();
+		void MenuInfosInterface();
 		
 
 		/* CONTROLLER */
-		void GridController(interaction::CubeSelector& cubeSelector);
-		void WorldController(glm::vec3& backgroundColor);
-		void CubeController(interaction::CubeSelector& cubeSelector);
-		void LightController(interaction::CubeSelector& cubeSelector, interaction::LightManager& lightManager);
-		void CameraController(interaction::CubeSelector& cubeSelector, camera::FreeflyCamera& Camera);
+		void GridController();
+		void WorldController();
+		void CubeController();
+		void LightController();
+		void CameraController();
 
 
 		/* INFOS - SELECTOR CONTROLLER */
-		void InfosCurrentCubeInterface(interaction::CubeSelector& cubeSelector, renderer::CubeRenderer& cubeRenderer);
-		void InfosSelectorInterface(interaction::CubeSelector& cubeSelector);
+		void InfosCurrentCubeInterface();
+		void InfosSelectorInterface();
 
-		void CameraKeyBoard(camera::FreeflyCamera& camera);
-		void CubeKeyBoard(interaction::CubeSelector& cubeSelector);
-		void SelectorKeyBoard(interaction::CubeSelector& cubeSelector);
+		void CameraKeyBoard();
+		void CubeKeyBoard();
+		void SelectorKeyBoard();
 
+	private:
 		/* ImGUI WIDGET */
-		void ComboTexture(interaction::CubeSelector& cubeSelector, std::vector<Texture*>& textures, const char* label);
-		void ComboMultiTexture(interaction::CubeSelector& cubeSelector, std::vector<Texture*>& textures, const char* label);
+		void ComboTexture(std::vector<unsigned int>& textures, const char* label);
+		void ComboMultiTexture(std::vector<unsigned int>& textures, const char* label);
 		bool DragIntSameLine(const char* label, const int& nb, int* value, const int& step = 1, const int& min = 0, const int& max = 100, const char* symbol = "");
 	};
 

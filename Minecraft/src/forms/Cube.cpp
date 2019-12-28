@@ -56,11 +56,9 @@ namespace form {
 
 
     Cube::Cube(const glm::ivec3& position, const short& scale, const glm::vec3& color, const CubeType& cubetype,
-		const std::vector<Texture*>& textures)
+		const std::vector<unsigned int>& textures)
         : m_position(position), m_textures(textures), m_scale(scale), m_color(color), m_type(cubetype)
-    {
-		m_textures.reserve(6);
-	}
+    {}
 
     Cube::~Cube()
     {}
