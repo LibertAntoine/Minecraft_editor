@@ -149,6 +149,7 @@ namespace modes {
     m_CubeRenderer.updateColor();
     m_CubeRenderer.updateTexture();
     m_CubeRenderer.updateType();
+    m_CubeRenderer.updateCubeId();
   }
 
   ModeEditor::~ModeEditor() {}
@@ -179,82 +180,7 @@ namespace modes {
 
   void ModeEditor::OnEvent(const SDL_Event &e)
   {
-    switch(e.type) {
-      case SDL_MOUSEWHEEL:
-				if ( ImGui::IsAnyWindowHovered() == false ) {
-					m_FreeCam.moveFront(e.wheel.y);
-				}
-        break;
-      case SDL_MOUSEBUTTONUP:
-        if ( e.button.button == SDL_BUTTON_MIDDLE ) {
-          m_moveCamEye = false;
-        }
-        break;
-      case SDL_MOUSEMOTION:
-        if ( m_moveCamEye && m_moveShift && ImGui::IsAnyWindowHovered() == false) {
-          if ( e.motion.xrel != 0 ) {
-            m_FreeCam.moveLeft( float(e.motion.xrel) * 0.01);
-          }
-          if ( e.motion.yrel != 0 ) {
-            m_FreeCam.moveUp( float(e.motion.yrel) * 0.01);
-          }
-        }
-        else if ( m_moveCamEye && ImGui::IsAnyWindowHovered() == false) {
-          if ( e.motion.xrel != 0 ) {
-            m_FreeCam.rotateLeft( float(e.motion.xrel) * 0.5);
-          }
-          if ( e.motion.yrel != 0 ) {
-            m_FreeCam.rotateUp( float(e.motion.yrel) * 0.5);
-          }
-        }
-        break;
-      case SDL_KEYDOWN:
-        if ( e.key.keysym.sym == SDLK_LSHIFT ) {
-          m_moveShift = true;
-        }
-        break;
-      case SDL_KEYUP:
-        if ( e.key.keysym.sym == SDLK_LSHIFT ) {
-          m_moveShift = false;
-        }
-				break;
-      case SDL_MOUSEBUTTONDOWN:
-        if ( e.button.button == SDL_BUTTON_MIDDLE ) {
-          m_moveCamEye = true;
-        }
-        else if ( e.button.button == SDL_BUTTON_LEFT  && ImGui::IsAnyWindowHovered() == false ) {
-
-          /* NOTE: check which FrameBuffer is currently bound
-             GLint drawFboId = 0, readFboId = 0;
-             glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFboId);
-             glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFboId);
-          //std::cout << "checking current FBO. Draw:" << drawFboId << ", Read: " << readFboId << std::endl;
-          */
-
-          // NOTE: Check if a cube has been selected
-          m_frameBufferSelection.Bind();
-          GLCall(glReadBuffer(GL_COLOR_ATTACHMENT0));
-          GLuint pixels[4] = {0,0,0,0};
-          GLCall( glReadPixels(e.button.x, App::WINDOW_HEIGHT-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_UNSIGNED_INT, pixels) );
-          //std::cout << pixels[0] << "," << pixels[1] << "," << pixels[2] << "," << pixels[3] << std::endl;
-          if ( pixels[3] != 0 ) {
-            form::Cube* selectionAddress;
-            // NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
-            selectionAddress = (form::Cube*)( (intptr_t( pixels[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( pixels[1] ) & 0xFFFFFFFF ) );
-            m_CubeSelector.SetSelector(glm::ivec3(selectionAddress->position()));
-          } else {
-            GLint position[4];
-            GLCall( glReadBuffer(GL_COLOR_ATTACHMENT1); );
-            GLCall( glReadPixels(e.button.x, App::WINDOW_HEIGHT-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_INT, position) );
-            //std::cout << "PosX: " << position[0] << ", PosY: " << position[1] << std::endl;
-            if ( position[3] != 0 ) {
-              m_CubeSelector.SetSelector(glm::ivec3(position[0], 0, position[1]));
-            }
-          }
-          m_frameBufferSelection.Unbind();        
-        }
-        break;
-    }
+         
   }
 
 
