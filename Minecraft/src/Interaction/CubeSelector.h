@@ -79,6 +79,7 @@ namespace interaction {
 		void Show(glm::mat4 view, glm::mat4 projection);
 
 		void MoveSelectorToClick(int x, int y, const FrameBuffer& framebufferSelection);
+		void MoveSelectorToClickFace(int x, int y, const FrameBuffer& framebufferSelection);
 	};
 
 }

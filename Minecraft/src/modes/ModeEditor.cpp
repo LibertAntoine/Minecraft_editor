@@ -192,6 +192,13 @@ namespace modes {
 					else if ( e.button.button == SDL_BUTTON_LEFT ) {
 						m_leftClick = true;
 						m_CubeSelector.MoveSelectorToClick(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
+						if ( m_altKey == true ) {
+							if ( m_CubeSelector.currentCube() ) {
+								// TODO: check face somehow
+								m_CubeSelector.MoveSelectorToClickFace(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
+							}
+							m_CubeSelector.AddToSelector();
+						}
 					}
 					break;
 
@@ -201,25 +208,26 @@ namespace modes {
 					break;
 
 				case SDL_MOUSEMOTION:
-					if ( m_middleClick && m_shiftKey ) {
+					if ( m_spaceKey || m_middleClick ) {
 
 						if ( e.motion.xrel != 0 ) m_FreeCam.moveLeft( float(e.motion.xrel) * 0.01);
 						if ( e.motion.yrel != 0 ) m_FreeCam.moveUp( float(e.motion.yrel) * 0.01);
 
 					}
-					else if ( m_middleClick ) {
+					else if ( m_shiftKey ) {
 
-						if ( e.motion.xrel != 0 ) m_FreeCam.rotateLeft( float(e.motion.xrel) * 0.5);
-						if ( e.motion.yrel != 0 ) m_FreeCam.rotateUp( float(e.motion.yrel) * 0.5);
+						if ( e.motion.xrel != 0 ) m_FreeCam.rotateLeft( - float(e.motion.xrel) * 0.5);
+						if ( e.motion.yrel != 0 ) m_FreeCam.rotateUp( - float(e.motion.yrel) * 0.5);
 
 					} 
 					else if ( m_ctrlKey && m_leftClick ) {
-						// TODO: draw
 						m_CubeSelector.MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
 						if ( m_CubeSelector.currentCube() ) {
-							int cubeStyle = m_CubeSelector.selectorCube().type();
-							m_CubeRenderer.updateType();
-							m_CubeSelector.currentCube()->type() = m_CubeSelector.selectorCube().type();
+							form::CubeType cubeStyle = m_CubeSelector.selectorCube().type();
+							if ( m_CubeSelector.currentCube()->type() != cubeStyle ) {
+								m_CubeSelector.currentCube()->type() = cubeStyle;
+								m_CubeRenderer.updateType();
+							}
 							if (cubeStyle == form::COLORED) {
 								static float color[3] = { m_CubeSelector.selectorCube().color().x, m_CubeSelector.selectorCube().color().y, m_CubeSelector.selectorCube().color().z, };
 								m_CubeSelector.currentCube()->Setcolor(glm::vec3(color[0], color[1], color[2]));
@@ -243,10 +251,9 @@ namespace modes {
 						m_CubeSelector.MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
 						if ( m_CubeSelector.currentCube() ) {
 							// TODO: check face somehow
+							m_CubeSelector.MoveSelectorToClickFace(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
 						}
-						else {
-							m_CubeSelector.AddToSelector();
-						}
+						m_CubeSelector.AddToSelector();
 					}
 					break;
 
@@ -254,18 +261,38 @@ namespace modes {
 					if ( e.key.keysym.sym == SDLK_LSHIFT || e.key.keysym.sym == SDLK_RSHIFT ) m_shiftKey = true;
 					else if ( e.key.keysym.sym == SDLK_LCTRL || e.key.keysym.sym == SDLK_RCTRL ) m_ctrlKey = true;
 					else if ( e.key.keysym.sym == SDLK_LALT || e.key.keysym.sym == SDLK_RALT ) m_altKey = true;
+					else if ( e.key.keysym.sym == SDLK_SPACE || e.key.keysym.sym == SDLK_SPACE ) m_spaceKey = true;
+					else if ( e.key.keysym.sym == SDLK_z || e.key.keysym.sym == SDLK_z ) m_FreeCam.moveFront(1);
+					else if ( e.key.keysym.sym == SDLK_s || e.key.keysym.sym == SDLK_s ) m_FreeCam.moveFront(-1);
+					else if ( e.key.keysym.sym == SDLK_d || e.key.keysym.sym == SDLK_d ) m_FreeCam.moveLeft(-1);
+					else if ( e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_q ) m_FreeCam.moveLeft(1);
 					break;
 
 				case SDL_KEYUP:
 					if ( e.key.keysym.sym == SDLK_LSHIFT || e.key.keysym.sym == SDLK_RSHIFT ) m_shiftKey = false;
 					else if ( e.key.keysym.sym == SDLK_LCTRL || e.key.keysym.sym == SDLK_RCTRL ) m_ctrlKey = false;
 					else if ( e.key.keysym.sym == SDLK_LALT || e.key.keysym.sym == SDLK_RALT ) m_altKey = false;
+					else if ( e.key.keysym.sym == SDLK_SPACE || e.key.keysym.sym == SDLK_SPACE ) m_spaceKey = false;
 					break;
 			}
 		}
+		else {
+			this->resetInteractionBool();
+		}
   }
 
-
+	void ModeEditor::resetInteractionBool()
+	{
+		m_moveCamEye = false;
+		m_moveShift = false;
+		m_slideMouse = false;
+		m_altKey = false;
+		m_ctrlKey = false;
+		m_spaceKey = false;
+		m_shiftKey = false;
+		m_leftClick = false;
+		m_middleClick = false;
+	}
 
   void ModeEditor::OnImGuiRender()
   {

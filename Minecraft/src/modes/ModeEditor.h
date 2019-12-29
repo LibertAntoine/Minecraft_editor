@@ -49,6 +49,7 @@ private:
 
   bool m_altKey = false;
   bool m_ctrlKey = false;
+  bool m_spaceKey = false;
   bool m_shiftKey = false;
 
   bool m_leftClick = false;
@@ -68,6 +69,8 @@ public:
   inline camera::FreeflyCamera& freeCam() { return  m_FreeCam; };
   inline interaction::CubeSelector& cubeSelector() { return  m_CubeSelector; };
   inline interaction::LightManager& lightManager() { return  m_LightManager; };
+
+	void resetInteractionBool();
 
 };
 } // namespace modes
