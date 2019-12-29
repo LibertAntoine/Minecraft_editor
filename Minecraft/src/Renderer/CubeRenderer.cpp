@@ -135,8 +135,8 @@ void CubeRenderer::del(form::Cube* cube) {
         GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
         
-				glm::mat4 MVMatrix(1);
-        MVMatrix = view * MVMatrix;
+				glm::mat4 MVMatrix = view;
+				MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
 
         m_VAO->Bind();
         m_ShaderClickSelection->Bind();
