@@ -31,6 +31,7 @@ namespace renderer {
     int vector_cube_index = 0;
 
     GLCall(glDrawBuffer(GL_COLOR_ATTACHMENT0));
+    glEnable(GL_DEPTH_TEST);
     glClearColor(1, 1, 1, 0); // White for unselectable air
     glViewport(0, 0, App::WINDOW_WIDTH, App::WINDOW_HEIGHT);
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));

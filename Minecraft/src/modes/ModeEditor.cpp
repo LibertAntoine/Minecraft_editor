@@ -125,8 +125,11 @@ namespace modes {
 
     m_frameBufferSelection.Bind();
 
+    m_depthBufferSelection.Bind();
+		GLCall( glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, App::WINDOW_WIDTH, App::WINDOW_HEIGHT); );
+		GLCall( glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferSelection.getDepthBufferId()); );
+
     m_textureSelectionCube.SimpleBind();
-    //m_depthBufferSelection.Bind();
 
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureSelectionCube.GetTextureID(), 0););
 
@@ -141,7 +144,7 @@ namespace modes {
 
     m_textureSelectionGround.Unbind();
     m_frameBufferSelection.Unbind();
-    //m_depthBufferSelection.Unbind();
+    m_depthBufferSelection.Unbind();
 
     m_CubeRenderer.updateColor();
     m_CubeRenderer.updateTexture();
