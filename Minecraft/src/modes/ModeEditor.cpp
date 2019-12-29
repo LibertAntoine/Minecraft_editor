@@ -186,8 +186,14 @@ namespace modes {
 				if ( ImGui::IsAnyWindowHovered() == false ) m_FreeCam.moveFront(e.wheel.y);
         break;
 
+      case SDL_MOUSEBUTTONDOWN:
+        if ( e.button.button == SDL_BUTTON_MIDDLE ) m_moveCamEye = true;
+        else if ( e.button.button == SDL_BUTTON_LEFT  && ImGui::IsAnyWindowHovered() == false ) m_CubeSelector.MoveSelectorToClick(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
+        break;
+
       case SDL_MOUSEBUTTONUP:
         if ( e.button.button == SDL_BUTTON_MIDDLE ) m_moveCamEye = false;
+        if ( e.button.button == SDL_BUTTON_LEFT ) m_slideDraw = false;
         break;
 
       case SDL_MOUSEMOTION:
@@ -202,24 +208,39 @@ namespace modes {
           if ( e.motion.xrel != 0 ) m_FreeCam.rotateLeft( float(e.motion.xrel) * 0.5);
           if ( e.motion.yrel != 0 ) m_FreeCam.rotateUp( float(e.motion.yrel) * 0.5);
 
-        }
+        } 
+				else if ( m_slideDraw == true && ImGui::IsAnyWindowHovered() == false ) {
+					// TODO: draw
+					m_CubeSelector.MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
+					if ( m_CubeSelector.currentCube() ) {
+						int cubeStyle = m_CubeSelector.selectorCube().type();
+						m_CubeSelector.currentCube()->type() = m_CubeSelector.selectorCube().type();
+						if (cubeStyle == form::COLORED) {
+							static float color[3] = { m_CubeSelector.selectorCube().color().x, m_CubeSelector.selectorCube().color().y, m_CubeSelector.selectorCube().color().z, };
+							m_CubeSelector.currentCube()->Setcolor(glm::vec3(color[0], color[1], color[2]));
+							m_CubeRenderer.updateColor();
+						}
+						else if (cubeStyle == form::TEXTURED) {
+							m_CubeSelector.currentCube()->texture() = m_CubeSelector.selectorCube().texture();
+							m_CubeRenderer.updateTexture();
+						} else if (cubeStyle == form::MULTI_TEXTURED) {
+							m_CubeSelector.currentCube()->texture() = m_CubeSelector.selectorCube().texture();
+							m_CubeRenderer.updateTexture();
+						}
+						m_CubeSelector.refresh();
+				}
+					}
         break;
+
       case SDL_KEYDOWN:
         if ( e.key.keysym.sym == SDLK_LSHIFT ) m_moveShift = true;
-				else if ( e.key.keysym.sym == SDLK_SPACE ) m_slideDraw = true;
+				else if ( e.key.keysym.sym == SDLK_LCTRL ) m_slideDraw = true;
         break;
 
       case SDL_KEYUP:
         if ( e.key.keysym.sym == SDLK_LSHIFT ) m_moveShift = false;
-				else if ( e.key.keysym.sym == SDLK_SPACE ) m_slideDraw = false;
+				else if ( e.key.keysym.sym == SDLK_LCTRL ) m_slideDraw = false;
 				break;
-
-      case SDL_MOUSEBUTTONDOWN:
-        if ( e.button.button == SDL_BUTTON_MIDDLE ) m_moveCamEye = true;
-        else if ( e.button.button == SDL_BUTTON_LEFT  && ImGui::IsAnyWindowHovered() == false ) {
-					m_CubeSelector.MoveSelectorToClick(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
-        }
-        break;
     }
   }
 
