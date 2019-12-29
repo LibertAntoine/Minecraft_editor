@@ -52,6 +52,7 @@ form::Cube *CubeRenderer::add(const form::Cube& cube)
     this->updateColor();
     this->updateTexture();
     this->updateType();
+    this->updateCubeId();
   return &m_CubeList.back();
 }
 
@@ -61,6 +62,7 @@ void CubeRenderer::del(form::Cube* cube) {
     this->updateColor();
     this->updateTexture();
     this->updateType();
+    this->updateCubeId();
 }
 
     void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager, const TextureArray& texture)
@@ -118,7 +120,7 @@ void CubeRenderer::del(form::Cube* cube) {
       texture->Unbind();
     };
 
-    void CubeRenderer::drawSelectionTexture(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection) {
+    void CubeRenderer::drawSelectionTexture(const glm::mat4& view, const glm::mat4& projection) {
        
         GLCall(glDrawBuffer(GL_COLOR_ATTACHMENT0));
         glEnable(GL_DEPTH_TEST);
@@ -135,9 +137,6 @@ void CubeRenderer::del(form::Cube* cube) {
         GLCall(glDrawArraysInstanced(GL_POINTS, 0, m_CubeList.size(), m_CubeList.size()));
 
     }
-
-
-
 
     void CubeRenderer::updatePosition() {
         std::vector<glm::ivec3> positions;
@@ -180,4 +179,16 @@ void CubeRenderer::del(form::Cube* cube) {
         });
         m_VertexBufferType->Update(types.data(), sizeof(int) * types.size());
     }
+
+
+    void CubeRenderer::updateCubeId() {
+        std::vector<unsigned int> cubeId;
+        std::for_each(m_CubeList.begin(), m_CubeList.end(),
+            [&cubeId](form::Cube& cube) {
+            cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32);
+            cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF));
+        });
+        m_VertexBufferCubeId->Update(cubeId.data(), 2 * sizeof(unsigned int) * m_CubeList.size());
+    };
+
 } // namespace renderer

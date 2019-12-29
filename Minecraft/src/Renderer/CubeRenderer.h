@@ -39,11 +39,12 @@ namespace renderer {
       void updateColor();
       void updateTexture();
       void updateType();
+      void updateCubeId();
 
       void del(form::Cube* cube);
       void draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager, const TextureArray& texture);
       void drawSelector(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection);
-      void drawSelectionTexture(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection);
+      void drawSelectionTexture(const glm::mat4& view, const glm::mat4& projection);
   };
 
 }

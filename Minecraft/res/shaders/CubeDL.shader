@@ -30,7 +30,7 @@ void main() {
 #version 440 core
 
 layout(points) in;
-layout(triangle_strip, max_vertices = 100) out;
+layout(triangle_strip, max_vertices = 34) out;
 
 
 in vData

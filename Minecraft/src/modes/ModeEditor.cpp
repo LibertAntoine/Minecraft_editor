@@ -149,6 +149,7 @@ namespace modes {
     m_CubeRenderer.updateColor();
     m_CubeRenderer.updateTexture();
     m_CubeRenderer.updateType();
+    m_CubeRenderer.updateCubeId();
   }
 
   ModeEditor::~ModeEditor() {}

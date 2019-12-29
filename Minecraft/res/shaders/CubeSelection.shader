@@ -5,13 +5,11 @@ layout(location = 0) in vec3 position;
 layout(location = 5) in ivec2 cubeId;
 
 out vData{
-	vec3 position;
 	flat ivec2 cubeId;
 } data_vs;
 
 void main()
 {
-	data_vs.position = vec4(position, 1);
 	data_vs.cubeId = cubeId;
 	gl_Position = vec4(position, 1);
 };
@@ -24,26 +22,16 @@ layout(triangle_strip, max_vertices = 64) out;
 
 
 in vData{
-	vec3 position;
 	flat ivec2 cubeId;
 } data_vs[];
 
 out gData
 {
-	vec3 position;
-	vec3 normal;
-	flat ivec2 cubeId;
+	flat uvec2 cubeId;
 	flat int face;
 } data_gs;
 
 uniform mat4 uMVPMatrix;
-
-const vec3 normc[6] = vec3[](vec3(0, 0, 1), // normal
-	vec3(-1, 0, 0),
-	vec3(0, 0, -1),
-	vec3(0, -1, 0),
-	vec3(1, 0, 0),
-	vec3(0, 1, 0));
 
 const vec4 cubeVerts[8] = vec4[8](
 	vec4(0, 0, 0, 1),  //LB  0
@@ -73,8 +61,7 @@ void main() {
 			for (int i = 0; i < 4; i++) {
 				int v = cubeIndices[i + k * 4];
 				gl_Position = uMVPMatrix * (gl_in[j].gl_Position + cubeVerts[v]);
-				data_gs.cubeId = data_vs.cubeId[0];
-				data_gs.normal = normc[k];
+				data_gs.cubeId = data_vs[0].cubeId;
 				data_gs.face = k;
 				EmitVertex();
 			}
@@ -88,9 +75,7 @@ void main() {
 
 in gData
 {
-	vec3 position;
-	vec3 normal;
-	flat ivec2 cubeId;
+	flat uvec2 cubeId;
 	flat int face;
 } data_gs;
 
@@ -100,5 +85,5 @@ layout(location = 0) out uvec4 fFragCubeId;
 // NOTE: uint is a 32-bit unsigned integer
 void main()
 {
-  fFragCubeId = uvec4(uCubeID.x, uCubeID.y, 0, 1);
+  fFragCubeId = uvec4(data_gs.cubeId.x, data_gs.cubeId.y, 0, 1);
 };
