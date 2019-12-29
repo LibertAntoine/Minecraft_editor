@@ -172,7 +172,8 @@ namespace modes {
 
     // NOTE: Generating offscreen selection texture
     m_frameBufferSelection.Bind();
-    m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
+    //m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList); // NOTE: old draw calls
+		m_CubeRenderer.drawSelectionTexture(m_FreeCam.getViewMatrix(), m_ProjMatrix);
     m_GroundSelectionRenderer.draw(m_FreeCam, m_ProjMatrix);
     m_frameBufferSelection.Unbind();
 
@@ -180,8 +181,7 @@ namespace modes {
 
   void ModeEditor::OnEvent(const SDL_Event &e)
   {
-         
-  }
+	}
 
 
 
