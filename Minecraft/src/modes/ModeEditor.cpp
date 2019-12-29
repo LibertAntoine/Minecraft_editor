@@ -150,7 +150,7 @@ namespace modes {
 
   ModeEditor::~ModeEditor() {}
 
-  void ModeEditor::OnUpdate(float deltaTime) {}
+  void ModeEditor::OnUpdate(float ) {}
 
   void ModeEditor::OnRender()
   {
@@ -162,13 +162,13 @@ namespace modes {
 
     m_GridRenderer.draw(m_FreeCam, m_ProjMatrix, m_CubeSelector.activeGrid());
 	m_LightManager.dirLight().lightDirection = glm::vec3(glm::mat4(1.0f) * glm::vec4(m_LightManager.direction(), 0));
-    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_LightManager, m_textureArray);
+    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_textureArray);
     m_CubeSelector.Show(m_FreeCam.getViewMatrix(), m_ProjMatrix);
 
     // NOTE: Generating offscreen selection texture
     m_frameBufferSelection.Bind();
     m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList);
-    m_GroundSelectionRenderer.draw(m_FreeCam, m_ProjMatrix, m_CubeSelector.activeGrid());
+    m_GroundSelectionRenderer.draw(m_FreeCam, m_ProjMatrix);
     m_frameBufferSelection.Unbind();
 
   }
@@ -177,16 +177,17 @@ namespace modes {
   {
     switch(e.type) {
       case SDL_MOUSEWHEEL:
-        m_FreeCam.moveFront(e.wheel.y);
+				if ( ImGui::IsAnyWindowHovered() == false ) {
+					m_FreeCam.moveFront(e.wheel.y);
+				}
         break;
-        
       case SDL_MOUSEBUTTONUP:
         if ( e.button.button == SDL_BUTTON_MIDDLE ) {
           m_moveCamEye = false;
         }
         break;
       case SDL_MOUSEMOTION:
-        if ( m_moveCamEye && m_moveShift ) {
+        if ( m_moveCamEye && m_moveShift && ImGui::IsAnyWindowHovered() == false) {
           if ( e.motion.xrel != 0 ) {
             m_FreeCam.moveLeft( float(e.motion.xrel) * 0.01);
           }
@@ -194,7 +195,7 @@ namespace modes {
             m_FreeCam.moveUp( float(e.motion.yrel) * 0.01);
           }
         }
-        else if ( m_moveCamEye ) {
+        else if ( m_moveCamEye && ImGui::IsAnyWindowHovered() == false) {
           if ( e.motion.xrel != 0 ) {
             m_FreeCam.rotateLeft( float(e.motion.xrel) * 0.5);
           }
@@ -204,7 +205,7 @@ namespace modes {
         }
         break;
       case SDL_KEYDOWN:
-        if ( e.key.keysym.sym ==  SDLK_LSHIFT ) {
+        if ( e.key.keysym.sym == SDLK_LSHIFT ) {
           m_moveShift = true;
         }
         break;
@@ -212,6 +213,7 @@ namespace modes {
         if ( e.key.keysym.sym == SDLK_LSHIFT ) {
           m_moveShift = false;
         }
+				break;
       case SDL_MOUSEBUTTONDOWN:
         if ( e.button.button == SDL_BUTTON_MIDDLE ) {
           m_moveCamEye = true;
@@ -229,7 +231,7 @@ namespace modes {
           m_frameBufferSelection.Bind();
           GLCall(glReadBuffer(GL_COLOR_ATTACHMENT0));
           GLuint pixels[4] = {0,0,0,0};
-          GLCall( glReadPixels(e.button.x, WINDOW_HEIGHT-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_UNSIGNED_INT, pixels) );
+          GLCall( glReadPixels(e.button.x, App::WINDOW_HEIGHT-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_UNSIGNED_INT, pixels) );
           //std::cout << pixels[0] << "," << pixels[1] << "," << pixels[2] << "," << pixels[3] << std::endl;
           if ( pixels[3] != 0 ) {
             form::Cube* selectionAddress;
@@ -239,7 +241,7 @@ namespace modes {
           } else {
             GLint position[4];
             GLCall( glReadBuffer(GL_COLOR_ATTACHMENT1); );
-            GLCall( glReadPixels(e.button.x, WINDOW_HEIGHT-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_INT, position) );
+            GLCall( glReadPixels(e.button.x, App::WINDOW_HEIGHT-e.button.y-1, 1, 1, GL_RGBA_INTEGER, GL_INT, position) );
             //std::cout << "PosX: " << position[0] << ", PosY: " << position[1] << std::endl;
             if ( position[3] != 0 ) {
               m_CubeSelector.SetSelector(glm::ivec3(position[0], 0, position[1]));

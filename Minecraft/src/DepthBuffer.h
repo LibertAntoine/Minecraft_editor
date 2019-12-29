@@ -12,5 +12,5 @@ class DepthBuffer {
     void Bind() const;
     void Unbind() const;
 
-    const unsigned int getDepthBufferId() const;
+    unsigned int getDepthBufferId() const;
 };

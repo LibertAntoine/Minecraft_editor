@@ -32,8 +32,8 @@ namespace interaction {
 	private:
 		renderer::CubeRenderer* m_Cuberenderer;
 		TextureArray* m_TextureArray;
-		Octree<form::Cube*> m_CubeWorld; // Documentation : https://nomis80.org/code/doc/classOctree.html
 		int m_SizeWorld;
+		Octree<form::Cube*> m_CubeWorld; // Documentation : https://nomis80.org/code/doc/classOctree.html
 		Selector* m_selector;
 		bool m_activeGrid[3];
 
@@ -52,7 +52,7 @@ namespace interaction {
 		inline Selector* selector() { return m_selector; };
 		inline form::Cube* currentCube() { return m_selector->currentCube; };
 		inline form::Cube& selectorCube() { return m_selector->selectorCube; };
-		inline const int sizeWorld() const { return m_SizeWorld; };
+		inline int sizeWorld() const { return m_SizeWorld; };
 		inline const bool* activeGrid() const { return m_activeGrid; };
 		inline bool* activeGrid() { return m_activeGrid; };
 

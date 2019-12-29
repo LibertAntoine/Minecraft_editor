@@ -9,9 +9,10 @@ class TextureArray
 {
 private:
 	unsigned int m_TextureArrayID;
+	const int m_Width;
+	const int m_Height;
 	unsigned int m_layerCount;
 	unsigned char* m_LocalBuffer;
-	const int m_Width, m_Height;
 
 	std::map<std::string, unsigned int> m_TextureList;
 	std::map<std::string, Texture*> m_ProxiList;

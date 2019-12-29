@@ -10,8 +10,8 @@ namespace modes {
 	public:
 		ModeImGUITest();
 		~ModeImGUITest();
-		void OnUpdate(float deltaTime) override;
-		void OnEvent(const SDL_Event& e) override;
+		void OnUpdate(float ) override;
+		void OnEvent(const SDL_Event& ) override;
 		void OnRender() override;
 		void OnImGuiRender() override;
 	};

@@ -14,7 +14,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g -ggdb3") # Keep macro definition for debugging wit
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 #Append compile flags
-#SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fpermissive")
+#SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -BLAH")
 
 find_package(OpenGL REQUIRED)
 if(${OpenGL_FOUND})
