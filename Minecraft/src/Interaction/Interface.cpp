@@ -153,20 +153,35 @@ namespace interaction {
 	}
 
 
-	void Interface::LightController() {
-		ImGui::Text("Directive Light Controller : ");
-		ImGui::DragFloat3("uKs##DirLight", &m_light->dirLight().uKs.x, 0.01f, 0 , 1);
-		ImGui::DragFloat3("uKd##DirLight", &m_light->dirLight().uKd.x, 0.01f, 0, 1);
-		ImGui::DragFloat3("Light Direction##DirLight", &m_light->direction().x, 0.01f, -1, 1);
-		ImGui::DragFloat3("Light Intensity##DirLight", &m_light->dirLight().lightIntensity.x, 0.01f, 0, 100);
-		ImGui::DragFloat("Shininess##DirLight", &m_light->dirLight().shininess, 0.01f, 0, 1000);
-
-		ImGui::Text("Ponctual Light Controller : ");
-		ImGui::DragFloat3("uKs##PosLight", &m_light->pointLightList()[0].uKs.x, 0.01f, 0, 1);
-		ImGui::DragFloat3("uKd##PosLight", &m_light->pointLightList()[0].uKd.x, 0.01f, 0, 1);
-		ImGui::DragFloat3("Light Direction##PosLight", &m_light->position().x, 0.01f);
-		ImGui::DragFloat3("Light Intensity##PosLight", &m_light->pointLightList()[0].lightIntensity.x, 0.01f, 0, 100);
-		ImGui::DragFloat("Shininess##PosLight", &m_light->pointLightList()[0].shininess, 0.01f, 0, 1000);
+	void Interface::LightController() 
+	{
+		int r = m_light->currentLight();
+		if (ImGui::RadioButton("No Light##1", &r, interaction::lightStatus::NONE)) {
+			m_light->currentLight() = interaction::lightStatus::NONE;
+		};
+		ImGui::SameLine();
+		if (ImGui::RadioButton("Directionnal##1", &r, interaction::lightStatus::DIRECTIONNAL)) {
+			m_light->currentLight() = interaction::lightStatus::DIRECTIONNAL;
+		};
+		ImGui::SameLine();
+		if (ImGui::RadioButton("Ponctual##1", &r, interaction::lightStatus::PONCTUAL)) {
+			m_light->currentLight() = interaction::lightStatus::PONCTUAL;
+		};
+		if (m_light->currentLight() == interaction::lightStatus::DIRECTIONNAL) {
+			ImGui::Text("Directive Light Controller : ");
+			ImGui::DragFloat3("uKs##DirLight", &m_light->dirLight().uKs.x, 0.01f, 0, 1);
+			ImGui::DragFloat3("uKd##DirLight", &m_light->dirLight().uKd.x, 0.01f, 0, 1);
+			ImGui::DragFloat3("Light Direction##DirLight", &m_light->direction().x, 0.01f, -1, 1);
+			ImGui::DragFloat3("Light Intensity##DirLight", &m_light->dirLight().lightIntensity.x, 0.01f, 0, 100);
+			ImGui::DragFloat("Shininess##DirLight", &m_light->dirLight().shininess, 0.01f, 0, 1000);
+		} else if (m_light->currentLight() == interaction::lightStatus::PONCTUAL) {
+			ImGui::Text("Ponctual Light Controller : ");
+			ImGui::DragFloat3("uKs##PosLight", &m_light->pointLightList()[0].uKs.x, 0.01f, 0, 1);
+			ImGui::DragFloat3("uKd##PosLight", &m_light->pointLightList()[0].uKd.x, 0.01f, 0, 1);
+			ImGui::DragFloat3("Light Direction##PosLight", &m_light->position().x, 0.01f);
+			ImGui::DragFloat3("Light Intensity##PosLight", &m_light->pointLightList()[0].lightIntensity.x, 0.01f, 0, 100);
+			ImGui::DragFloat("Shininess##PosLight", &m_light->pointLightList()[0].shininess, 0.01f, 0, 1000);
+		}
 	}
 
 
