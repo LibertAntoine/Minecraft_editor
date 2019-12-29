@@ -21,12 +21,14 @@ namespace renderer {
       std::unique_ptr<VertexBuffer> m_VertexBufferColor;
       std::unique_ptr<VertexBuffer> m_VertexBufferTexture;
       std::unique_ptr<VertexBuffer> m_VertexBufferType;
+      std::unique_ptr<VertexBuffer> m_VertexBufferCubeId;
 
       std::unique_ptr<Shader> m_ShaderSelector;
 	  std::unique_ptr<Shader> m_ShaderCube;
       std::unique_ptr<Shader> m_ShaderCubeDirLight;
       std::unique_ptr<Shader> m_ShaderCubePonctLight;
-
+      std::unique_ptr<Shader> m_ShaderClickSelection;
+      
     public:
       std::list<form::Cube> m_CubeList;
       CubeRenderer();
@@ -41,6 +43,7 @@ namespace renderer {
       void del(form::Cube* cube);
       void draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager, const TextureArray& texture);
       void drawSelector(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection);
+      void drawSelectionTexture(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection);
   };
 
 }
