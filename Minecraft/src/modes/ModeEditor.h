@@ -40,7 +40,7 @@ private:
   renderer::CubeSelectionRenderer m_CubeSelectionRenderer;
   interaction::LightManager m_LightManager;
   FrameBuffer m_frameBufferSelection; /// Custom framebuffer that is bound during selection texture rendering, also for queries
-  //DepthBuffer m_depthBufferSelection;
+  DepthBuffer m_depthBufferSelection;
   Texture m_textureSelectionCube; /// Offscreen texture that contains mouse selectable(visible) Cubes
   Texture m_textureSelectionGround; /// Offscreen texture that contains mouse selectable (visible) ground
   bool m_moveCamEye = false;
