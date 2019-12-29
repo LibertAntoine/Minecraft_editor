@@ -181,7 +181,47 @@ namespace modes {
 
   void ModeEditor::OnEvent(const SDL_Event &e)
   {
-	}
+    switch(e.type) {
+      case SDL_MOUSEWHEEL:
+				if ( ImGui::IsAnyWindowHovered() == false ) m_FreeCam.moveFront(e.wheel.y);
+        break;
+
+      case SDL_MOUSEBUTTONUP:
+        if ( e.button.button == SDL_BUTTON_MIDDLE ) m_moveCamEye = false;
+        break;
+
+      case SDL_MOUSEMOTION:
+        if ( m_moveCamEye && m_moveShift && ImGui::IsAnyWindowHovered() == false) {
+
+          if ( e.motion.xrel != 0 ) m_FreeCam.moveLeft( float(e.motion.xrel) * 0.01);
+          if ( e.motion.yrel != 0 ) m_FreeCam.moveUp( float(e.motion.yrel) * 0.01);
+
+        }
+        else if ( m_moveCamEye && ImGui::IsAnyWindowHovered() == false) {
+
+          if ( e.motion.xrel != 0 ) m_FreeCam.rotateLeft( float(e.motion.xrel) * 0.5);
+          if ( e.motion.yrel != 0 ) m_FreeCam.rotateUp( float(e.motion.yrel) * 0.5);
+
+        }
+        break;
+      case SDL_KEYDOWN:
+        if ( e.key.keysym.sym == SDLK_LSHIFT ) m_moveShift = true;
+				else if ( e.key.keysym.sym == SDLK_SPACE ) m_slideDraw = true;
+        break;
+
+      case SDL_KEYUP:
+        if ( e.key.keysym.sym == SDLK_LSHIFT ) m_moveShift = false;
+				else if ( e.key.keysym.sym == SDLK_SPACE ) m_slideDraw = false;
+				break;
+
+      case SDL_MOUSEBUTTONDOWN:
+        if ( e.button.button == SDL_BUTTON_MIDDLE ) m_moveCamEye = true;
+        else if ( e.button.button == SDL_BUTTON_LEFT  && ImGui::IsAnyWindowHovered() == false ) {
+					m_CubeSelector.MoveSelectorToClick(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
+        }
+        break;
+    }
+  }
 
 
 
