@@ -25,3 +25,15 @@ GLuint FrameBuffer::GetFrameBufferId() const
 {
   return m_FrameBufferId;
 }
+
+void FrameBuffer::getDataAtPosition4ui(int x, int y, GLuint *data, GLenum attachment) const
+{
+	GLCall(glReadBuffer(attachment));
+	GLCall( glReadPixels(x, y, 1, 1, GL_RGBA_INTEGER, GL_UNSIGNED_INT, data) );
+}
+
+void FrameBuffer::getDataAtPosition4i(int x, int y, GLint *data, GLenum attachment) const
+{
+	GLCall(glReadBuffer(attachment));
+	GLCall( glReadPixels(x, y, 1, 1, GL_RGBA_INTEGER, GL_INT, data) );
+}
