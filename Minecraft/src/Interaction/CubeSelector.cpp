@@ -185,4 +185,32 @@ namespace interaction {
     }
   }
 
+	void CubeSelector::MoveSelectorToClick(int x, int y, const FrameBuffer& framebufferSelection)
+	{
+		/* NOTE: check which FrameBuffer is currently bound
+			 GLint drawFboId = 0, readFboId = 0;
+			 glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFboId);
+			 glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFboId);
+		//std::cout << "checking current FBO. Draw:" << drawFboId << ", Read: " << readFboId << std::endl;
+		*/
+		framebufferSelection.Bind();
+		GLuint data[4];
+		framebufferSelection.getDataAtPosition4ui(x, y, data, GL_COLOR_ATTACHMENT0);
+		// NOTE: Check if a cube has been selected
+		if ( data[3] != 0 ) {
+			form::Cube* selectionAddress;
+			// NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
+			selectionAddress = (form::Cube*)( (intptr_t( data[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( data[1] ) & 0xFFFFFFFF ) );
+
+			this->SetSelector(glm::ivec3(selectionAddress->position()));
+		}
+		// NOTE: No cube is under the position so check the ground
+		else {
+			GLint position[4];
+			framebufferSelection.getDataAtPosition4i(x, y, position, GL_COLOR_ATTACHMENT1);
+			if ( position[3] != 0 ) this->SetSelector(glm::ivec3(position[0], 0, position[1]));
+		}
+
+    framebufferSelection.Unbind();        
+	}
 }

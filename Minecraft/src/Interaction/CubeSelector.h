@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "VertexBuffer.h"
+#include "FrameBuffer.h"
 #include "VertexBufferLayout.h"
 #include <vector>
 #include <memory> // For std::make_unique
@@ -76,6 +77,8 @@ namespace interaction {
 		void Dig();
 
 		void Show(glm::mat4 view, glm::mat4 projection);
+
+		void MoveSelectorToClick(int x, int y, const FrameBuffer& framebufferSelection);
 	};
 
 }
