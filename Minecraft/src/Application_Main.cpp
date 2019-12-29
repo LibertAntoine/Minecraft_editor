@@ -27,8 +27,12 @@
 #include "modes/ModeEditor.h"
 #include "modes/ModeImGUITest.h"
 
-int main( void )
+int main(int argc, char* args[])
 {
+ (void)argc;
+ (void)args;
+
+
   App app;
   Renderer renderer;
 

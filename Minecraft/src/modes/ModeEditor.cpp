@@ -162,7 +162,7 @@ namespace modes {
 
     m_GridRenderer.draw(m_FreeCam, m_ProjMatrix, m_CubeSelector.activeGrid());
 	m_LightManager.dirLight().lightDirection = glm::vec3(glm::mat4(1.0f) * glm::vec4(m_LightManager.direction(), 0));
-    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_textureArray);
+    m_CubeRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_LightManager, m_textureArray);
     m_CubeSelector.Show(m_FreeCam.getViewMatrix(), m_ProjMatrix);
 
     // NOTE: Generating offscreen selection texture
