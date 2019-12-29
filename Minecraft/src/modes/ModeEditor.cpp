@@ -211,6 +211,7 @@ namespace modes {
 					m_CubeSelector.MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
 					if ( m_CubeSelector.currentCube() ) {
 						int cubeStyle = m_CubeSelector.selectorCube().type();
+						m_CubeRenderer.updateType();
 						m_CubeSelector.currentCube()->type() = m_CubeSelector.selectorCube().type();
 						if (cubeStyle == form::COLORED) {
 							static float color[3] = { m_CubeSelector.selectorCube().color().x, m_CubeSelector.selectorCube().color().y, m_CubeSelector.selectorCube().color().z, };
