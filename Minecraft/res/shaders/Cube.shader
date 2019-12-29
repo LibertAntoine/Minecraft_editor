@@ -8,7 +8,7 @@ layout(location = 3) in vec3 tex2;
 layout(location = 4) in int type;
 
 out vData {
-	vec4 color;
+	vec3 color;
 	vec3 tex1;
 	vec3 tex2;
 	flat int type;
@@ -16,7 +16,7 @@ out vData {
 
 void main() {
 	gl_Position = vec4(position, 1);
-	data_vs.color = vec4(color, 1);
+	data_vs.color = color;
 	data_vs.tex1 = tex1;
 	data_vs.tex2 = tex2;
 	data_vs.type = type;
@@ -28,12 +28,12 @@ void main() {
 #version 440 core
 
 layout(points) in;
-layout(triangle_strip, max_vertices = 64) out;
+layout(triangle_strip, max_vertices = 24) out;
 
 
 in vData
 {
-	vec4 color;
+	vec3 color;
 	vec3 tex1;
 	vec3 tex2;
 	flat int type;
@@ -42,7 +42,7 @@ in vData
 out gData
 {
 	vec2 tex_coord;
-	vec4 color;
+	vec3 color;
 	flat float textureLayer;
 	flat int type;
 } data_gs;
@@ -106,7 +106,7 @@ void main() {
 in gData
 {
 	vec2 tex_coord;
-	vec4 color;
+	vec3 color;
 	flat float textureLayer;
 	flat int type;
 } data_gs;
@@ -118,7 +118,7 @@ uniform sampler2DArray uTexArray;
 void main()
 {
 	if (data_gs.type == 0)
-		fFragTexture = data_gs.color;
+		fFragTexture = vec4(data_gs.color, 1);
 	else if (data_gs.type == 1 || data_gs.type == 2)
 		fFragTexture = vec4(texture(uTexArray, vec3(data_gs.tex_coord.xy, data_gs.textureLayer)));
 };

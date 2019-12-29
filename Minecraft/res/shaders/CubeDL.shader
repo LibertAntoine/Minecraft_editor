@@ -9,7 +9,7 @@ layout(location = 4) in int type;
 
 out vData{
 	vec3 position;
-	vec4 color;
+	vec3 color;
 	vec3 tex1;
 	vec3 tex2;
 	flat int type;
@@ -18,7 +18,7 @@ out vData{
 
 void main() {
 	gl_Position = vec4(position, 1);
-	data_vs.color = vec4(color, 1);
+	data_vs.color = color;
 	data_vs.tex1 = tex1;
 	data_vs.tex2 = tex2;
 	data_vs.type = type;
@@ -30,30 +30,28 @@ void main() {
 #version 440 core
 
 layout(points) in;
-layout(triangle_strip, max_vertices = 100) out;
+layout(triangle_strip, max_vertices = 24) out;
 
 
 in vData
 {
 	vec3 position;
-	vec4 color;
+	vec3 color;
 	vec3 tex1;
 	vec3 tex2;
 	flat int type;
 } data_vs[];
 
-in vec3 position_vs[];
 
 out gData
-{
-	vec4 color;
+{	vec3 position;
+	vec3 color;
 	vec2 tex_coord;
 	vec3 normal;
 	flat float textureLayer;
 	flat int type;
 } data_gs;
 
-out vec3 position_gs;
 
 uniform mat4 uMVPMatrix;
 
@@ -99,7 +97,7 @@ void main() {
 			for (int i = 0; i < 4; i++) {
 				int v = cubeIndices[i + k * 4];
 				gl_Position = uMVPMatrix * (gl_in[j].gl_Position + cubeVerts[v]);
-				position_gs = data_vs[0].position;
+				data_gs.position = data_vs[0].position;
 				data_gs.color = data_vs[0].color;
 				data_gs.tex_coord = texc[i];
 				if (data_vs[0].type == 2) data_gs.textureLayer = tex[k];
@@ -119,14 +117,14 @@ void main() {
 
 in gData
 {
-	vec4 color;
+	vec3 position;
+	vec3 color;
 	vec2 tex_coord;
 	vec3 normal;
 	flat float textureLayer;
 	flat int type;
 } data_gs;
 
-in vec3 position_gs;
 
 out vec4 fFragTexture;
 
@@ -143,14 +141,14 @@ vec3 blinnPhong()
 	return
 		vec3(uLightIntensity * (
 			uKd * max(dot(uLightDir_vs, data_gs.normal), 0.)
-			+ uKs * pow(max(dot(normalize(- position_gs), data_gs.normal), 0.), uShininess)
+			+ uKs * pow(max(dot(normalize(-data_gs.position), data_gs.normal), 0.), uShininess)
 			));
 }
 
 void main()
 {
 	if (data_gs.type == 0)
-		fFragTexture = data_gs.color;
+		fFragTexture = vec4(data_gs.color, 1) * vec4(blinnPhong(), 1);
 	else if (data_gs.type == 1 || data_gs.type == 2)
 		fFragTexture = texture(uTexArray, vec3(data_gs.tex_coord.xy, data_gs.textureLayer)) * vec4(blinnPhong(), 1);
 };

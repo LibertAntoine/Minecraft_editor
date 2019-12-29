@@ -82,8 +82,12 @@ void CubeRenderer::del(form::Cube* cube) {
       else if (lightManager.currentLight() == interaction::lightStatus::PONCTUAL) {
           m_ShaderCubePonctLight->Bind();
           m_ShaderCubePonctLight->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+          m_ShaderCubePonctLight->SetUniform3f("uKd", lightManager.pointLightList()[0].uKd.x, lightManager.pointLightList()[0].uKd.y, lightManager.pointLightList()[0].uKd.z);
+          m_ShaderCubePonctLight->SetUniform3f("uKs", lightManager.pointLightList()[0].uKs.x, lightManager.pointLightList()[0].uKs.y, lightManager.pointLightList()[0].uKs.z);
+          m_ShaderCubePonctLight->SetUniform3f("uLightPos", lightManager.pointLightList()[0].lightPosition.x, lightManager.pointLightList()[0].lightPosition.y, lightManager.pointLightList()[0].lightPosition.z);
+          m_ShaderCubePonctLight->SetUniform3f("uLightIntensity", lightManager.pointLightList()[0].lightIntensity.x, lightManager.pointLightList()[0].lightIntensity.y, lightManager.pointLightList()[0].lightIntensity.z);
+          m_ShaderCubePonctLight->SetUniform1f("uShininess", lightManager.pointLightList()[0].shininess);
       }
-
       GLCall(glDrawArraysInstanced(GL_POINTS, 0, m_CubeList.size(), m_CubeList.size()));
     }
 

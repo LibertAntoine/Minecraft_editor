@@ -155,12 +155,18 @@ namespace interaction {
 
 	void Interface::LightController() {
 		ImGui::Text("Directive Light Controller : ");
-		ImGui::DragFloat3("uKs", &m_light->dirLight().uKs.x, 0.01f, 0 , 1);
-		ImGui::DragFloat3("uKd", &m_light->dirLight().uKd.x, 0.01f, 0, 1);
-		ImGui::DragFloat3("Light Direction", &m_light->direction().x, 0.01f, -1, 1);
-		ImGui::DragFloat3("Light Intensity", &m_light->dirLight().lightIntensity.x, 0.01f, 0, 100);
-		ImGui::DragFloat("Shininess", &m_light->dirLight().shininess, 0.01f, 0, 1000);
+		ImGui::DragFloat3("uKs##DirLight", &m_light->dirLight().uKs.x, 0.01f, 0 , 1);
+		ImGui::DragFloat3("uKd##DirLight", &m_light->dirLight().uKd.x, 0.01f, 0, 1);
+		ImGui::DragFloat3("Light Direction##DirLight", &m_light->direction().x, 0.01f, -1, 1);
+		ImGui::DragFloat3("Light Intensity##DirLight", &m_light->dirLight().lightIntensity.x, 0.01f, 0, 100);
+		ImGui::DragFloat("Shininess##DirLight", &m_light->dirLight().shininess, 0.01f, 0, 1000);
 
+		ImGui::Text("Ponctual Light Controller : ");
+		ImGui::DragFloat3("uKs##PosLight", &m_light->pointLightList()[0].uKs.x, 0.01f, 0, 1);
+		ImGui::DragFloat3("uKd##PosLight", &m_light->pointLightList()[0].uKd.x, 0.01f, 0, 1);
+		ImGui::DragFloat3("Light Direction##PosLight", &m_light->position().x, 0.01f);
+		ImGui::DragFloat3("Light Intensity##PosLight", &m_light->pointLightList()[0].lightIntensity.x, 0.01f, 0, 100);
+		ImGui::DragFloat("Shininess##PosLight", &m_light->pointLightList()[0].shininess, 0.01f, 0, 1000);
 	}
 
 

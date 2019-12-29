@@ -54,7 +54,7 @@ namespace interaction {
 
 	private:
 		/* ImGUI WIDGET */
-                void RBFFile(interaction::CubeSelector& cubeSelector, const char* label);
+        void RBFFile(interaction::CubeSelector& cubeSelector, const char* label);
 		void ComboTexture(std::vector<unsigned int>& textures, const char* label);
 		void ComboMultiTexture(std::vector<unsigned int>& textures, const char* label);
 		bool DragIntSameLine(const int& nb, int* value, const int& step = 1, const int& min = 0, const int& max = 100, const char* symbol = "");
