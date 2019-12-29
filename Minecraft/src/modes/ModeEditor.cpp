@@ -181,68 +181,88 @@ namespace modes {
 
   void ModeEditor::OnEvent(const SDL_Event &e)
   {
-    switch(e.type) {
-      case SDL_MOUSEWHEEL:
-				if ( ImGui::IsAnyWindowHovered() == false ) m_FreeCam.moveFront(e.wheel.y);
-        break;
+		if ( ImGui::IsAnyWindowHovered() == false ) {
+			switch(e.type) {
+				case SDL_MOUSEWHEEL:
+					m_FreeCam.moveFront(e.wheel.y);
+					break;
 
-      case SDL_MOUSEBUTTONDOWN:
-        if ( e.button.button == SDL_BUTTON_MIDDLE ) m_moveCamEye = true;
-        else if ( e.button.button == SDL_BUTTON_LEFT  && ImGui::IsAnyWindowHovered() == false ) m_CubeSelector.MoveSelectorToClick(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
-        break;
-
-      case SDL_MOUSEBUTTONUP:
-        if ( e.button.button == SDL_BUTTON_MIDDLE ) m_moveCamEye = false;
-        if ( e.button.button == SDL_BUTTON_LEFT ) m_slideDraw = false;
-        break;
-
-      case SDL_MOUSEMOTION:
-        if ( m_moveCamEye && m_moveShift && ImGui::IsAnyWindowHovered() == false) {
-
-          if ( e.motion.xrel != 0 ) m_FreeCam.moveLeft( float(e.motion.xrel) * 0.01);
-          if ( e.motion.yrel != 0 ) m_FreeCam.moveUp( float(e.motion.yrel) * 0.01);
-
-        }
-        else if ( m_moveCamEye && ImGui::IsAnyWindowHovered() == false) {
-
-          if ( e.motion.xrel != 0 ) m_FreeCam.rotateLeft( float(e.motion.xrel) * 0.5);
-          if ( e.motion.yrel != 0 ) m_FreeCam.rotateUp( float(e.motion.yrel) * 0.5);
-
-        } 
-				else if ( m_slideDraw == true && ImGui::IsAnyWindowHovered() == false ) {
-					// TODO: draw
-					m_CubeSelector.MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
-					if ( m_CubeSelector.currentCube() ) {
-						int cubeStyle = m_CubeSelector.selectorCube().type();
-						m_CubeRenderer.updateType();
-						m_CubeSelector.currentCube()->type() = m_CubeSelector.selectorCube().type();
-						if (cubeStyle == form::COLORED) {
-							static float color[3] = { m_CubeSelector.selectorCube().color().x, m_CubeSelector.selectorCube().color().y, m_CubeSelector.selectorCube().color().z, };
-							m_CubeSelector.currentCube()->Setcolor(glm::vec3(color[0], color[1], color[2]));
-							m_CubeRenderer.updateColor();
-						}
-						else if (cubeStyle == form::TEXTURED) {
-							m_CubeSelector.currentCube()->texture() = m_CubeSelector.selectorCube().texture();
-							m_CubeRenderer.updateTexture();
-						} else if (cubeStyle == form::MULTI_TEXTURED) {
-							m_CubeSelector.currentCube()->texture() = m_CubeSelector.selectorCube().texture();
-							m_CubeRenderer.updateTexture();
-						}
-						m_CubeSelector.refresh();
-				}
+				case SDL_MOUSEBUTTONDOWN:
+					if ( e.button.button == SDL_BUTTON_MIDDLE ) m_middleClick = true;
+					else if ( e.button.button == SDL_BUTTON_LEFT ) {
+						m_leftClick = true;
+						m_CubeSelector.MoveSelectorToClick(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
 					}
-        break;
+					break;
 
-      case SDL_KEYDOWN:
-        if ( e.key.keysym.sym == SDLK_LSHIFT ) m_moveShift = true;
-				else if ( e.key.keysym.sym == SDLK_LCTRL ) m_slideDraw = true;
-        break;
+				case SDL_MOUSEBUTTONUP:
+					if ( e.button.button == SDL_BUTTON_MIDDLE ) m_middleClick = false;
+					if ( e.button.button == SDL_BUTTON_LEFT ) m_leftClick = false;
+					break;
 
-      case SDL_KEYUP:
-        if ( e.key.keysym.sym == SDLK_LSHIFT ) m_moveShift = false;
-				else if ( e.key.keysym.sym == SDLK_LCTRL ) m_slideDraw = false;
-				break;
-    }
+				case SDL_MOUSEMOTION:
+					if ( m_middleClick && m_shiftKey ) {
+
+						if ( e.motion.xrel != 0 ) m_FreeCam.moveLeft( float(e.motion.xrel) * 0.01);
+						if ( e.motion.yrel != 0 ) m_FreeCam.moveUp( float(e.motion.yrel) * 0.01);
+
+					}
+					else if ( m_middleClick ) {
+
+						if ( e.motion.xrel != 0 ) m_FreeCam.rotateLeft( float(e.motion.xrel) * 0.5);
+						if ( e.motion.yrel != 0 ) m_FreeCam.rotateUp( float(e.motion.yrel) * 0.5);
+
+					} 
+					else if ( m_ctrlKey && m_leftClick ) {
+						// TODO: draw
+						m_CubeSelector.MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
+						if ( m_CubeSelector.currentCube() ) {
+							int cubeStyle = m_CubeSelector.selectorCube().type();
+							m_CubeRenderer.updateType();
+							m_CubeSelector.currentCube()->type() = m_CubeSelector.selectorCube().type();
+							if (cubeStyle == form::COLORED) {
+								static float color[3] = { m_CubeSelector.selectorCube().color().x, m_CubeSelector.selectorCube().color().y, m_CubeSelector.selectorCube().color().z, };
+								m_CubeSelector.currentCube()->Setcolor(glm::vec3(color[0], color[1], color[2]));
+								m_CubeRenderer.updateColor();
+							}
+							else if (cubeStyle == form::TEXTURED) {
+								m_CubeSelector.currentCube()->texture() = m_CubeSelector.selectorCube().texture();
+								m_CubeRenderer.updateTexture();
+							} else if (cubeStyle == form::MULTI_TEXTURED) {
+								m_CubeSelector.currentCube()->texture() = m_CubeSelector.selectorCube().texture();
+								m_CubeRenderer.updateTexture();
+							}
+							// TODO: check if necessary
+							m_CubeSelector.refresh();
+						}
+						else if ( m_altKey ) {
+							m_CubeSelector.AddToSelector();
+						}
+					}
+					else if ( m_altKey && m_leftClick ) {
+						m_CubeSelector.MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
+						if ( m_CubeSelector.currentCube() ) {
+							// TODO: check face somehow
+						}
+						else {
+							m_CubeSelector.AddToSelector();
+						}
+					}
+					break;
+
+				case SDL_KEYDOWN:
+					if ( e.key.keysym.sym == SDLK_LSHIFT || e.key.keysym.sym == SDLK_RSHIFT ) m_shiftKey = true;
+					else if ( e.key.keysym.sym == SDLK_LCTRL || e.key.keysym.sym == SDLK_RCTRL ) m_ctrlKey = true;
+					else if ( e.key.keysym.sym == SDLK_LALT || e.key.keysym.sym == SDLK_RALT ) m_altKey = true;
+					break;
+
+				case SDL_KEYUP:
+					if ( e.key.keysym.sym == SDLK_LSHIFT || e.key.keysym.sym == SDLK_RSHIFT ) m_shiftKey = false;
+					else if ( e.key.keysym.sym == SDLK_LCTRL || e.key.keysym.sym == SDLK_RCTRL ) m_ctrlKey = false;
+					else if ( e.key.keysym.sym == SDLK_LALT || e.key.keysym.sym == SDLK_RALT ) m_altKey = false;
+					break;
+			}
+		}
   }
 
 

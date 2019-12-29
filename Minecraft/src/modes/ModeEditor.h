@@ -45,7 +45,14 @@ private:
   Texture m_textureSelectionGround; /// Offscreen texture that contains mouse selectable (visible) ground
   bool m_moveCamEye = false;
   bool m_moveShift = false;
-  bool m_slideDraw = false;
+  bool m_slideMouse = false;
+
+  bool m_altKey = false;
+  bool m_ctrlKey = false;
+  bool m_shiftKey = false;
+
+  bool m_leftClick = false;
+  bool m_middleClick = false;
 
 
 
