@@ -49,6 +49,7 @@ namespace interaction {
 
 		inline glm::vec3& direction() { return m_direction; };
 		inline glm::vec3& position() { return m_position; };
+		inline lightStatus& currentLight() { return m_currentLight; }
 
 
 

@@ -22,28 +22,6 @@ void main() {
 	data_vs.type = type;
 }
 
-#shader fragment
-#version 440 core
-
-in gData
-{
-	vec2 tex_coord;
-	vec4 color;
-	flat float textureLayer;
-	flat int type;
-} data_gs;
-
-out vec4 fFragTexture;
-
-uniform sampler2DArray uTexArray;
-
-void main()
-{
-	if (data_gs.type == 0)
-		fFragTexture = data_gs.color;
-	else if (data_gs.type == 1 || data_gs.type == 2)
-		fFragTexture = vec4(texture(uTexArray, vec3(data_gs.tex_coord.xy, data_gs.textureLayer)));
-};
 
 
 #shader geometry
@@ -100,7 +78,7 @@ const int  cubeIndices[24] = int[24]
 
 void main() {
 	float tex[6] = { data_vs[0].tex1.x, data_vs[0].tex1.y, data_vs[0].tex1.z,
-	data_vs[0].tex2.x, data_vs[0].tex2.y, data_vs[0].tex2.z};
+	data_vs[0].tex2.x, data_vs[0].tex2.y, data_vs[0].tex2.z };
 
 	for (int j = 0; j < gl_in.length(); j++) {
 		for (int k = 0; k < 6; ++k) {
@@ -115,6 +93,34 @@ void main() {
 				EmitVertex();
 			}
 			EndPrimitive();
-		}	
+		}
 	}
 }
+
+
+
+
+#shader fragment
+#version 440 core
+
+in gData
+{
+	vec2 tex_coord;
+	vec4 color;
+	flat float textureLayer;
+	flat int type;
+} data_gs;
+
+out vec4 fFragTexture;
+
+uniform sampler2DArray uTexArray;
+
+void main()
+{
+	if (data_gs.type == 0)
+		fFragTexture = data_gs.color;
+	else if (data_gs.type == 1 || data_gs.type == 2)
+		fFragTexture = vec4(texture(uTexArray, vec3(data_gs.tex_coord.xy, data_gs.textureLayer)));
+};
+
+

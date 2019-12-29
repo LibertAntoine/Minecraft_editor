@@ -63,11 +63,27 @@ void CubeRenderer::del(form::Cube* cube) {
       glm::mat4 MVMatrix = view;
       MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
       glActiveTexture(GL_TEXTURE0);
-      m_ShaderCube->Bind();
-      m_ShaderCube->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-      m_ShaderCube->Bind();
       texture.Bind();
       m_VAO->Bind();
+
+      if (lightManager.currentLight() == interaction::lightStatus::NONE) {
+          m_ShaderCube->Bind();
+          m_ShaderCube->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+      }
+      else if (lightManager.currentLight() == interaction::lightStatus::DIRECTIONNAL) {
+          m_ShaderCubeDirLight->Bind();
+          m_ShaderCubeDirLight->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+          m_ShaderCubeDirLight->SetUniform3f("uKd", lightManager.dirLight().uKd.x, lightManager.dirLight().uKd.y, lightManager.dirLight().uKd.z);
+          m_ShaderCubeDirLight->SetUniform3f("uKs", lightManager.dirLight().uKs.x, lightManager.dirLight().uKs.y, lightManager.dirLight().uKs.z);
+          m_ShaderCubeDirLight->SetUniform3f("uLightDir_vs", lightManager.dirLight().lightDirection.x, lightManager.dirLight().lightDirection.y, lightManager.dirLight().lightDirection.z);
+          m_ShaderCubeDirLight->SetUniform3f("uLightIntensity", lightManager.dirLight().lightIntensity.x, lightManager.dirLight().lightIntensity.y, lightManager.dirLight().lightIntensity.z);
+          m_ShaderCubeDirLight->SetUniform1f("uShininess", lightManager.dirLight().shininess);
+      }
+      else if (lightManager.currentLight() == interaction::lightStatus::PONCTUAL) {
+          m_ShaderCubePonctLight->Bind();
+          m_ShaderCubePonctLight->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+      }
+
       GLCall(glDrawArraysInstanced(GL_POINTS, 0, m_CubeList.size(), m_CubeList.size()));
     }
 

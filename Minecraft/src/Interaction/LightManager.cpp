@@ -24,9 +24,10 @@ namespace interaction {
 	}
 
 	LightManager::~LightManager() {
-	
-	
 	}
 
+	void LightManager::AddPonctLight(const PointLight& pointLight) {
+		m_pointLightList.push_back(pointLight);
+	}
 
 }
