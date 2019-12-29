@@ -135,7 +135,9 @@ void CubeRenderer::del(form::Cube* cube) {
         GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
         
-        glm::mat4 MVMatrix = view * MVMatrix;
+				glm::mat4 MVMatrix(1);
+        MVMatrix = view * MVMatrix;
+
         m_VAO->Bind();
         m_ShaderClickSelection->Bind();
         m_ShaderClickSelection->SetUniformMat4f("uMVMatrix", MVMatrix);
@@ -188,11 +190,20 @@ void CubeRenderer::del(form::Cube* cube) {
 
 
     void CubeRenderer::updateCubeId() {
-        std::vector<unsigned int> cubeId;
+        std::vector<uint32_t> cubeId;
         std::for_each(m_CubeList.begin(), m_CubeList.end(),
             [&cubeId](form::Cube& cube) {
-            cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32);
-            cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF));
+						
+						// BUG: Weird vector behavior : parts mus be initialised outside of the push_back
+						// cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32);
+						// cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF));
+						
+						GLuint idPart[2];
+						idPart[0] = (intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32;
+						idPart[1] = (intptr_t(&cube) & 0xFFFFFFFF);
+
+            cubeId.push_back(idPart[0]);
+            cubeId.push_back(idPart[1]);
         });
         m_VertexBufferCubeId->Update(cubeId.data(), 2 * sizeof(unsigned int) * m_CubeList.size());
     };
