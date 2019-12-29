@@ -4,25 +4,19 @@
 #include "forms/Cube.h"
 
 namespace renderer {
+
+
 CubeRenderer::CubeRenderer()
+    :m_ShaderCube(std::make_unique<Shader>("res/shaders/Cube.shader")),
+    m_ShaderCubeDirLight(std::make_unique<Shader>("res/shaders/CubeDL.shader")),
+    m_ShaderCubePonctLight(std::make_unique<Shader>("res/shaders/CubePL.shader")),
+    m_ShaderSelector(std::make_unique<Shader>("res/shaders/Selector.shader")),
+    m_VAO(std::make_unique<VertexArray>()),
+    m_VertexBufferPosition(std::make_unique<VertexBuffer>(nullptr, 0)),
+    m_VertexBufferColor(std::make_unique<VertexBuffer>(nullptr, 0)),
+    m_VertexBufferTexture(std::make_unique<VertexBuffer>(nullptr, 0)),
+    m_VertexBufferType(std::make_unique<VertexBuffer>(nullptr, 0))
 {
-  m_ShaderTexture = std::make_unique<Shader>("res/shaders/Selector.shader");
-  m_ShaderGeometry = std::make_unique<Shader>("res/shaders/Cube.shader");
-
-  m_VAO = std::make_unique<VertexArray>();
-
-  m_VertexBufferPosition = std::make_unique<VertexBuffer>(nullptr, 0);
-  this->updatePosition();
-
-  m_VertexBufferColor = std::make_unique<VertexBuffer>(nullptr, 0);
-  this->updateColor();
-
-  m_VertexBufferTexture = std::make_unique<VertexBuffer>(nullptr, 0);
-  this->updateTexture();
-
-  m_VertexBufferType = std::make_unique<VertexBuffer>(nullptr, 0);
-  this->updateType();
-  
   VertexBufferLayout layoutPosition;
   layoutPosition.Push<int>(3);
 
@@ -62,50 +56,44 @@ void CubeRenderer::del(form::Cube* cube) {
     this->updateType();
 }
 
-void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager, const TextureArray& texture)
-{
-  Renderer renderer;
+    void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager, const TextureArray& texture)
+    {
+      Renderer renderer;
   
-  glm::mat4 MVMatrix = view;
-  MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
-  glActiveTexture(GL_TEXTURE0);
-  m_ShaderGeometry->Bind();
-  m_ShaderGeometry->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-  m_ShaderGeometry->Bind();
-  texture.Bind();
-  m_VAO->Bind();
-  GLCall(glDrawArraysInstanced(GL_POINTS, 0, m_CubeList.size(), m_CubeList.size()));
-}
+      glm::mat4 MVMatrix = view;
+      MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
+      glActiveTexture(GL_TEXTURE0);
+      m_ShaderCube->Bind();
+      m_ShaderCube->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+      m_ShaderCube->Bind();
+      texture.Bind();
+      m_VAO->Bind();
+      GLCall(glDrawArraysInstanced(GL_POINTS, 0, m_CubeList.size(), m_CubeList.size()));
+    }
 
-void CubeRenderer::drawSelector(const glm::vec3 &position, const int &scale,
+    void CubeRenderer::drawSelector(const glm::vec3 &position, const int &scale,
                                 std::shared_ptr<Texture> texture,
                                 glm::mat4 view, glm::mat4 projection)
-{
-  Renderer renderer;
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  glDisable(GL_DEPTH_TEST);
-  GLCall(glLineWidth(5));
+    {
+      Renderer renderer;
+      glDisable(GL_DEPTH_TEST);
+      GLCall(glLineWidth(5));
 
 
-  glm::mat4 MVMatrix = glm::translate(
-      glm::mat4(1.0f), glm::vec3(-0.015, -0.015, -0.015));
-  MVMatrix =
-      glm::scale(MVMatrix, glm::vec3((scale + 0.03) * 2, (scale + 0.03) * 2, (scale + 0.03) * 2));
-  MVMatrix = view * MVMatrix;
+      glm::mat4 MVMatrix = glm::mat4(1.0f);
+      MVMatrix = glm::scale(MVMatrix, glm::vec3((scale)+1, (scale)+1, (scale)+1));
+      MVMatrix = view * MVMatrix;
+      
+      texture->Bind();
+      m_ShaderSelector->Bind();
+      m_ShaderSelector->SetUniform3f("uPosition", position.x, position.y, position.z);
+      m_ShaderSelector->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+      m_VAO->Bind();
+      glDrawArrays(GL_POINTS, 0, 1);
 
-
-  texture->Bind();
-  m_ShaderTexture->Bind();
-  m_ShaderTexture->SetUniform3f("uPosition", position.x, position.y, position.z);
-  m_ShaderTexture->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-  m_VAO->Bind();
-  glDrawArrays(GL_POINTS, 0, 1);
-
-  glEnable(GL_DEPTH_TEST);
-  texture->Unbind();
-};
-
-
+      glEnable(GL_DEPTH_TEST);
+      texture->Unbind();
+    };
 
 
     void CubeRenderer::updatePosition() {
