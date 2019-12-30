@@ -30,15 +30,15 @@ class ModeEditor : public Mode
 private:
   glm::mat4 m_ProjMatrix;
   renderer::GridRenderer m_GridRenderer;
-  renderer::CubeRenderer m_CubeRenderer;
-  TextureArray m_textureArray;
-  interaction::CubeSelector m_CubeSelector;
-  glm::vec3 m_backgroundColor;
+	std::shared_ptr<renderer::CubeRenderer> m_CubeRenderer;
+	std::shared_ptr<TextureArray> m_textureArray;
+	std::shared_ptr<interaction::CubeSelector> m_CubeSelector;
+	std::shared_ptr<glm::vec3> m_backgroundColor;
   renderer::GroundSelectionRenderer m_GroundSelectionRenderer;
+	std::shared_ptr<camera::FreeflyCamera> m_FreeCam;
+	std::shared_ptr<interaction::LightManager> m_LightManager;
   interaction::Interface m_Interface;
-  camera::FreeflyCamera m_FreeCam;
   renderer::CubeSelectionRenderer m_CubeSelectionRenderer;
-  interaction::LightManager m_LightManager;
   FrameBuffer m_frameBufferSelection; /// Custom framebuffer that is bound during selection texture rendering, also for queries
   DepthBuffer m_depthBufferSelection;
   Texture m_textureSelectionCube; /// Offscreen texture that contains mouse selectable(visible) Cubes
@@ -65,10 +65,10 @@ public:
   void OnRender() override;
   void OnImGuiRender() override;
 
-  inline glm::vec3& backgroundColor() { return  m_backgroundColor; };
-  inline camera::FreeflyCamera& freeCam() { return  m_FreeCam; };
-  inline interaction::CubeSelector& cubeSelector() { return  m_CubeSelector; };
-  inline interaction::LightManager& lightManager() { return  m_LightManager; };
+  inline glm::vec3& backgroundColor() { return  *m_backgroundColor; };
+  inline camera::FreeflyCamera& freeCam() { return  *m_FreeCam; };
+  inline interaction::CubeSelector& cubeSelector() { return  *m_CubeSelector; };
+  inline interaction::LightManager& lightManager() { return  *m_LightManager; };
 
 	void resetInteractionBool();
 

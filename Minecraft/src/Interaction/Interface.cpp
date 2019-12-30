@@ -1,10 +1,9 @@
 #include "Interface.h"
 
 namespace interaction {
-	Interface::Interface(renderer::CubeRenderer& renderer, interaction::CubeSelector& selector, TextureArray& textureArray,
-		camera::FreeflyCamera& camera, interaction::LightManager& light, glm::vec3& backgroundColor)
-		:m_cubeRenderer(&renderer) , m_cubeSelector(&selector), m_textureArray(&textureArray), 
-		m_camera(&camera), m_light(&light), m_backgroundColor(&backgroundColor)
+	Interface::Interface(std::shared_ptr<renderer::CubeRenderer> renderer, std::shared_ptr<interaction::CubeSelector> selector, std::shared_ptr<TextureArray> textureArray, std::shared_ptr<camera::FreeflyCamera> camera, std::shared_ptr<interaction::LightManager> light, std::shared_ptr<glm::vec3> backgroundColor)
+		:m_cubeRenderer(renderer) , m_cubeSelector(selector), m_textureArray(textureArray), 
+		m_camera(camera), m_light(light), m_backgroundColor(backgroundColor)
 	{
 	}
 

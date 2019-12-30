@@ -3,8 +3,8 @@
 
 namespace interaction {
 
-  CubeSelector::CubeSelector(renderer::CubeRenderer& renderer, TextureArray& textureArray, const int& capacity)
-    :m_Cuberenderer(&renderer), m_TextureArray(&textureArray), m_SizeWorld(capacity), m_CubeWorld(capacity * 2, nullptr),
+  CubeSelector::CubeSelector(std::shared_ptr<renderer::CubeRenderer> renderer, std::shared_ptr<TextureArray> textureArray, const int& capacity)
+    :m_Cuberenderer(renderer), m_TextureArray(textureArray), m_SizeWorld(capacity), m_CubeWorld(capacity * 2, nullptr),
       m_textSelector(std::make_unique<Texture>("res/textures/Cube/Texture_Selection.png", "Selection_Texture")),
       m_textSelected(std::make_unique<Texture>("res/textures/Cube/Texture_Selected.png", "Selected_Texture")),
       m_textCopy(std::make_unique<Texture>("res/textures/Cube/Texture_Selected.png", "Copy_Texture"))

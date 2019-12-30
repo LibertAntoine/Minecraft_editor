@@ -31,8 +31,8 @@ namespace interaction {
 	class CubeSelector
 	{
 	private:
-		renderer::CubeRenderer* m_Cuberenderer;
-		TextureArray* m_TextureArray;
+		std::shared_ptr<renderer::CubeRenderer> m_Cuberenderer;
+		std::shared_ptr<TextureArray> m_TextureArray;
 		int m_SizeWorld;
 		Octree<form::Cube*> m_CubeWorld; // Documentation : https://nomis80.org/code/doc/classOctree.html
 		Selector* m_selector;
@@ -47,7 +47,7 @@ namespace interaction {
                 RBF m_rbf; //TODO: go to private w/ getter
 
 		CubeSelector() = delete;
-		CubeSelector(renderer::CubeRenderer& renderer, TextureArray& textureArray, const int& capacity = 2024);
+		CubeSelector(std::shared_ptr<renderer::CubeRenderer> renderer, std::shared_ptr<TextureArray> textureArray, const int& capacity = 2024);
 		~CubeSelector();
 
 		inline Selector* selector() { return m_selector; };
