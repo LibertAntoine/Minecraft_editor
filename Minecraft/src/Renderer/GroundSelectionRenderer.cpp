@@ -52,7 +52,6 @@ namespace renderer {
     glm::mat4 Translation = glm::mat4(1);
     Translation = glm::translate(Translation, glm::vec3(glm::round(camera.position().x), glm::round(camera.position().y), 0.f));
     m_Shader->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-    m_Shader->SetUniformMat4f("uMVMatrix", MVMatrix);
     m_Shader->SetUniformMat4f("uTranslation", Translation);
     renderer.Draw(GL_TRIANGLES, *m_VAO, *m_IndexBuffer, *m_Shader);
     m_Shader->Unbind();

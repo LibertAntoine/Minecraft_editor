@@ -2,10 +2,10 @@
 #version 330 core
 
 layout(location = 0) in vec3 position;
-layout(location = 5) in ivec2 cubeId;
+layout(location = 5) in uvec2 cubeId;
 
 out vData{
-	flat ivec2 cubeId;
+	flat uvec2 cubeId;
 } data_vs;
 
 void main()
@@ -22,7 +22,7 @@ layout(triangle_strip, max_vertices = 64) out;
 
 
 in vData{
-	flat ivec2 cubeId;
+	flat uvec2 cubeId;
 } data_vs[];
 
 out gData
@@ -85,5 +85,5 @@ layout(location = 0) out uvec4 fFragCubeId;
 // NOTE: uint is a 32-bit unsigned integer
 void main()
 {
-  fFragCubeId = uvec4(data_gs.cubeId.x, data_gs.cubeId.y, 0, 1);
+  fFragCubeId = uvec4(data_gs.cubeId.x, data_gs.cubeId.y, data_gs.face, 1);
 };

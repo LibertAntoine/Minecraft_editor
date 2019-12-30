@@ -57,7 +57,7 @@ form::Cube *CubeRenderer::add(const form::Cube& cube)
 }
 
 void CubeRenderer::del(form::Cube* cube) { 
-    /*m_CubeList.remove(*cube)*/;
+    m_CubeList.remove(*cube);
     this->updatePosition();
     this->updateColor();
     this->updateTexture();
@@ -72,6 +72,7 @@ void CubeRenderer::del(form::Cube* cube) {
       glm::mat4 MVMatrix = view;
       MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
       glActiveTexture(GL_TEXTURE0);
+			glEnable(GL_CULL_FACE); // NOTE: VERY AWESOME SHIT : do not print triangles that are not visible (great performance improvement)
       texture.Bind();
       m_VAO->Bind();
 
@@ -100,6 +101,7 @@ void CubeRenderer::del(form::Cube* cube) {
       }
 
       GLCall(glDrawArraysInstanced(GL_POINTS, 0, m_CubeList.size(), m_CubeList.size()));
+			glDisable(GL_CULL_FACE);
     }
 
     void CubeRenderer::drawSelector(const glm::vec3 &position, const int &scale,
@@ -130,15 +132,17 @@ void CubeRenderer::del(form::Cube* cube) {
        
         GLCall(glDrawBuffer(GL_COLOR_ATTACHMENT0));
         glEnable(GL_DEPTH_TEST);
+        glDisable(GL_CULL_FACE);
         glClearColor(1, 1, 1, 0); // White for unselectable air
         glViewport(0, 0, App::WINDOW_WIDTH, App::WINDOW_HEIGHT);
         GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
         
-        glm::mat4 MVMatrix = view * MVMatrix;
+				glm::mat4 MVMatrix = view;
+				MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
+
         m_VAO->Bind();
         m_ShaderClickSelection->Bind();
-        m_ShaderClickSelection->SetUniformMat4f("uMVMatrix", MVMatrix);
         m_ShaderClickSelection->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
         GLCall(glDrawArraysInstanced(GL_POINTS, 0, m_CubeList.size(), m_CubeList.size()));
 
@@ -188,11 +192,20 @@ void CubeRenderer::del(form::Cube* cube) {
 
 
     void CubeRenderer::updateCubeId() {
-        std::vector<unsigned int> cubeId;
+        std::vector<uint32_t> cubeId;
         std::for_each(m_CubeList.begin(), m_CubeList.end(),
             [&cubeId](form::Cube& cube) {
-            cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32);
-            cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF));
+						
+						// BUG: Weird vector behavior : parts mus be initialised outside of the push_back
+						// cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32);
+						// cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF));
+						
+						GLuint idPart[2];
+						idPart[0] = (intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32;
+						idPart[1] = (intptr_t(&cube) & 0xFFFFFFFF);
+
+            cubeId.push_back(idPart[0]);
+            cubeId.push_back(idPart[1]);
         });
         m_VertexBufferCubeId->Update(cubeId.data(), 2 * sizeof(unsigned int) * m_CubeList.size());
     };

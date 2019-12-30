@@ -3,8 +3,8 @@
 
 namespace interaction {
 
-  CubeSelector::CubeSelector(renderer::CubeRenderer& renderer, TextureArray& textureArray, const int& capacity)
-    :m_Cuberenderer(&renderer), m_TextureArray(&textureArray), m_SizeWorld(capacity), m_CubeWorld(capacity * 2, nullptr),
+  CubeSelector::CubeSelector(std::shared_ptr<renderer::CubeRenderer> renderer, std::shared_ptr<TextureArray> textureArray, const int& capacity)
+    :m_Cuberenderer(renderer), m_TextureArray(textureArray), m_SizeWorld(capacity), m_CubeWorld(capacity * 2, nullptr),
       m_textSelector(std::make_unique<Texture>("res/textures/Cube/Texture_Selection.png", "Selection_Texture")),
       m_textSelected(std::make_unique<Texture>("res/textures/Cube/Texture_Selected.png", "Selected_Texture")),
       m_textCopy(std::make_unique<Texture>("res/textures/Cube/Texture_Selected.png", "Copy_Texture"))
@@ -185,4 +185,61 @@ namespace interaction {
     }
   }
 
+	void CubeSelector::MoveSelectorToClickFace(int x, int y, const FrameBuffer& framebufferSelection)
+	{
+		framebufferSelection.Bind();
+		GLuint data[4];
+		framebufferSelection.getDataAtPosition4ui(x, y, data, GL_COLOR_ATTACHMENT0);
+    framebufferSelection.Unbind();        
+
+		switch( data[2] ) {
+			case 0: 
+				this->MoveSelector(glm::vec3(0,0,-1));
+				break;
+			case 1: 
+				this->MoveSelector(glm::vec3(1,0,0));
+				break;
+			case 2: 
+				this->MoveSelector(glm::vec3(0,0,1));
+				break;
+			case 3: 
+				this->MoveSelector(glm::vec3(0,-1,0));
+				break;
+			case 4: 
+				this->MoveSelector(glm::vec3(-1,0,0));
+				break;
+			case 5: 
+				this->MoveSelector(glm::vec3(0,1,0));
+				break;
+		}
+	}
+
+	void CubeSelector::MoveSelectorToClick(int x, int y, const FrameBuffer& framebufferSelection)
+	{
+		/* NOTE: check which FrameBuffer is currently bound
+			 GLint drawFboId = 0, readFboId = 0;
+			 glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFboId);
+			 glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFboId);
+		//std::cout << "checking current FBO. Draw:" << drawFboId << ", Read: " << readFboId << std::endl;
+		*/
+		framebufferSelection.Bind();
+		GLuint data[4];
+		framebufferSelection.getDataAtPosition4ui(x, y, data, GL_COLOR_ATTACHMENT0);
+		// NOTE: Check if a cube has been selected
+		if ( data[3] != 0 ) {
+			form::Cube* selectionAddress;
+			// NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
+			selectionAddress = (form::Cube*)( (intptr_t( data[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( data[1] ) & 0xFFFFFFFF ) );
+
+			this->SetSelector(glm::ivec3(selectionAddress->position()));
+		}
+		// NOTE: No cube is under the position so check the ground
+		else {
+			GLint position[4];
+			framebufferSelection.getDataAtPosition4i(x, y, position, GL_COLOR_ATTACHMENT1);
+			if ( position[3] != 0 ) this->SetSelector(glm::ivec3(position[0], 0, position[1]));
+		}
+
+    framebufferSelection.Unbind();        
+	}
 }
