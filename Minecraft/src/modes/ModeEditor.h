@@ -53,6 +53,7 @@ private:
   bool m_shiftKey = false;
 
   bool m_leftClick = false;
+  bool m_rightClick = false;
   bool m_middleClick = false;
 
 

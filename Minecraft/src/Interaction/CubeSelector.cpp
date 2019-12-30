@@ -227,6 +227,7 @@ namespace interaction {
 		framebufferSelection.getDataAtPosition4ui(x, y, data, GL_COLOR_ATTACHMENT0);
 		// NOTE: Check if a cube has been selected
 		if ( data[3] != 0 ) {
+			// TODO, BUG: Crash when, drawing real far out of the map. Unknown reason. selectionAddress gets a bad address and the above condition should not pass where there's no cube
 			form::Cube* selectionAddress;
 			// NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
 			selectionAddress = (form::Cube*)( (intptr_t( data[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( data[1] ) & 0xFFFFFFFF ) );

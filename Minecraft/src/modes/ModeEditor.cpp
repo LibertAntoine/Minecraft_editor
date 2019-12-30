@@ -191,14 +191,18 @@ namespace modes {
 
 				case SDL_MOUSEBUTTONDOWN:
 					if ( e.button.button == SDL_BUTTON_MIDDLE ) m_middleClick = true;
+					else if ( e.button.button == SDL_BUTTON_RIGHT ) {
+						m_rightClick = true;
+						m_CubeSelector->MoveSelectorToClick(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
+						if ( m_ctrlKey ) {
+							if ( m_CubeSelector->currentCube() ) m_CubeSelector->DeleteToSelector();
+						}
+					}
 					else if ( e.button.button == SDL_BUTTON_LEFT ) {
 						m_leftClick = true;
 						m_CubeSelector->MoveSelectorToClick(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
-						if ( m_altKey == true ) {
-							if ( m_CubeSelector->currentCube() ) {
-								// TODO: check face somehow
-								m_CubeSelector->MoveSelectorToClickFace(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
-							}
+						if ( m_altKey || m_ctrlKey ) {
+							if ( m_CubeSelector->currentCube() && !m_ctrlKey ) m_CubeSelector->MoveSelectorToClickFace(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
 							m_CubeSelector->AddToSelector();
 						}
 					}
@@ -206,7 +210,8 @@ namespace modes {
 
 				case SDL_MOUSEBUTTONUP:
 					if ( e.button.button == SDL_BUTTON_MIDDLE ) m_middleClick = false;
-					if ( e.button.button == SDL_BUTTON_LEFT ) m_leftClick = false;
+					else if ( e.button.button == SDL_BUTTON_RIGHT ) m_rightClick = false;
+					else if ( e.button.button == SDL_BUTTON_LEFT ) m_leftClick = false;
 					break;
 
 				case SDL_MOUSEMOTION:
@@ -231,8 +236,8 @@ namespace modes {
 								m_CubeRenderer->updateType();
 							}
 							if (cubeStyle == form::COLORED) {
-								static float color[3] = { m_CubeSelector->selectorCube().color().x, m_CubeSelector->selectorCube().color().y, m_CubeSelector->selectorCube().color().z, };
-								m_CubeSelector->currentCube()->Setcolor(glm::vec3(color[0], color[1], color[2]));
+								//float color[3] = { m_CubeSelector->selectorCube().color().x, m_CubeSelector->selectorCube().color().y, m_CubeSelector->selectorCube().color().z, };
+								m_CubeSelector->currentCube()->Setcolor(glm::vec3(m_CubeSelector->selectorCube().color()));
 								m_CubeRenderer->updateColor();
 							}
 							else if (cubeStyle == form::TEXTURED) {
@@ -247,6 +252,12 @@ namespace modes {
 						}
 						else if ( m_altKey ) {
 							m_CubeSelector->AddToSelector();
+						}
+					}
+					else if ( m_ctrlKey && m_rightClick ) {
+						m_CubeSelector->MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
+						if ( m_CubeSelector->currentCube() ) {
+							m_CubeSelector->DeleteToSelector();
 						}
 					}
 					else if ( m_altKey && m_leftClick ) {
@@ -294,6 +305,7 @@ namespace modes {
 		m_shiftKey = false;
 		m_leftClick = false;
 		m_middleClick = false;
+		m_rightClick = false;
 	}
 
   void ModeEditor::OnImGuiRender()
