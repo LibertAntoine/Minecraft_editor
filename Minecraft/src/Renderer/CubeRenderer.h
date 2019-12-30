@@ -16,6 +16,11 @@ namespace renderer {
   class CubeRenderer 
   {
     private:
+			std::unique_ptr<Shader> m_ShaderCube;
+      std::unique_ptr<Shader> m_ShaderCubeDirLight;
+      std::unique_ptr<Shader> m_ShaderCubePonctLight;
+      std::unique_ptr<Shader> m_ShaderSelector;
+      std::unique_ptr<Shader> m_ShaderClickSelection;
       std::unique_ptr<VertexArray> m_VAO;
       std::unique_ptr<VertexBuffer> m_VertexBufferPosition;
       std::unique_ptr<VertexBuffer> m_VertexBufferColor;
@@ -23,11 +28,6 @@ namespace renderer {
       std::unique_ptr<VertexBuffer> m_VertexBufferType;
       std::unique_ptr<VertexBuffer> m_VertexBufferCubeId;
 
-      std::unique_ptr<Shader> m_ShaderSelector;
-	  std::unique_ptr<Shader> m_ShaderCube;
-      std::unique_ptr<Shader> m_ShaderCubeDirLight;
-      std::unique_ptr<Shader> m_ShaderCubePonctLight;
-      std::unique_ptr<Shader> m_ShaderClickSelection;
       
     public:
       std::list<form::Cube> m_CubeList;

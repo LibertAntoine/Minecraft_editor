@@ -143,7 +143,6 @@ void CubeRenderer::del(form::Cube* cube) {
 
         m_VAO->Bind();
         m_ShaderClickSelection->Bind();
-        m_ShaderClickSelection->SetUniformMat4f("uMVMatrix", MVMatrix);
         m_ShaderClickSelection->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
         GLCall(glDrawArraysInstanced(GL_POINTS, 0, m_CubeList.size(), m_CubeList.size()));
 
