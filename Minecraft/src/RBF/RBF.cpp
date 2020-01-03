@@ -132,7 +132,7 @@ void RBF::solveOmegas()
   }
   omega = phis.colPivHouseholderQr().solve(solutions);
   for ( int i = 0; i < solutions.size(); i++ ) {
-    std::get<2>(m_ControlPoints[i]) = solutions(i);
+    std::get<2>(m_ControlPoints[i]) = omega(i);
   }
 }
 

@@ -47,6 +47,7 @@ include_directories( # Search directories for .h files
 	${CMAKE_SOURCE_DIR}/Minecraft/src
     	${CMAKE_SOURCE_DIR}/WinDependencies/SDL2/include
        ${CMAKE_SOURCE_DIR}/WinDependencies/glew-2.1.0/include
+       ${CMAKE_SOURCE_DIR}/WinDependencies
        ${CMAKE_SOURCE_DIR}/Minecraft/vendor
 )
 else()

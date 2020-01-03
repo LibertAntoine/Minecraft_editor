@@ -187,7 +187,10 @@ void RBF::updateEpsilon(const double newEpsilon)
 
 double RBF::computeDistance(const Eigen::Vector3i& pointA, const Eigen::Vector3i& pointB) const
 {
-  double distance = ( pointB - pointA ).norm();
+	Eigen::Vector3d pointAd = pointA.cast<double>();
+	Eigen::Vector3d pointBd = pointB.cast<double>();
+
+  double distance = ( pointAd - pointBd ).norm();
   return distance;
 }
 
@@ -206,13 +209,13 @@ void RBF::solveOmegas()
 {
   Eigen::MatrixXd phis = phiMatrix();
   Eigen::VectorXd omega(phis.rows());
-  Eigen::VectorXd solutions(phis.rows());
+  Eigen::VectorXd weights(phis.rows());
   for ( size_t i = 0; i < m_ControlPoints.size(); i++ ) {
-    solutions(i) = std::get<1>(m_ControlPoints[i]);
+    weights(i) = std::get<1>(m_ControlPoints[i]);
   }
-  omega = phis.colPivHouseholderQr().solve(solutions);
-  for ( long int i = 0; i < solutions.size(); i++ ) {
-    std::get<2>(m_ControlPoints[i]) = solutions(i);
+  omega = phis.colPivHouseholderQr().solve(weights);
+  for ( long int i = 0; i < weights.size(); i++ ) {
+    std::get<2>(m_ControlPoints[i]) = omega(i);
   }
 }
 
