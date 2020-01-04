@@ -15,24 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Renderer.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VertexBuffer.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IndexBuffer.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VertexArray.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Shader.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -60,55 +42,73 @@
     <ClCompile Include="src\App.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\modes\Mode.cpp">
+    <ClCompile Include="src\GraphicEngine\Camera.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\forms\Cube.cpp">
+    <ClCompile Include="src\GraphicEngine\DepthBuffer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\VertexBufferLayout.cpp">
+    <ClCompile Include="src\GraphicEngine\FrameBuffer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Camera.cpp">
+    <ClCompile Include="src\GraphicEngine\IndexBuffer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\modes\ModeImGUITest.cpp">
+    <ClCompile Include="src\GraphicEngine\Renderer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\forms\Grid.cpp">
+    <ClCompile Include="src\GraphicEngine\Shader.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\CubeRenderer.cpp">
+    <ClCompile Include="src\GraphicEngine\Texture.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\GridRenderer.cpp">
+    <ClCompile Include="src\GraphicEngine\TextureArray.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\FrameBuffer.cpp">
+    <ClCompile Include="src\GraphicEngine\VertexArray.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Interaction\CubeSelector.cpp">
+    <ClCompile Include="src\GraphicEngine\VertexBuffer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Interaction\Interface.cpp">
+    <ClCompile Include="src\GraphicEngine\VertexBufferLayout.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\DepthBuffer.cpp">
+    <ClCompile Include="src\Modes\Mode.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Interaction\LightManager.cpp">
+    <ClCompile Include="src\Modes\ModeEditor.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextureArray.cpp">
+    <ClCompile Include="src\Modes\ModeImGUITest.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Interaction\RBF.cpp">
+    <ClCompile Include="src\MinecraftEditor\Interaction\Interface.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\RBF\RBF.cpp">
+    <ClCompile Include="src\MinecraftEditor\RBF\RBF.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\modes\ModeEditor.cpp">
+    <ClCompile Include="src\MinecraftEditor\Graphic\Lights\LightManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MinecraftEditor\Graphic\Renderers\CubeRenderer.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MinecraftEditor\Graphic\Renderers\GridRenderer.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MinecraftEditor\Graphic\forms\Cube.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MinecraftEditor\Graphic\forms\Grid.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MinecraftEditor\Interaction\CubeSelector.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MinecraftEditor\Interaction\RBF.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,28 +116,7 @@
     <None Include="vendor\octree\octree.tcc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Renderer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VertexBuffer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IndexBuffer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VertexBufferLayout.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VertexArray.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Shader.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="src\vendor\stb_image\stb_image.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Texture.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\vendor\glm\simd\common.h">
@@ -192,18 +171,6 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="vendor\stb_image\stb_image.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\App.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modes\Mode.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\forms\Cube.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Camera.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="vendor\glm\common.hpp">
@@ -275,21 +242,6 @@
     <ClInclude Include="vendor\glm\vector_relational.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\modes\ModeImGUITest.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\forms\Grid.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\CubeRenderer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\GridRenderer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\FrameBuffer.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="vendor\octree\array.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -311,28 +263,76 @@
     <ClInclude Include="vendor\octree\numtraits.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\Interaction\CubeSelector.h">
+    <ClInclude Include="src\App.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\Interaction\Interface.h">
+    <ClInclude Include="src\GraphicEngine\Camera.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\DepthBuffer.h">
+    <ClInclude Include="src\GraphicEngine\DepthBuffer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\Interaction\LightManager.h">
+    <ClInclude Include="src\GraphicEngine\FrameBuffer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\TextureArray.h">
+    <ClInclude Include="src\GraphicEngine\IndexBuffer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\Interaction\RBF.h">
+    <ClInclude Include="src\GraphicEngine\Renderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\RBF\RBF.h">
+    <ClInclude Include="src\GraphicEngine\Shader.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\modes\ModeEditor.h">
+    <ClInclude Include="src\GraphicEngine\Texture.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GraphicEngine\TextureArray.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GraphicEngine\VertexArray.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GraphicEngine\VertexBuffer.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GraphicEngine\VertexBufferLayout.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Modes\Mode.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Modes\ModeEditor.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Modes\ModeImGUITest.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Interaction\Interface.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\RBF\RBF.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Graphic\Lights\LightManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Graphic\Renderers\CubeRenderer.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Graphic\Renderers\GridRenderer.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Graphic\forms\Cube.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Graphic\forms\Grid.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Interaction\CubeSelector.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Interaction\RBF.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

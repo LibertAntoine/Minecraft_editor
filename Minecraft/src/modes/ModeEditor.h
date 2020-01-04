@@ -2,26 +2,26 @@
 
 #include "Mode.h"
 
-#include "Camera.h"
-#include "DepthBuffer.h"
-#include "FrameBuffer.h"
-#include "Interaction/CubeSelector.h"
-#include "Interaction/Interface.h"
-#include "Renderer/CubeRenderer.h"
-#include "Renderer/GridRenderer.h"
-#include "Texture.h"
-#include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
-#include "forms/Cube.h"
-#include "Interaction/LightManager.h"
-#include "TextureArray.h"
+#include "GraphicEngine/Camera.h"
+#include "GraphicEngine/DepthBuffer.h"
+#include "GraphicEngine/FrameBuffer.h"
+#include "MinecraftEditor/Interaction/CubeSelector.h"
+#include "MinecraftEditor/Interaction/Interface.h"
+#include "MinecraftEditor/Graphic/Renderers/CubeRenderer.h"
+#include "MinecraftEditor/Graphic/Renderers/GridRenderer.h"
+#include "GraphicEngine/Texture.h"
+#include "GraphicEngine/VertexBuffer.h"
+#include "GraphicEngine/VertexBufferLayout.h"
+#include "MinecraftEditor/Graphic/Forms/Cube.h"
+#include "MinecraftEditor/Graphic/Lights/LightManager.h"
+#include "GraphicEngine/TextureArray.h"
 #include <algorithm>
 #include <vector>
 
 
 #include <memory>
 
-namespace modes {
+namespace Modes {
 
 class ModeEditor : public Mode
 {

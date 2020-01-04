@@ -1,7 +1,7 @@
 #include "ModeEditor.h"
 #include <stdint.h>
 #include "ImGUI/imgui.h"
-#include "Renderer.h"
+#include "GraphicEngine/Renderer.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -9,7 +9,7 @@
 #include <string>
 #include "stb_image/stb_image.h"
 
-namespace modes {
+namespace Modes {
 
     ModeEditor::ModeEditor()
     :m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
@@ -44,7 +44,7 @@ namespace modes {
     GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, m_textureArray));
     GLCall(glTexStorage3D(GL_TEXTURE_2D_ARRAY,
         1,                    //5 mipmaps
-        GL_RGBA8,               //Internal format
+        GL_RGBA8,               //Internal Formsat
         Width, Height,           //width,height
         4                  //Number of layers
     ));
@@ -59,7 +59,7 @@ namespace modes {
         0,                      //Mipmap number
         0, 0, 0, //xoffset, yoffset, zoffset
         Width , Height , 1,          //width, height, depth
-        GL_RGBA,                 //format
+        GL_RGBA,                 //Formsat
         GL_UNSIGNED_BYTE,       //type
         LocalBuffer)); //pointer to data
 
@@ -69,7 +69,7 @@ namespace modes {
         0,                      //Mipmap number
         0, 0, 1, //xoffset, yoffset, zoffset
         1, 1, 1,         //width, height, depth
-        GL_RGB,                 //format
+        GL_RGB,                 //Formsat
         GL_UNSIGNED_BYTE,       //type
         color2)); //pointer to data
 
@@ -229,20 +229,20 @@ namespace modes {
 					else if ( m_ctrlKey && m_leftClick ) {
 						m_CubeSelector->MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
 						if ( m_CubeSelector->currentCube() ) {
-							form::CubeType cubeStyle = m_CubeSelector->selectorCube().type();
+							Forms::CubeType cubeStyle = m_CubeSelector->selectorCube().type();
 							if ( m_CubeSelector->currentCube()->type() != cubeStyle ) {
 								m_CubeSelector->currentCube()->type() = cubeStyle;
 								m_CubeRenderer->updateType();
 							}
-							if (cubeStyle == form::COLORED) {
+							if (cubeStyle == Forms::COLORED) {
 								//float color[3] = { m_CubeSelector->selectorCube().color().x, m_CubeSelector->selectorCube().color().y, m_CubeSelector->selectorCube().color().z, };
 								m_CubeSelector->currentCube()->Setcolor(glm::vec3(m_CubeSelector->selectorCube().color()));
 								m_CubeRenderer->updateColor();
 							}
-							else if (cubeStyle == form::TEXTURED) {
+							else if (cubeStyle == Forms::TEXTURED) {
 								m_CubeSelector->currentCube()->texture() = m_CubeSelector->selectorCube().texture();
 								m_CubeRenderer->updateTexture();
-							} else if (cubeStyle == form::MULTI_TEXTURED) {
+							} else if (cubeStyle == Forms::MULTI_TEXTURED) {
 								m_CubeSelector->currentCube()->texture() = m_CubeSelector->selectorCube().texture();
 								m_CubeRenderer->updateTexture();
 							}

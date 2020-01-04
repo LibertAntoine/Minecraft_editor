@@ -4,7 +4,7 @@
 #include <vector>
 #include <GL/glew.h>
 
-namespace form {
+namespace Forms {
 
   class Grid {
     public:

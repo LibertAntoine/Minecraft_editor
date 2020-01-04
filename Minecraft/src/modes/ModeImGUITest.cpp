@@ -3,7 +3,7 @@
 #include "ImGUI/imgui.h"
 
 
-namespace modes {
+namespace Modes {
 
 	ModeImGUITest::ModeImGUITest()
 

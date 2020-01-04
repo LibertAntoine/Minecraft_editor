@@ -198,22 +198,22 @@ namespace interaction {
 			};
 			int r = m_cubeSelector->currentCube()->type();
 			ImGui::Text("Type : "); ImGui::SameLine();
-			if (ImGui::RadioButton("Colored##1", &r, form::COLORED)) { 
-				m_cubeSelector->currentCube()->type() = form::COLORED;
+			if (ImGui::RadioButton("Colored##1", &r, Forms::COLORED)) { 
+				m_cubeSelector->currentCube()->type() = Forms::COLORED;
 				m_cubeRenderer->updateType(); 
 			}
 			ImGui::SameLine();
-			if (ImGui::RadioButton("Textured##1", &r, form::TEXTURED)) { 
-				m_cubeSelector->currentCube()->type() = form::TEXTURED;
+			if (ImGui::RadioButton("Textured##1", &r, Forms::TEXTURED)) { 
+				m_cubeSelector->currentCube()->type() = Forms::TEXTURED;
 				m_cubeRenderer->updateType();
 			}
 				ImGui::SameLine();
-			if (ImGui::RadioButton("Multi-textured##1", &r, form::MULTI_TEXTURED)) { 
-				m_cubeSelector->currentCube()->type() = form::MULTI_TEXTURED;
+			if (ImGui::RadioButton("Multi-textured##1", &r, Forms::MULTI_TEXTURED)) { 
+				m_cubeSelector->currentCube()->type() = Forms::MULTI_TEXTURED;
 				m_cubeRenderer->updateType();
 			}
 
-			if (r == form::COLORED) {
+			if (r == Forms::COLORED) {
 				static float color[3] = { m_cubeSelector->currentCube()->color().x,
 				m_cubeSelector->currentCube()->color().y,
 				m_cubeSelector->currentCube()->color().z, };
@@ -222,9 +222,9 @@ namespace interaction {
 					m_cubeRenderer->updateColor();
 				};
 			}
-			else if (r == form::TEXTURED) {
+			else if (r == Forms::TEXTURED) {
 				this->ComboTexture(m_cubeSelector->currentCube()->texture(), "Cube Texture");
-			} else if (r == form::MULTI_TEXTURED) {
+			} else if (r == Forms::MULTI_TEXTURED) {
 				this->ComboMultiTexture(m_cubeSelector->currentCube()->texture(), "Cube Multi-Texture");
 			}
 
@@ -244,23 +244,23 @@ namespace interaction {
 		};
 		static int e = 0;
 		ImGui::Text("Type : "); ImGui::SameLine();
-		ImGui::RadioButton("Colored##2", &e, form::COLORED); ImGui::SameLine();
-		ImGui::RadioButton("Textured##2", &e, form::TEXTURED); ImGui::SameLine();
-		ImGui::RadioButton("Multi-textured##2", &e, form::MULTI_TEXTURED);
-		if (e == form::COLORED) {
-			m_cubeSelector->selectorCube().type() = form::COLORED;
+		ImGui::RadioButton("Colored##2", &e, Forms::COLORED); ImGui::SameLine();
+		ImGui::RadioButton("Textured##2", &e, Forms::TEXTURED); ImGui::SameLine();
+		ImGui::RadioButton("Multi-textured##2", &e, Forms::MULTI_TEXTURED);
+		if (e == Forms::COLORED) {
+			m_cubeSelector->selectorCube().type() = Forms::COLORED;
 			static float color[3] = { m_cubeSelector->selectorCube().color().x,
 			m_cubeSelector->selectorCube().color().y,
 			m_cubeSelector->selectorCube().color().z, };
 			if (ImGui::ColorEdit3("Selector Color", color)) {
 				m_cubeSelector->selectorCube().Setcolor(glm::vec3(color[0], color[1], color[2]));
 			};
-		} else if (e == form::TEXTURED) {
-			m_cubeSelector->selectorCube().type() = form::TEXTURED;
+		} else if (e == Forms::TEXTURED) {
+			m_cubeSelector->selectorCube().type() = Forms::TEXTURED;
 			this->ComboTexture(m_cubeSelector->selectorCube().texture(), "Selector Texture");
 		}
-		else if (e == form::MULTI_TEXTURED) {
-			m_cubeSelector->selectorCube().type() = form::MULTI_TEXTURED;
+		else if (e == Forms::MULTI_TEXTURED) {
+			m_cubeSelector->selectorCube().type() = Forms::MULTI_TEXTURED;
 			this->ComboMultiTexture(m_cubeSelector->selectorCube().texture(), "Selector Multi-Texture");
 		}	
 	}
@@ -377,7 +377,7 @@ namespace interaction {
 	}
 
 	void Interface::RBFFile(interaction::CubeSelector& cubeSelector, const char* label) {
-          // TODO: Optimize transforms between strig to char pointers
+          // TODO: Optimize transFormss between strig to char pointers
           // Don't do it on every frame, maybe store it as is in class
           std::vector<char*> filePaths(cubeSelector.m_rbf.m_FilePaths.size() + 1);
           for ( size_t i = 0; i != cubeSelector.m_rbf.m_FilePaths.size(); ++i) {

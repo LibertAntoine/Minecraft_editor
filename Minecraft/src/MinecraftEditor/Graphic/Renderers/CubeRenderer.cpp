@@ -1,7 +1,7 @@
 #include "CubeRenderer.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "forms/Cube.h"
+#include "MinecraftEditor/Graphic/Forms/Cube.h"
 
 namespace renderer {
 
@@ -45,7 +45,7 @@ CubeRenderer::CubeRenderer()
 
 CubeRenderer::~CubeRenderer() {}
 
-form::Cube *CubeRenderer::add(const form::Cube& cube)
+Forms::Cube *CubeRenderer::add(const Forms::Cube& cube)
 {
   m_CubeList.push_back(cube);
     this->updatePosition();
@@ -56,7 +56,7 @@ form::Cube *CubeRenderer::add(const form::Cube& cube)
   return &m_CubeList.back();
 }
 
-void CubeRenderer::del(form::Cube* cube) { 
+void CubeRenderer::del(Forms::Cube* cube) { 
     m_CubeList.remove(*cube);
     this->updatePosition();
     this->updateColor();
@@ -72,7 +72,7 @@ void CubeRenderer::del(form::Cube* cube) {
       glm::mat4 MVMatrix = view;
       MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
       glActiveTexture(GL_TEXTURE0);
-			glEnable(GL_CULL_FACE); // NOTE: VERY AWESOME SHIT : do not print triangles that are not visible (great performance improvement)
+			glEnable(GL_CULL_FACE); // NOTE: VERY AWESOME SHIT : do not print triangles that are not visible (great perFormsance improvement)
       texture.Bind();
       m_VAO->Bind();
 
@@ -151,7 +151,7 @@ void CubeRenderer::del(form::Cube* cube) {
     void CubeRenderer::updatePosition() {
         std::vector<glm::ivec3> positions;
         std::for_each(m_CubeList.begin(), m_CubeList.end(),
-            [&positions](form::Cube& cube) {
+            [&positions](Forms::Cube& cube) {
             positions.push_back(cube.position());
         });
         m_VertexBufferPosition->Update(positions.data(), sizeof(glm::ivec3) * positions.size());
@@ -160,7 +160,7 @@ void CubeRenderer::del(form::Cube* cube) {
     void CubeRenderer::updateColor() {
         std::vector<glm::vec3> colors;
         std::for_each(m_CubeList.begin(), m_CubeList.end(),
-            [&colors](form::Cube& cube) {
+            [&colors](Forms::Cube& cube) {
             colors.push_back(cube.color());
         });
         m_VertexBufferColor->Update(colors.data(), sizeof(glm::vec3) * colors.size());
@@ -169,7 +169,7 @@ void CubeRenderer::del(form::Cube* cube) {
     void CubeRenderer::updateTexture() {
         std::vector<unsigned int> textures;
         std::for_each(m_CubeList.begin(), m_CubeList.end(),
-            [&textures](form::Cube& cube) {
+            [&textures](Forms::Cube& cube) {
             textures.push_back(cube.texture()[0]);
             textures.push_back(cube.texture()[1]);
             textures.push_back(cube.texture()[2]);
@@ -184,7 +184,7 @@ void CubeRenderer::del(form::Cube* cube) {
     void CubeRenderer::updateType() {
         std::vector<int> types;
         std::for_each(m_CubeList.begin(), m_CubeList.end(),
-            [&types](form::Cube& cube) {
+            [&types](Forms::Cube& cube) {
             types.push_back(cube.type());
         });
         m_VertexBufferType->Update(types.data(), sizeof(int) * types.size());
@@ -194,7 +194,7 @@ void CubeRenderer::del(form::Cube* cube) {
     void CubeRenderer::updateCubeId() {
         std::vector<uint32_t> cubeId;
         std::for_each(m_CubeList.begin(), m_CubeList.end(),
-            [&cubeId](form::Cube& cube) {
+            [&cubeId](Forms::Cube& cube) {
 						
 						// BUG: Weird vector behavior : parts mus be initialised outside of the push_back
 						// cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32);

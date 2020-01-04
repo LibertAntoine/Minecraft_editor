@@ -9,7 +9,7 @@ TextureArray::TextureArray(const unsigned int& witdh, const unsigned int& height
     this->Bind();
     GLCall(glTexStorage3D(GL_TEXTURE_2D_ARRAY,
         1,                    // mipmaps
-        GL_RGBA8,               //Internal format
+        GL_RGBA8,               //Internal Formsat
         m_Width, m_Height,           //width,height
         100                  //Number of layers
     ));
@@ -35,7 +35,7 @@ void TextureArray::AddTexture(const std::string& path, const std::string& proxi)
             0,                      //Mipmap number
             0, 0, m_layerCount, //xoffset, yoffset, zoffset
             m_Width, m_Height, 1,          //width, height, depth
-            GL_RGBA,                 //format
+            GL_RGBA,                 //Formsat
             GL_UNSIGNED_BYTE,       //type
             m_LocalBuffer)); //pointer to data
         this->addProxi(proxi, this->nammed(path));

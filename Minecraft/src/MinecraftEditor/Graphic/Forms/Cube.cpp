@@ -3,7 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
-namespace form {
+namespace Forms {
     //    v6----- v5
     //   /|      /|
     //  v1------v2|
@@ -64,7 +64,7 @@ namespace form {
     {}
 
 
-	bool Cube::operator==(const form::Cube& a) {
+	bool Cube::operator==(const Forms::Cube& a) {
 		if (m_position == a.m_position) {
 			return true;
 		}

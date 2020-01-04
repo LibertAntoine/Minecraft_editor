@@ -2,10 +2,10 @@
 
 
 #include <glm/glm.hpp>
-#include "Texture.h"
+#include "GraphicEngine/Texture.h"
 #include <vector>
 
-namespace form {
+namespace Forms {
 
   typedef enum CubeType {
     COLORED = 0,
@@ -27,7 +27,7 @@ namespace form {
           );
       ~Cube();
 
-        bool operator==(const form::Cube& a);
+        bool operator==(const Forms::Cube& a);
 
       inline const glm::ivec3& position() const { return m_position; };
       inline glm::ivec3& position() { return m_position; };

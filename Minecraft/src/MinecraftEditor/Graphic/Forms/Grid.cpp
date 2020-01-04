@@ -1,6 +1,6 @@
 #include "Grid.h"
 
-namespace form {
+namespace Forms {
 
   Grid::Grid(const int& size, const glm::vec3& color)
     : m_size(size), m_color(color)

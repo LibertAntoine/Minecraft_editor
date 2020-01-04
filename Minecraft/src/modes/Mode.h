@@ -7,7 +7,7 @@
 #include <iostream>
 #include <SDL.h>
 
-namespace modes {
+namespace Modes {
 
 	class Mode
 	{

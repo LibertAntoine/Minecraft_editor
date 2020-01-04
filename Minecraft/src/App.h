@@ -6,7 +6,7 @@
 
 #include <GL/glew.h>
 #include <SDL.h>
-#include <Renderer.h>
+#include <GraphicEngine/Renderer.h>
 #include <iostream>
 
 /**

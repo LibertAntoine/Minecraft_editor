@@ -6,7 +6,7 @@
 
 namespace renderer {
   GridRenderer::GridRenderer(const unsigned int& size, glm::vec3 color)
-    :m_grid(form::Grid(size, color)), m_gridSelection(form::GridSelection(size)),
+    :m_grid(Forms::Grid(size, color)), m_gridSelection(Forms::GridSelection(size)),
 	  m_ShaderGrid(std::make_unique<Shader>("res/shaders/Grid.shader")),
 	  m_ShaderGridSelection(std::make_unique<Shader>("res/shaders/GroundSelection.shader")),
 	  m_VAOGrid(std::make_unique<VertexArray>()),

@@ -1,15 +1,15 @@
 #pragma once
 
 #include <iostream>
-#include "VertexBuffer.h"
-#include "FrameBuffer.h"
-#include "VertexBufferLayout.h"
+#include "GraphicEngine/VertexBuffer.h"
+#include "GraphicEngine/FrameBuffer.h"
+#include "GraphicEngine/VertexBufferLayout.h"
 #include <vector>
 #include <memory> // For std::make_unique
 #include <algorithm>
-#include "forms/Cube.h"
+#include "MinecraftEditor/Graphic/Forms/Cube.h"
 #include <octree/octree.h>
-#include <Renderer/CubeRenderer.h>
+#include "MinecraftEditor/Graphic/Renderers/CubeRenderer.h"
 #include "RBF.h"
 
 namespace interaction {
@@ -21,8 +21,8 @@ namespace interaction {
 	} SelectorState;
 
 	typedef struct Selector {
-		form::Cube selectorCube;
-		form::Cube* currentCube;
+		Forms::Cube selectorCube;
+		Forms::Cube* currentCube;
 		bool currentSelected;
 		bool currentCopy;
 		glm::vec3 selectedPosition;
@@ -34,7 +34,7 @@ namespace interaction {
 		std::shared_ptr<renderer::CubeRenderer> m_Cuberenderer;
 		std::shared_ptr<TextureArray> m_TextureArray;
 		int m_SizeWorld;
-		Octree<form::Cube*> m_CubeWorld; // Documentation : https://nomis80.org/code/doc/classOctree.html
+		Octree<Forms::Cube*> m_CubeWorld; // Documentation : https://nomis80.org/code/doc/classOctree.html
 		Selector* m_selector;
 		bool m_activeGrid[3];
 
@@ -51,20 +51,20 @@ namespace interaction {
 		~CubeSelector();
 
 		inline Selector* selector() { return m_selector; };
-		inline form::Cube* currentCube() { return m_selector->currentCube; };
-		inline form::Cube& selectorCube() { return m_selector->selectorCube; };
+		inline Forms::Cube* currentCube() { return m_selector->currentCube; };
+		inline Forms::Cube& selectorCube() { return m_selector->selectorCube; };
 		inline int sizeWorld() const { return m_SizeWorld; };
 		inline const bool* activeGrid() const { return m_activeGrid; };
 		inline bool* activeGrid() { return m_activeGrid; };
 
 
 		void refresh();
-		form::Cube* currentSelected();
+		Forms::Cube* currentSelected();
 		void MoveSelector(const glm::ivec3& deplacement);
 		void SetSelector(const glm::ivec3& NewPosition);
-		void Move(form::Cube* cube, const glm::vec3& newPosition);
-		void Create(const form::Cube& cube);
-		void Delete(form::Cube* cube);
+		void Move(Forms::Cube* cube, const glm::vec3& newPosition);
+		void Create(const Forms::Cube& cube);
+		void Delete(Forms::Cube* cube);
 
 		void MoveIn();
 		void MoveOut();

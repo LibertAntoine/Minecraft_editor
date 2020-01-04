@@ -1,15 +1,15 @@
 #pragma once
 
 #include <iostream>
-#include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
+#include "GraphicEngine/VertexBuffer.h"
+#include "GraphicEngine/VertexBufferLayout.h"
 #include <vector>
 #include <memory> // For std::make_unique
 #include <algorithm>
 #include <list>
-#include "forms/Cube.h"
-#include "Interaction/LightManager.h"
-#include "TextureArray.h"
+#include "MinecraftEditor/Graphic/Forms/Cube.h"
+#include "MinecraftEditor/Graphic/Lights/LightManager.h"
+#include "GraphicEngine/TextureArray.h"
 
 namespace renderer {
 
@@ -30,10 +30,10 @@ namespace renderer {
 
       
     public:
-      std::list<form::Cube> m_CubeList;
+      std::list<Forms::Cube> m_CubeList;
       CubeRenderer();
       ~CubeRenderer();
-      form::Cube* add(const form::Cube& cube);
+      Forms::Cube* add(const Forms::Cube& cube);
 
       void updatePosition();
       void updateColor();
@@ -41,7 +41,7 @@ namespace renderer {
       void updateType();
       void updateCubeId();
 
-      void del(form::Cube* cube);
+      void del(Forms::Cube* cube);
       void draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager, const TextureArray& texture);
       void drawSelector(const glm::vec3& position, const int& scale, std::shared_ptr<Texture> texture, glm::mat4 view, glm::mat4 projection);
       void drawSelectionTexture(const glm::mat4& view, const glm::mat4& projection);

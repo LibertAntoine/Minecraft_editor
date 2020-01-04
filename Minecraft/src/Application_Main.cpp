@@ -8,24 +8,12 @@
 #include <SDL.h>
 
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
 
 #include "App.h"
-#include "Renderer.h"
-#include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-#include "Shader.h"
-#include "Texture.h"
+#include "GraphicEngine/Renderer.h"
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-
-#include "modes/ModeEditor.h"
-#include "modes/ModeImGUITest.h"
+#include "Modes/ModeEditor.h"
+#include "Modes/ModeImGUITest.h"
 
 int main(int argc, char* args[])
 {
@@ -37,11 +25,11 @@ int main(int argc, char* args[])
   Renderer renderer;
 
   //Pass Auto in editor mode.
-  modes::Mode* currentMode = new modes::ModeEditor;
+  Modes::Mode* currentMode = new Modes::ModeEditor;
 
-  modes::ModeMenu* modeMenu = new modes::ModeMenu(currentMode);
-  modeMenu->RegisterMode<modes::ModeEditor>("Cube");
-  modeMenu->RegisterMode<modes::ModeImGUITest>("ImGUI Demo");
+  Modes::ModeMenu* modeMenu = new Modes::ModeMenu(currentMode);
+  modeMenu->RegisterMode<Modes::ModeEditor>("Cube");
+  modeMenu->RegisterMode<Modes::ModeImGUITest>("ImGUI Demo");
 
 
   /* Boucle principale */

@@ -5,7 +5,7 @@
 #include <string>
 #include <sstream>
 
-#include "Renderer.h"
+#include "GraphicEngine/Renderer.h"
 
 Shader::Shader(const std::string& filepath) 
 	: m_FilePath(filepath), m_RendererID(0)
@@ -96,7 +96,7 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 		glGetProgramInfoLog(program, length, &length, message);
 		std::cout << "Failed to link program" << std::endl;
                 if ( length == 0 ) {
-                  std::cout << "No further information provided" << std::endl;
+                  std::cout << "No further inFormsation provided" << std::endl;
                 }
 		std::cout << message << std::endl;
 		glDeleteProgram(program);
@@ -112,7 +112,7 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 		glGetProgramInfoLog(program, length, &length, message);
 		std::cout << "Failed to validate program" << std::endl;
                 if ( length == 0 ) {
-                  std::cout << "No further information provided" << std::endl;
+                  std::cout << "No further inFormsation provided" << std::endl;
                 }
 		std::cout << message << std::endl;
 		glDeleteProgram(program);
@@ -176,7 +176,7 @@ int Shader::GetUniformLocation(const std::string& name)
 	GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
 	if (location == -1) {
           std::cout << "In file: " << m_FilePath << std::endl;
-          std::cout << "Warning : uniform '" << name << "' doesn't exist or may not be used in the shaders!" << std::endl;
+          std::cout << "Warning : uniForms '" << name << "' doesn't exist or may not be used in the shaders!" << std::endl;
         }
 		
 	m_UniformLocationCache[name] = location;

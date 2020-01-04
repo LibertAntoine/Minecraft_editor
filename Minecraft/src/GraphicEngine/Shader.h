@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <GL/glew.h>
 #include "glm/glm.hpp"
-#include "Interaction/LightManager.h"
+#include "MinecraftEditor/Graphic/Lights/LightManager.h"
 
 struct ShaderProgramSource {
 	std::string VertexSource;
@@ -25,7 +25,7 @@ public:
 	void Bind() const;
 	void Unbind() const;
 
-	//Set Uniforms
+	//Set UniFormss
 	void SetUniform1i(const std::string& name, int value);
 	void SetUniform1uiv(const std::string& name, GLuint* v1, int count);
 	void SetUniform1f(const std::string& name, float value);

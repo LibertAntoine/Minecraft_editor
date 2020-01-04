@@ -17,7 +17,7 @@ namespace interaction {
     m_selector->selectedPosition = glm::vec3(0, 1, 0);
     m_selector->currentSelected = false;
     m_selector->currentCopy = false;
-    m_selector->selectorCube = form::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0, 0.5, 0.5), form::COLORED, { 0,0,0,0,0,0 });
+    m_selector->selectorCube = Forms::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0, 0.5, 0.5), Forms::COLORED, { 0,0,0,0,0,0 });
 
     this->Create(m_selector->selectorCube);
     this->refresh();
@@ -27,10 +27,10 @@ namespace interaction {
     delete m_selector;
   }
 
-  void CubeSelector::Create(const form::Cube& NewCube) {
+  void CubeSelector::Create(const Forms::Cube& NewCube) {
     {
       m_selector->currentSelected = false;
-      form::Cube* cube = m_CubeWorld.at(NewCube.position().x + m_SizeWorld, NewCube.position().y + m_SizeWorld, NewCube.position().z + m_SizeWorld);
+	  Forms::Cube* cube = m_CubeWorld.at(NewCube.position().x + m_SizeWorld, NewCube.position().y + m_SizeWorld, NewCube.position().z + m_SizeWorld);
       if (cube != nullptr) {
         this->Delete(cube);
       }
@@ -44,7 +44,7 @@ namespace interaction {
     }
   }
 
-  void CubeSelector::Delete(form::Cube* cube) {
+  void CubeSelector::Delete(Forms::Cube* cube) {
     m_selector->currentSelected = false;
     if (cube != nullptr) {
       m_CubeWorld.erase(cube->position().x + m_SizeWorld, cube->position().y + m_SizeWorld, cube->position().z + m_SizeWorld);
@@ -60,7 +60,7 @@ namespace interaction {
         m_selector->selectorCube.position().z + m_SizeWorld);
   }
 
-  form::Cube* CubeSelector::currentSelected() {
+  Forms::Cube* CubeSelector::currentSelected() {
     return m_CubeWorld.at(m_selector->selectedPosition.x + m_SizeWorld, 
         m_selector->selectedPosition.y + m_SizeWorld,
         m_selector->selectedPosition.z + m_SizeWorld);
@@ -92,7 +92,7 @@ namespace interaction {
     }
   }
 
-  void CubeSelector::Move(form::Cube* cube, const glm::vec3& newPosition) {
+  void CubeSelector::Move(Forms::Cube* cube, const glm::vec3& newPosition) {
     if (cube != nullptr) {
       m_CubeWorld.erase(cube->position().x + m_SizeWorld, cube->position().y + m_SizeWorld, cube->position().z + m_SizeWorld);
       m_CubeWorld.set(newPosition.x + m_SizeWorld, newPosition.y + m_SizeWorld, newPosition.z + m_SizeWorld, cube);
@@ -103,7 +103,7 @@ namespace interaction {
 
 
   void  CubeSelector::Extrude() {
-    form::Cube* cube = nullptr;
+	  Forms::Cube* cube = nullptr;
     glm::vec3 NewPosition;
     int size = m_SizeWorld * 2;
     for (int i = 1; cube == nullptr && i <= size; ++i) {
@@ -113,18 +113,18 @@ namespace interaction {
     if (cube == nullptr) {
       NewPosition = glm::vec3(m_selector->selectorCube.position().x, 
           0, m_selector->selectorCube.position().z);
-      this->Create(form::Cube(NewPosition, m_selector->selectorCube.scale(), 
+      this->Create(Forms::Cube(NewPosition, m_selector->selectorCube.scale(),
             m_selector->selectorCube.color(), m_selector->selectorCube.type(), m_selector->selectorCube.texture()));
     } else {
       NewPosition = glm::vec3(cube->position().x, cube->position().y + cube->scale(), cube->position().z);
-      this->Create(form::Cube(NewPosition, cube->scale(), cube->color(), cube->type(), cube->texture()));
+      this->Create(Forms::Cube(NewPosition, cube->scale(), cube->color(), cube->type(), cube->texture()));
 
     }
     this->SetSelector(NewPosition);
   }
 
   void CubeSelector::Dig() {
-    form::Cube* cube = nullptr;
+	  Forms::Cube* cube = nullptr;
     glm::vec3 position;
     int size = m_SizeWorld * 2;
     for (int i = 1; cube == nullptr && i <= size; ++i) {
@@ -177,7 +177,7 @@ namespace interaction {
         for ( int y = 0; y < 10; y++ ) {
           glm::vec3 position(x, y, z);
           if ( m_rbf.isThereACubeHere(position) ) {
-            form::Cube newCube(position, 1, m_selector->selectorCube.color(), m_selector->selectorCube.type(), m_selector->selectorCube.texture());
+			  Forms::Cube newCube(position, 1, m_selector->selectorCube.color(), m_selector->selectorCube.type(), m_selector->selectorCube.texture());
             this->Create(newCube);
           }
         }
@@ -228,9 +228,9 @@ namespace interaction {
 		// NOTE: Check if a cube has been selected
 		if ( data[3] != 0 ) {
 			// TODO, BUG: Crash when, drawing real far out of the map. Unknown reason. selectionAddress gets a bad address and the above condition should not pass where there's no cube
-			form::Cube* selectionAddress;
+			Forms::Cube* selectionAddress;
 			// NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
-			selectionAddress = (form::Cube*)( (intptr_t( data[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( data[1] ) & 0xFFFFFFFF ) );
+			selectionAddress = (Forms::Cube*)( (intptr_t( data[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( data[1] ) & 0xFFFFFFFF ) );
 
 			this->SetSelector(glm::ivec3(selectionAddress->position()));
 		}

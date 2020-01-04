@@ -4,11 +4,11 @@
 
 #include "ImGUI/imgui.h"
 #include "SDL.h"
-#include "Interaction/CubeSelector.h"
-#include "Camera.h"
+#include "MinecraftEditor/Interaction/CubeSelector.h"
+#include "GraphicEngine/Camera.h"
 #include <iostream>
 #include "App.h"
-#include "Texture.h"
+#include "GraphicEngine/Texture.h"
 
 namespace interaction {
 
