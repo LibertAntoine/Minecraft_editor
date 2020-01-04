@@ -55,7 +55,7 @@ class RBF
 {
   private:
     std::vector<std::tuple<Eigen::Vector3i, double, double>> m_ControlPoints;
-    std::vector<glm::vec3> m_Boundaries;
+    std::vector<glm::ivec3> m_Boundaries;
 
     RBF_CALLBACKS::InverseQuadratic m_inverseQuadratic;
     RBF_CALLBACKS::MultiQuadratic m_multiQuadratic;
@@ -65,6 +65,8 @@ class RBF
     std::function<double(double)> m_rbf;
 
     double m_epsilon = 1.0;
+
+		bool m_useProbability = true;
 
   public:
     //std::string m_FilePath;
@@ -98,6 +100,15 @@ class RBF
     void switchRBFtoGaussian(const double epsilon);
 
     double getScalar(const glm::vec3& position) const; /// @brief Compute the output scalar value of the current RBF function
+
+		/**
+		 * \brief Return the first terrain generator boundary
+		 */
+		glm::ivec3 getBoundaryA() const;
+		/**
+		 * \brief Return the second terrain generator boundary
+		 */
+		glm::ivec3 getBoundaryB() const;
 
     bool isThereACubeHere(const glm::vec3& position) const; /// @brief Determine the presence of a cube at a certain location using random and RBF value
 
