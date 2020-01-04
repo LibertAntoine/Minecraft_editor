@@ -1,4 +1,5 @@
 #include "DepthBuffer.h"
+#include "GLerror.h"
 
 DepthBuffer::DepthBuffer()
 {

@@ -2,6 +2,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "MinecraftEditor/Graphic/Forms/Cube.h"
+#include "GraphicEngine/GLerror.h"
 
 namespace renderer {
 

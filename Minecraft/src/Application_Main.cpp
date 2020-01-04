@@ -14,7 +14,7 @@
 #include <GL/glew.h>
 #include <SDL.h>
 
-#include "App.h"
+#include "GraphicEngine/App.h"
 #include "GraphicEngine/Renderer.h"
 
 #include "Modes/ModeEditor.h"

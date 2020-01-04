@@ -1,4 +1,5 @@
 #include "IndexBuffer.h"
+#include "GLerror.h"
 #include "Renderer.h"
 
 IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count)

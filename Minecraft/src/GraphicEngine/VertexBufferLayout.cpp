@@ -1,5 +1,6 @@
 #include "VertexBufferLayout.h"
 
+
 namespace details {
 	template<typename T>
 	GLenum getGLenum() {

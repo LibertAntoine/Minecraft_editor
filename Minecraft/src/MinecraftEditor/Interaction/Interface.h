@@ -7,7 +7,7 @@
 #include "MinecraftEditor/Interaction/CubeSelector.h"
 #include "GraphicEngine/Camera.h"
 #include <iostream>
-#include "App.h"
+#include "GraphicEngine/App.h"
 #include "GraphicEngine/Texture.h"
 
 namespace interaction {

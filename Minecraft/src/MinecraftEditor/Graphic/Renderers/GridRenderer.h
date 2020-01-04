@@ -5,6 +5,9 @@
 #include <vector>
 #include <algorithm>
 #include "GraphicEngine/VertexBuffer.h"
+#include "GraphicEngine/VertexArray.h"
+#include "GraphicEngine/IndexBuffer.h"
+#include "GraphicEngine/Shader.h"
 #include "GraphicEngine/VertexBufferLayout.h"
 #include "GraphicEngine/Camera.h"
 #include "MinecraftEditor/Graphic/Forms/Grid.h"

@@ -163,11 +163,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\Application_Main.cpp" />
+    <ClCompile Include="src\GraphicEngine\App.cpp" />
     <ClCompile Include="src\GraphicEngine\Camera.cpp" />
     <ClCompile Include="src\GraphicEngine\DepthBuffer.cpp" />
     <ClCompile Include="src\GraphicEngine\FrameBuffer.cpp" />
+    <ClCompile Include="src\GraphicEngine\GLerror.cpp" />
     <ClCompile Include="src\GraphicEngine\IndexBuffer.cpp" />
     <ClCompile Include="src\GraphicEngine\Renderer.cpp" />
     <ClCompile Include="src\GraphicEngine\Shader.cpp" />
@@ -200,10 +201,11 @@
     <None Include="vendor\octree\octree.tcc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\App.h" />
+    <ClInclude Include="src\GraphicEngine\App.h" />
     <ClInclude Include="src\GraphicEngine\Camera.h" />
     <ClInclude Include="src\GraphicEngine\DepthBuffer.h" />
     <ClInclude Include="src\GraphicEngine\FrameBuffer.h" />
+    <ClInclude Include="src\GraphicEngine\GLerror.h" />
     <ClInclude Include="src\GraphicEngine\IndexBuffer.h" />
     <ClInclude Include="src\GraphicEngine\Renderer.h" />
     <ClInclude Include="src\GraphicEngine\Shader.h" />

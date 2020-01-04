@@ -1,7 +1,6 @@
 #pragma once
 
 #include <GL/glew.h>
-#include "Renderer.h" // NOTE: necessary for GLCall Macro
 
 class DepthBuffer {
   private:

@@ -12,6 +12,7 @@
 #include "MinecraftEditor/Graphic/Renderers/CubeRenderer.h"
 #include "RBF.h"
 
+
 namespace interaction {
 
 	typedef enum SelectorState {

@@ -1,7 +1,8 @@
 #include "GridRenderer.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "App.h"
+#include "GraphicEngine/App.h"
+#include "GraphicEngine/GLerror.h"
 
 
 namespace renderer {

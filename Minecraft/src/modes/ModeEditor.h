@@ -17,6 +17,7 @@
 #include "GraphicEngine/TextureArray.h"
 #include <algorithm>
 #include <vector>
+#include "GraphicEngine/GLerror.h"
 
 
 #include <memory>

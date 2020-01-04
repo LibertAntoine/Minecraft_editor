@@ -1,6 +1,7 @@
 #include "TextureArray.h"
 #include "stb_image/stb_image.h"
 #include <regex>
+#include "GLerror.h"
 
 TextureArray::TextureArray(const unsigned int& witdh, const unsigned int& height)
     :m_Width(witdh), m_Height(height), m_layerCount(0), m_LocalBuffer(nullptr)

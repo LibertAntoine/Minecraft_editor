@@ -1,4 +1,6 @@
 #include "App.h"
+#include "GLerror.h"
+
 
 bool App::m_instanciated = false;
 const char* App::m_glsl_version = "#version 130";

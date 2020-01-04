@@ -8,6 +8,7 @@
 #include <SDL.h>
 #include <string>
 #include "stb_image/stb_image.h"
+#include "GraphicEngine/GLerror.h"
 
 namespace Modes {
 
