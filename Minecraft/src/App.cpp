@@ -1,10 +1,7 @@
 #include "App.h"
 
-
 bool App::m_instanciated = false;
 const char* App::m_glsl_version = "#version 130";
-
-
 
 App::App() {
 	m_instanciated = true;
@@ -38,8 +35,6 @@ void App::endFrame() const {
 	SDL_GL_SwapWindow(m_window);
 }
 
-
-
 bool App::isRunning() const { return m_running; }
 void App::exit() { m_running = false; }
 
@@ -49,23 +44,23 @@ void App::initSDL() {
 		std::cerr << "Can't init SDL : " << SDL_GetError() << std::endl;
 	}
 
-	// Use OpenGL 3.3
+	// Use OpenGL 3.3 //
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
-	// Various attributes
+	// Various attributes //
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	// Create Window
+	// Create Window //
 	m_window = SDL_CreateWindow("Minecraft Editor",
-		SDL_WINDOWPOS_CENTERED,           // initial x position
-		SDL_WINDOWPOS_CENTERED,           // initial y position
-		WINDOW_WIDTH,                               // width, in pixels
-		WINDOW_HEIGHT,                               // height, in pixels
-		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL                  // flags - see below
+		SDL_WINDOWPOS_CENTERED,           
+		SDL_WINDOWPOS_CENTERED,          
+		WINDOW_WIDTH,                             
+		WINDOW_HEIGHT,                              
+		SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL     
 	);
 
 	if (m_window == nullptr) {
@@ -96,16 +91,21 @@ void App::initImGUI() {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	// Keyboard and mouse enabled with ImGUI //
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
+
+	// Style Imgui Configurations //
 	ImGui::StyleColorsDark();
 	io.Fonts->AddFontFromFileTTF("res/fonts/Lato/Lato-Medium.ttf", 15);
-	ImGui_ImplSDL2_InitForOpenGL(m_window, m_glContext);
-	ImGui_ImplOpenGL3_Init(m_glsl_version);
-
 	ImGui::PushStyleColor(ImGuiCol_ResizeGrip, 0);
-	ImGui::PushStyleColor(ImGuiCol_ResizeGripActive, 0); 
-	ImGui::PushStyleColor(ImGuiCol_ResizeGripHovered, 0); 
+	ImGui::PushStyleColor(ImGuiCol_ResizeGripActive, 0);
+	ImGui::PushStyleColor(ImGuiCol_ResizeGripHovered, 0);
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.f);
 	ImGui::PushStyleVar(ImGuiStyleVar_ScrollbarRounding, 0.f);
+
+	// Initialisation //
+	ImGui_ImplSDL2_InitForOpenGL(m_window, m_glContext);
+	ImGui_ImplOpenGL3_Init(m_glsl_version);
 }

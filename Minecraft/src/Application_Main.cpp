@@ -1,13 +1,18 @@
+/**
+ * \file Application_Main.cpp
+ * \brief Main - launching the main loop
+ * \author Antoine Libert & Nicolas Lienart
+ * Call the differents mode which compose the application and launch the main loop.
+ *
+ */
+
 #include "ImGUI/imgui.h"
 #include "ImGUI/imgui_impl_sdl.h"
 #include "ImGUI/imgui_impl_opengl3.h"
 
-#include <stdio.h>
-
+#include <iostream>
 #include <GL/glew.h>
 #include <SDL.h>
-
-#include <iostream>
 
 #include "App.h"
 #include "GraphicEngine/Renderer.h"
@@ -20,7 +25,6 @@ int main(int argc, char* args[])
  (void)argc;
  (void)args;
 
-
   App app;
   Renderer renderer;
 
@@ -32,7 +36,7 @@ int main(int argc, char* args[])
   modeMenu->RegisterMode<Modes::ModeImGUITest>("ImGUI Demo");
 
 
-  /* Boucle principale */
+  /* Main loop */
   while (app.isRunning()) {
 	  renderer.Clear();
 	  app.beginFrame();
@@ -59,6 +63,8 @@ int main(int argc, char* args[])
 		  app.endFrame();
 	  }
   }
+
+  //Closing of the program
   if (currentMode != modeMenu) {
     delete modeMenu;
   }
