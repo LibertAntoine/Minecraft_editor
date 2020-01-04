@@ -42,12 +42,6 @@ namespace interaction {
 			}
 		ImGui::End();
 
-		/* Activation KeyBoard Controllers */
-			
-		this->CameraKeyBoard();
-		this->CubeKeyBoard();
-		this->SelectorKeyBoard();
-		
 	}
 
 	void Interface::MenuBarInterface() {
@@ -260,90 +254,6 @@ namespace interaction {
 		else if (e == Forms::MULTI_TEXTURED) {
 			m_cubeSelector->selectorCube().type() = Forms::MULTI_TEXTURED;
 			this->ComboMultiTexture(m_cubeSelector->selectorCube().texture(), "Selector Multi-Texture");
-		}	
-	}
-
-	/* KEYBOARD CONTROLLERS */
-	void Interface::CameraKeyBoard() {
-		if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)) {
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
-				m_camera->moveFront(1.f);
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN))
-				m_camera->moveFront(-1.f);
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_UP))
-				m_camera->moveUp(1.f);
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_DOWN))
-				m_camera->moveUp(-1.f);
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_LEFT))
-				m_camera->moveLeft(1.f);
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_RIGHT))
-				m_camera->moveLeft(-1.f);
-		}
-
-		if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) {
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_UP))
-				m_camera->rotateUp(2.f);
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_DOWN))
-				m_camera->rotateUp(-2.f);
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_LEFT))
-				m_camera->rotateLeft(2.f);
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_RIGHT))
-				m_camera->rotateLeft(-2.f);
-		}
-	}
-
-	void Interface::CubeKeyBoard() {
-		if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) {
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_I))
-				m_cubeSelector->AddToSelector();
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_O))
-				m_cubeSelector->DeleteToSelector();
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_X))
-				m_cubeSelector->CutToSelector();
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_V))
-				m_cubeSelector->PasteToSelector();
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
-				m_cubeSelector->Extrude();
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN))
-				m_cubeSelector->Dig();
-		}
-	}
-
-	void Interface::SelectorKeyBoard() {
-		if ((!ImGui::IsAnyWindowFocused() &&
-			!(ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)))
-			&& !(ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)))
-		{
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
-				m_cubeSelector->MoveSelector(glm::vec3(0, 1, 0));
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN))
-				m_cubeSelector->MoveSelector(glm::vec3(0, -1, 0));
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_UP))
-				m_cubeSelector->MoveSelector(glm::vec3(0, 0, -1));
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_DOWN))
-				m_cubeSelector->MoveSelector(glm::vec3(0, 0, 1));
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_LEFT))
-				m_cubeSelector->MoveSelector(glm::vec3(-1, 0, 0));
-
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_RIGHT))
-				m_cubeSelector->MoveSelector(glm::vec3(1, 0, 0));
 		}	
 	}
 

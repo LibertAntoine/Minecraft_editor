@@ -111,6 +111,9 @@
     <ClCompile Include="src\MinecraftEditor\Interaction\RBF.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="src\MinecraftEditor\Interaction\KeyBoard.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\octree\octree.tcc" />
@@ -333,6 +336,9 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\MinecraftEditor\Interaction\RBF.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Interaction\KeyBoard.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>

@@ -169,30 +169,32 @@ namespace interaction {
 
 	void CubeSelector::MoveSelectorToClickFace(int x, int y, const FrameBuffer& framebufferSelection)
 	{
-		framebufferSelection.Bind();
-		GLuint data[4];
-		framebufferSelection.getDataAtPosition4ui(x, y, data, GL_COLOR_ATTACHMENT0);
-    framebufferSelection.Unbind();        
+		if (m_selector->currentCube) {
+			framebufferSelection.Bind();
+			GLuint data[4];
+			framebufferSelection.getDataAtPosition4ui(x, y, data, GL_COLOR_ATTACHMENT0);
+			framebufferSelection.Unbind();
 
-		switch( data[2] ) {
-			case 0: 
-				this->MoveSelector(glm::vec3(0,0,-1));
+			switch (data[2]) {
+			case 0:
+				this->MoveSelector(glm::vec3(0, 0, -1));
 				break;
-			case 1: 
-				this->MoveSelector(glm::vec3(1,0,0));
+			case 1:
+				this->MoveSelector(glm::vec3(1, 0, 0));
 				break;
-			case 2: 
-				this->MoveSelector(glm::vec3(0,0,1));
+			case 2:
+				this->MoveSelector(glm::vec3(0, 0, 1));
 				break;
-			case 3: 
-				this->MoveSelector(glm::vec3(0,-1,0));
+			case 3:
+				this->MoveSelector(glm::vec3(0, -1, 0));
 				break;
-			case 4: 
-				this->MoveSelector(glm::vec3(-1,0,0));
+			case 4:
+				this->MoveSelector(glm::vec3(-1, 0, 0));
 				break;
-			case 5: 
-				this->MoveSelector(glm::vec3(0,1,0));
+			case 5:
+				this->MoveSelector(glm::vec3(0, 1, 0));
 				break;
+			}
 		}
 	}
 

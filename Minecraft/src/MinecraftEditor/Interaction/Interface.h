@@ -91,10 +91,6 @@ namespace interaction {
 		*/
 		void InfosSelectorInterface();
 
-		void CameraKeyBoard();
-		void CubeKeyBoard();
-		void SelectorKeyBoard();
-
 	private:
 		/* ImGUI WIDGET */
 
