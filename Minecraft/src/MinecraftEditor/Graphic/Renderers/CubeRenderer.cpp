@@ -178,7 +178,7 @@ void CubeRenderer::del(Forms::Cube* cube) {
             textures.push_back(cube.texture()[5]);
             
         });
-        m_VertexBufferTexture->Update(textures.data(), 6 * sizeof(unsigned int) * textures.size());
+        m_VertexBufferTexture->Update(textures.data(), sizeof(unsigned int) * textures.size());
     }
 
     void CubeRenderer::updateType() {
