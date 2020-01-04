@@ -130,6 +130,9 @@ namespace interaction {
   }
 
   void CubeSelector::SetSelector(const glm::ivec3& NewPosition) {
+		if ( NewPosition.x ) {
+		  
+		}
     m_selector->selectorCube.position() = NewPosition;
     if (m_selector->selectorCube.position().y < 0)
       m_selector->selectorCube.position().y = 0;
@@ -195,17 +198,17 @@ namespace interaction {
 
 	void CubeSelector::MoveSelectorToClick(int x, int y, const FrameBuffer& framebufferSelection)
 	{
-		/* NOTE: check which FrameBuffer is currently bound
+		/* NOTE: Check which FrameBuffer is currently bound
 			 GLint drawFboId = 0, readFboId = 0;
 			 glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &drawFboId);
 			 glGetIntegerv(GL_READ_FRAMEBUFFER_BINDING, &readFboId);
-		//std::cout << "checking current FBO. Draw:" << drawFboId << ", Read: " << readFboId << std::endl;
+			 std::cout << "checking current FBO. Draw:" << drawFboId << ", Read: " << readFboId << std::endl;
 		*/
 		framebufferSelection.Bind();
 		GLuint data[4];
 		framebufferSelection.getDataAtPosition4ui(x, y, data, GL_COLOR_ATTACHMENT0);
 		// NOTE: Check if a cube has been selected
-		if ( data[3] != 0 ) {
+		if ( data[3] == 1 ) {
 			// TODO, BUG: Crash when, drawing real far out of the map. Unknown reason. selectionAddress gets a bad address and the above condition should not pass where there's no cube
 			Forms::Cube* selectionAddress;
 			// NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
@@ -217,7 +220,7 @@ namespace interaction {
 		else {
 			GLint position[4];
 			framebufferSelection.getDataAtPosition4i(x, y, position, GL_COLOR_ATTACHMENT1);
-			if ( position[3] != 0 ) this->SetSelector(glm::ivec3(position[0], 0, position[1]));
+			if ( position[3] == 1 ) this->SetSelector(glm::ivec3(position[0], 0, position[1]));
 		}
 
     framebufferSelection.Unbind();        

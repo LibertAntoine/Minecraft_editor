@@ -37,6 +37,12 @@ namespace renderer {
 	  std::unique_ptr<Shader> m_ShaderGridSelection;
 	  Forms::GridSelection m_gridSelection;
 
+			std::unique_ptr<VertexBuffer> m_VertexBufferGridSelection;
+			std::unique_ptr<IndexBuffer> m_IndexBufferGridSelection;
+
+			std::unique_ptr<IndexBuffer> m_IndexBufferGrid;
+			std::unique_ptr<VertexBuffer> m_VertexBufferGrid;
+
     public:
 
 		/**

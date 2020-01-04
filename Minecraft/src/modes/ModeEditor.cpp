@@ -30,14 +30,9 @@ namespace Modes {
     m_textureArray->AddTexture("res/textures/Cube/log_acacia_top.png", "res/textures/Cube/log_acacia_top_proxi.png");
     m_textureArray->AddTexture("res/textures/Cube/piston_bottom.png", "res/textures/Cube/piston_bottom_proxi.png");
     m_textureArray->AddTexture("res/textures/Cube/lava_placeholder.png", "res/textures/Cube/lava_placeholder_proxi.png");
-
-    // TODO: check the following if necessary
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDisable(GL_CULL_FACE);
-
-    // TODO: check the following if necessary
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // NOTE: Selection related stuff
     m_textureSelectionCube.EmptyTextureUI();
@@ -55,9 +50,6 @@ namespace Modes {
 
     m_textureSelectionCube.Bind();
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_textureSelectionGround.GetTextureID(), 0););
-
-    //GLenum DrawBuffers[2] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
-    //GLCall(glDrawBuffers(2, DrawBuffers););
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) 
       std::cout << "Problem with the framebuffer" << std::endl;
@@ -79,9 +71,7 @@ namespace Modes {
   void ModeEditor::OnRender()
   {
 
-    GLCall(glClearColor(m_backgroundColor->x, m_backgroundColor->y,
-          m_backgroundColor->z, 1.0f));
-    // TODO: Check if necessary (redundancy) because of App.cpp beginFrame()
+    GLCall(glClearColor(m_backgroundColor->x, m_backgroundColor->y, m_backgroundColor->z, 1.0f));
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
     m_GridRenderer.drawGrid(*m_FreeCam, m_ProjMatrix, m_CubeSelector->activeGrid());
@@ -100,7 +90,6 @@ namespace Modes {
 
     // NOTE: Generating offscreen selection texture
     m_frameBufferSelection.Bind();
-    //m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList); // NOTE: old draw calls
 		m_CubeRenderer->drawSelectionTexture(m_FreeCam->getViewMatrix(), m_ProjMatrix);
 		m_GridRenderer.drawGridSelection(*m_FreeCam, m_ProjMatrix);
     m_frameBufferSelection.Unbind();
@@ -174,7 +163,7 @@ namespace Modes {
 								m_CubeRenderer->updateTexture();
 							}
 							// TODO: check if necessary
-							m_CubeSelector->refresh();
+							//m_CubeSelector->refresh();
 						}
 						else if ( m_altKey ) {
 							m_CubeSelector->AddToSelector();
