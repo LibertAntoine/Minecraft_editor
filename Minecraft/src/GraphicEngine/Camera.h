@@ -69,7 +69,7 @@ namespace camera {
 
 		// GETTERS - SETTERS //
 		/**
-		* \brief Return the camera view matrix associate to the camera 
+		* \brief Return the camera view matrix associated to the camera 
 		* \return Camera view matrix (4x4).
 		*/
 		glm::mat4 getViewMatrix() const;

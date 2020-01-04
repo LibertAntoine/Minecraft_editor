@@ -1,9 +1,0 @@
-#boundaries
-20 20 20
-12 1 2
-2 5 9
-#controlpoints
-0 0 0 -76
-140 200 0 76
-#rbf
-multiquadratic 1
