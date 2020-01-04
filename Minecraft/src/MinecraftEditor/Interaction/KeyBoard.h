@@ -1,8 +1,8 @@
 #pragma once
 
 /**
- * \file Interface.h
- * \brief Manage the ImGui interface and its interactions.
+ * \file KeyBoard.h
+ * \brief Manage the keyboard and mouse shorcut.
  * \author Antoine Libert & Nicolas Lienart
  */
 
@@ -27,13 +27,31 @@ namespace interaction {
 		FrameBuffer* m_frameBufferSelection;
 
 	public:
+		/**
+		* \brief Init Keyboard
+		* \param cubeRenderer of the application
+		* \param selector of the application
+		* \param camera of the application
+		* \param frameBufferSelection of the application
+		*/
 		KeyBoard(std::shared_ptr<renderer::CubeRenderer> cubeRenderer, std::shared_ptr<interaction::CubeSelector> selector, std::shared_ptr<camera::FreeflyCamera> camera, FrameBuffer* frameBufferSelection);
 		~KeyBoard();
 
-
+		/**
+		* \brief Active Shorcuts relative to the Camera.
+		*/
 		void CameraShortCut();
+		/**
+		* \brief Active Shorcuts relative to the cubes.
+		*/
 		void CubeShortCut();
+		/**
+		* \brief Active Shorcuts relative to the selector.
+		*/
 		void SelectorShortCut();
+		/**
+		* \brief Active Mouse Shorcuts
+		*/
 		void MouseShortCut();
 	};
 
