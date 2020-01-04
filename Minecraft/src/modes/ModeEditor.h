@@ -12,6 +12,7 @@
 #include "GraphicEngine/DepthBuffer.h"
 #include "GraphicEngine/FrameBuffer.h"
 #include "MinecraftEditor/Interaction/CubeSelector.h"
+#include "MinecraftEditor/Interaction/KeyBoard.h"
 #include "MinecraftEditor/Interaction/Interface.h"
 #include "MinecraftEditor/Graphic/Renderers/CubeRenderer.h"
 #include "MinecraftEditor/Graphic/Renderers/GridRenderer.h"
@@ -42,22 +43,11 @@ private:
   std::shared_ptr<camera::FreeflyCamera> m_FreeCam;
   std::shared_ptr<interaction::LightManager> m_LightManager;
   interaction::Interface m_Interface;
+  interaction::KeyBoard m_KeyBoard;
   FrameBuffer m_frameBufferSelection; /// Custom framebuffer that is bound during selection texture rendering, also for queries
   DepthBuffer m_depthBufferSelection;
   Texture m_textureSelectionCube; /// Offscreen texture that contains mouse selectable(visible) Cubes
   Texture m_textureSelectionGround; /// Offscreen texture that contains mouse selectable (visible) ground
-  bool m_moveCamEye = false;
-  bool m_moveShift = false;
-  bool m_slideMouse = false;
-
-  bool m_altKey = false;
-  bool m_ctrlKey = false;
-  bool m_spaceKey = false;
-  bool m_shiftKey = false;
-
-  bool m_leftClick = false;
-  bool m_rightClick = false;
-  bool m_middleClick = false;
 
 
 
@@ -75,8 +65,6 @@ public:
   inline camera::FreeflyCamera& freeCam() { return  *m_FreeCam; };
   inline interaction::CubeSelector& cubeSelector() { return  *m_CubeSelector; };
   inline interaction::LightManager& lightManager() { return  *m_LightManager; };
-
-  void resetInteractionBool();
 
 };
 } // namespace modes

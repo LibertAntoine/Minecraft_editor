@@ -12,15 +12,16 @@
 
 namespace Modes {
 
-    ModeEditor::ModeEditor()
-    :m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
-    m_GridRenderer(200, glm::vec3(0.5f, 0.5f, 0.5f)), m_CubeRenderer(std::make_shared<renderer::CubeRenderer>()),
-    m_textureArray(std::make_shared<TextureArray>( 32, 32 )),
-    m_CubeSelector(std::make_shared<interaction::CubeSelector>( m_CubeRenderer, 2048 )), // Should be a pow of two.
-    m_backgroundColor(std::make_shared<glm::vec3>(0.3f, 0.3f, 0.3f)),
+	ModeEditor::ModeEditor()
+	:m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
+	m_GridRenderer(200, glm::vec3(0.5f, 0.5f, 0.5f)), m_CubeRenderer(std::make_shared<renderer::CubeRenderer>()),
+	m_textureArray(std::make_shared<TextureArray>(32, 32)),
+	m_CubeSelector(std::make_shared<interaction::CubeSelector>(m_CubeRenderer, 512)), // Should be a pow of two.
+	m_backgroundColor(std::make_shared<glm::vec3>(0.3f, 0.3f, 0.3f)),
 	m_FreeCam(std::make_shared<camera::FreeflyCamera>()),
 	m_LightManager(std::make_shared<interaction::LightManager>()),
-    m_Interface(m_CubeRenderer, m_CubeSelector, m_textureArray, m_FreeCam, m_LightManager, m_backgroundColor)
+	m_Interface(m_CubeRenderer, m_CubeSelector, m_textureArray, m_FreeCam, m_LightManager, m_backgroundColor),
+	m_KeyBoard(m_CubeRenderer, m_CubeSelector, m_FreeCam, &m_frameBufferSelection)
 	{
     constexpr float fov = glm::radians(70.f);
     float ratio = 1080. / 720.;
@@ -29,7 +30,18 @@ namespace Modes {
 
     m_textureArray->AddTexture("res/textures/Cube/log_acacia_top.png", "res/textures/Cube/log_acacia_top_proxi.png");
     m_textureArray->AddTexture("res/textures/Cube/piston_bottom.png", "res/textures/Cube/piston_bottom_proxi.png");
-    m_textureArray->AddTexture("res/textures/Cube/lava_placeholder.png", "res/textures/Cube/lava_placeholder_proxi.png");
+    m_textureArray->AddTexture("res/textures/Cube/bookshelf.png", "res/textures/Cube/bookshelf_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/brick.png", "res/textures/Cube/brick_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/coarse_dirt.png", "res/textures/Cube/coarse_dirt_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/cobblestone.png", "res/textures/Cube/cobblestone_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/crafting_table_front.png", "res/textures/Cube/crafting_table_front_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/lava_placeholder.png", "res/textures/Cube/lava_placeholder_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/glowstone.png", "res/textures/Cube/glowstone_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/grass_carried.png", "res/textures/Cube/grass_carried_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/grass_side.png", "res/textures/Cube/grass_side_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/planks_jungle.png", "res/textures/Cube/planks_jungle_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/prismarine_bricks.png", "res/textures/Cube/prismarine_bricks_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/sponge_wet.png", "res/textures/Cube/sponge_wet_proxi.png");
     
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -87,7 +99,6 @@ namespace Modes {
 		m_CubeSelector->selector()->selectorCube.scale(), m_CubeSelector->textSelector(),
 		m_FreeCam->getViewMatrix(), m_ProjMatrix);
 
-
     // NOTE: Generating offscreen selection texture
     m_frameBufferSelection.Bind();
 		m_CubeRenderer->drawSelectionTexture(m_FreeCam->getViewMatrix(), m_ProjMatrix);
@@ -96,137 +107,43 @@ namespace Modes {
 
   }
 
-  void ModeEditor::OnEvent(const SDL_Event &e)
+  void ModeEditor::OnEvent(const SDL_Event& e)
   {
-		if ( ImGui::IsAnyWindowHovered() == false ) {
-			switch(e.type) {
-				case SDL_MOUSEWHEEL:
-					m_FreeCam->moveFront(e.wheel.y);
-					break;
+	  if (!ImGui::IsAnyWindowHovered() && !ImGui::IsAnyWindowFocused()) {
+		  switch (e.type) {
+		  case SDL_MOUSEWHEEL:
+			  m_FreeCam->moveFront(e.wheel.y);
+			  break;
 
-				case SDL_MOUSEBUTTONDOWN:
-					if ( e.button.button == SDL_BUTTON_MIDDLE ) m_middleClick = true;
-					else if ( e.button.button == SDL_BUTTON_RIGHT ) {
-						m_rightClick = true;
-						m_CubeSelector->MoveSelectorToClick(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
-						if ( m_ctrlKey ) {
-							if ( m_CubeSelector->currentCube() ) m_CubeSelector->DeleteToSelector();
-						}
-					}
-					else if ( e.button.button == SDL_BUTTON_LEFT ) {
-						m_leftClick = true;
-						m_CubeSelector->MoveSelectorToClick(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
-						if ( m_altKey || m_ctrlKey ) {
-							if ( m_CubeSelector->currentCube() && !m_ctrlKey ) m_CubeSelector->MoveSelectorToClickFace(e.button.x, App::WINDOW_HEIGHT -e.button.y -1, m_frameBufferSelection);
-							m_CubeSelector->AddToSelector();
-						}
-					}
-					break;
+		  case SDL_MOUSEMOTION:
+			  if (ImGui::IsMouseDown(SDL_BUTTON_MIDDLE) || ImGui::IsKeyPressed(SDL_SCANCODE_SPACE)) {
 
-				case SDL_MOUSEBUTTONUP:
-					if ( e.button.button == SDL_BUTTON_MIDDLE ) m_middleClick = false;
-					else if ( e.button.button == SDL_BUTTON_RIGHT ) m_rightClick = false;
-					else if ( e.button.button == SDL_BUTTON_LEFT ) m_leftClick = false;
-					break;
+				  if (e.motion.xrel != 0) m_FreeCam->moveLeft(float(e.motion.xrel) * 0.01);
+				  if (e.motion.yrel != 0) m_FreeCam->moveUp(float(e.motion.yrel) * 0.01);
 
-				case SDL_MOUSEMOTION:
-					if ( m_spaceKey || m_middleClick ) {
+			  }
+			  else if (ImGui::IsKeyDown(SDL_SCANCODE_LSHIFT) || ImGui::IsKeyDown(SDL_SCANCODE_RSHIFT)) {
 
-						if ( e.motion.xrel != 0 ) m_FreeCam->moveLeft( float(e.motion.xrel) * 0.01);
-						if ( e.motion.yrel != 0 ) m_FreeCam->moveUp( float(e.motion.yrel) * 0.01);
+				  if (e.motion.xrel != 0) m_FreeCam->rotateLeft(-float(e.motion.xrel) * 0.5);
+				  if (e.motion.yrel != 0) m_FreeCam->rotateUp(-float(e.motion.yrel) * 0.5);
 
-					}
-					else if ( m_shiftKey ) {
-
-						if ( e.motion.xrel != 0 ) m_FreeCam->rotateLeft( - float(e.motion.xrel) * 0.5);
-						if ( e.motion.yrel != 0 ) m_FreeCam->rotateUp( - float(e.motion.yrel) * 0.5);
-
-					} 
-					else if ( m_ctrlKey && m_leftClick ) {
-						m_CubeSelector->MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
-						if ( m_CubeSelector->currentCube() ) {
-							Forms::CubeType cubeStyle = m_CubeSelector->selectorCube().type();
-							if ( m_CubeSelector->currentCube()->type() != cubeStyle ) {
-								m_CubeSelector->currentCube()->type() = cubeStyle;
-								m_CubeRenderer->updateType();
-							}
-							if (cubeStyle == Forms::COLORED) {
-								//float color[3] = { m_CubeSelector->selectorCube().color().x, m_CubeSelector->selectorCube().color().y, m_CubeSelector->selectorCube().color().z, };
-								m_CubeSelector->currentCube()->Setcolor(glm::vec3(m_CubeSelector->selectorCube().color()));
-								m_CubeRenderer->updateColor();
-							}
-							else if (cubeStyle == Forms::TEXTURED) {
-								m_CubeSelector->currentCube()->texture() = m_CubeSelector->selectorCube().texture();
-								m_CubeRenderer->updateTexture();
-							} else if (cubeStyle == Forms::MULTI_TEXTURED) {
-								m_CubeSelector->currentCube()->texture() = m_CubeSelector->selectorCube().texture();
-								m_CubeRenderer->updateTexture();
-							}
-							// TODO: check if necessary
-							//m_CubeSelector->refresh();
-						}
-						else if ( m_altKey ) {
-							m_CubeSelector->AddToSelector();
-						}
-					}
-					else if ( m_ctrlKey && m_rightClick ) {
-						m_CubeSelector->MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
-						if ( m_CubeSelector->currentCube() ) {
-							m_CubeSelector->DeleteToSelector();
-						}
-					}
-					else if ( m_altKey && m_leftClick ) {
-						m_CubeSelector->MoveSelectorToClick(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
-						if ( m_CubeSelector->currentCube() ) {
-							// TODO: check face somehow
-							m_CubeSelector->MoveSelectorToClickFace(e.motion.x, App::WINDOW_HEIGHT -e.motion.y -1, m_frameBufferSelection);
-						}
-						m_CubeSelector->AddToSelector();
-					}
-					break;
-
-				case SDL_KEYDOWN:
-					if ( e.key.keysym.sym == SDLK_LSHIFT || e.key.keysym.sym == SDLK_RSHIFT ) m_shiftKey = true;
-					else if ( e.key.keysym.sym == SDLK_LCTRL || e.key.keysym.sym == SDLK_RCTRL ) m_ctrlKey = true;
-					else if ( e.key.keysym.sym == SDLK_LALT || e.key.keysym.sym == SDLK_RALT ) m_altKey = true;
-					else if ( e.key.keysym.sym == SDLK_SPACE || e.key.keysym.sym == SDLK_SPACE ) m_spaceKey = true;
-					else if ( e.key.keysym.sym == SDLK_z || e.key.keysym.sym == SDLK_z ) m_FreeCam->moveFront(1);
-					else if ( e.key.keysym.sym == SDLK_s || e.key.keysym.sym == SDLK_s ) m_FreeCam->moveFront(-1);
-					else if ( e.key.keysym.sym == SDLK_d || e.key.keysym.sym == SDLK_d ) m_FreeCam->moveLeft(-1);
-					else if ( e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_q ) m_FreeCam->moveLeft(1);
-					break;
-
-				case SDL_KEYUP:
-					if ( e.key.keysym.sym == SDLK_LSHIFT || e.key.keysym.sym == SDLK_RSHIFT ) m_shiftKey = false;
-					else if ( e.key.keysym.sym == SDLK_LCTRL || e.key.keysym.sym == SDLK_RCTRL ) m_ctrlKey = false;
-					else if ( e.key.keysym.sym == SDLK_LALT || e.key.keysym.sym == SDLK_RALT ) m_altKey = false;
-					else if ( e.key.keysym.sym == SDLK_SPACE || e.key.keysym.sym == SDLK_SPACE ) m_spaceKey = false;
-					break;
-			}
-		}
-		else {
-			this->resetInteractionBool();
-		}
+			  }
+		  }
+	  }
   }
 
-	void ModeEditor::resetInteractionBool()
-	{
-		m_moveCamEye = false;
-		m_moveShift = false;
-		m_slideMouse = false;
-		m_altKey = false;
-		m_ctrlKey = false;
-		m_spaceKey = false;
-		m_shiftKey = false;
-		m_leftClick = false;
-		m_middleClick = false;
-		m_rightClick = false;
-	}
 
   void ModeEditor::OnImGuiRender()
   {
+	/* Activation ImGUI interface */
     m_Interface.MenuBarInterface();
     m_Interface.MainActionMenu();
     m_Interface.MenuInfosInterface();
+
+	/* Activation KeyBoard Controllers */
+	m_KeyBoard.CameraShortCut();
+	m_KeyBoard.CubeShortCut();
+	m_KeyBoard.SelectorShortCut();
+	m_KeyBoard.MouseShortCut();
   }
 } // namespace modes

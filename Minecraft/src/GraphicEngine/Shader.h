@@ -11,8 +11,6 @@
 #include <unordered_map>
 #include <GL/glew.h>
 #include "glm/glm.hpp"
-#include "MinecraftEditor/Graphic/Lights/LightManager.h"
-
 
  /**
  * \brief Contains the text of the different shader part.

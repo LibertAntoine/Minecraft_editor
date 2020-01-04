@@ -65,7 +65,7 @@ namespace interaction {
 		* \brief Create a selector
 		* \param Renderer used for the selector render.
 		*/
-		CubeSelector(std::shared_ptr<renderer::CubeRenderer> renderer, const int& capacity = 2024);
+		CubeSelector(std::shared_ptr<renderer::CubeRenderer> renderer, const int& capacity = 512);
 		~CubeSelector();
 
 

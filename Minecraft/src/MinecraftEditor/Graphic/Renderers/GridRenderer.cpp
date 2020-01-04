@@ -52,7 +52,7 @@ namespace renderer {
       m_ShaderGrid->Bind();
       m_ShaderGrid->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
       m_ShaderGrid->SetUniformMat4f("uMVMatrix", MVMatrix);
-      renderer.Draw(GL_LINES, *m_VAOGrid, *m_IndexBufferGrid, *m_ShaderGrid);
+      renderer.DrawElements(GL_LINES, *m_VAOGrid, *m_IndexBufferGrid, *m_ShaderGrid);
     }
 
     if (active[0]) {
@@ -62,7 +62,7 @@ namespace renderer {
       m_ShaderGrid->Bind();
       m_ShaderGrid->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
       m_ShaderGrid->SetUniformMat4f("uMVMatrix", MVMatrix);
-      renderer.Draw(GL_LINES, *m_VAOGrid, *m_IndexBufferGrid, *m_ShaderGrid);
+      renderer.DrawElements(GL_LINES, *m_VAOGrid, *m_IndexBufferGrid, *m_ShaderGrid);
     }
     if (active[2]) {
       MVMatrix = glm::mat4(1) * camera.getViewMatrix();
@@ -71,7 +71,7 @@ namespace renderer {
       m_ShaderGrid->Bind();
       m_ShaderGrid->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
       m_ShaderGrid->SetUniformMat4f("uMVMatrix", MVMatrix);
-      renderer.Draw(GL_LINES, *m_VAOGrid, *m_IndexBufferGrid, *m_ShaderGrid);
+      renderer.DrawElements(GL_LINES, *m_VAOGrid, *m_IndexBufferGrid, *m_ShaderGrid);
     }
   }
 
@@ -104,7 +104,7 @@ namespace renderer {
 	  Translation = glm::translate(Translation, glm::vec3(glm::round(camera.position().x), glm::round(camera.position().y), 0.f));
 	  m_ShaderGridSelection->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
 	  m_ShaderGridSelection->SetUniformMat4f("uTranslation", Translation);
-	  renderer.Draw(GL_TRIANGLES, *m_VAOGridSelection, *m_IndexBufferGridSelection, *m_ShaderGridSelection);
+	  renderer.DrawElements(GL_TRIANGLES, *m_VAOGridSelection, *m_IndexBufferGridSelection, *m_ShaderGridSelection);
 	  m_ShaderGridSelection->Unbind();
   }
 }
