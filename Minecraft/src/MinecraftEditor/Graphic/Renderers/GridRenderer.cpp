@@ -38,7 +38,7 @@ namespace renderer {
 
   GridRenderer::~GridRenderer() {}
 
-  void GridRenderer::draw(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active) {
+  void GridRenderer::drawGrid(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active) {
     Renderer renderer;
     GLCall(glLineWidth(1));
     glm::mat4 MVMatrix;

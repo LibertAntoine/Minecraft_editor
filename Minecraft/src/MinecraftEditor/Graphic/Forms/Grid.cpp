@@ -70,5 +70,6 @@ namespace Forms {
 	  }
 
   }
+
   GridSelection::~GridSelection() {}
 }

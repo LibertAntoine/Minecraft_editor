@@ -16,10 +16,10 @@ namespace Modes {
     :m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
     m_GridRenderer(200, glm::vec3(0.5f, 0.5f, 0.5f)), m_CubeRenderer(std::make_shared<renderer::CubeRenderer>()),
     m_textureArray(std::make_shared<TextureArray>( 32, 32 )),
-    m_CubeSelector(std::make_shared<interaction::CubeSelector>( m_CubeRenderer, m_textureArray, 2048 )), // Obligatoirement une puissance de deux.
+    m_CubeSelector(std::make_shared<interaction::CubeSelector>( m_CubeRenderer, 2048 )), // Should be a pow of two.
     m_backgroundColor(std::make_shared<glm::vec3>(0.3f, 0.3f, 0.3f)),
-		m_FreeCam(std::make_shared<camera::FreeflyCamera>()),
-		m_LightManager(std::make_shared<interaction::LightManager>()),
+	m_FreeCam(std::make_shared<camera::FreeflyCamera>()),
+	m_LightManager(std::make_shared<interaction::LightManager>()),
     m_Interface(m_CubeRenderer, m_CubeSelector, m_textureArray, m_FreeCam, m_LightManager, m_backgroundColor)
 	{
     constexpr float fov = glm::radians(70.f);
@@ -30,93 +30,11 @@ namespace Modes {
     m_textureArray->AddTexture("res/textures/Cube/log_acacia_top.png", "res/textures/Cube/log_acacia_top_proxi.png");
     m_textureArray->AddTexture("res/textures/Cube/piston_bottom.png", "res/textures/Cube/piston_bottom_proxi.png");
     m_textureArray->AddTexture("res/textures/Cube/lava_placeholder.png", "res/textures/Cube/lava_placeholder_proxi.png");
-    
-    /*
-    int Width;
-    int Height;
-    int BPP;
-
-
-    unsigned char* LocalBuffer = stbi_load("res/textures/blocks/log_acacia_top.png", &Width, &Height, &BPP, 4);
-
-
-    GLCall(glGenTextures(1, &m_textureArray));
-    GLCall(glActiveTexture(GL_TEXTURE0));
-    GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, m_textureArray));
-    GLCall(glTexStorage3D(GL_TEXTURE_2D_ARRAY,
-        1,                    //5 mipmaps
-        GL_RGBA8,               //Internal Formsat
-        Width, Height,           //width,height
-        4                  //Number of layers
-    ));
-
-    GLubyte color[3] = { 0, 0,255};
-    
-
-
-
-   
-    GLCall(glTexSubImage3D(GL_TEXTURE_2D_ARRAY,
-        0,                      //Mipmap number
-        0, 0, 0, //xoffset, yoffset, zoffset
-        Width , Height , 1,          //width, height, depth
-        GL_RGBA,                 //Formsat
-        GL_UNSIGNED_BYTE,       //type
-        LocalBuffer)); //pointer to data
-
-    GLubyte color2[12] = { 255, 0, 0,  255, 0, 0, 255, 0, 0, 255, 0, 0, };
-
-    GLCall(glTexSubImage3D(GL_TEXTURE_2D_ARRAY,
-        0,                      //Mipmap number
-        0, 0, 1, //xoffset, yoffset, zoffset
-        1, 1, 1,         //width, height, depth
-        GL_RGB,                 //Formsat
-        GL_UNSIGNED_BYTE,       //type
-        color2)); //pointer to data
-
-
-    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-
-
-
-  
-
-    */
-
-
-
-    
-
-    //GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, m_textureArray));
-    //GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
-
-    //GLCall(glGenerateMipmap(GL_TEXTURE_2D_ARRAY));
-
-
 
     // TODO: check the following if necessary
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_CULL_FACE);
-
-    /* 
-       m_CubeSelector.Create(glm::vec3(0, 0, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 2, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 4, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 6, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 8, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 10, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 12, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 14, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 16, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 18, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 20, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 22, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 24, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       */
 
     // TODO: check the following if necessary
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -166,11 +84,19 @@ namespace Modes {
     // TODO: Check if necessary (redundancy) because of App.cpp beginFrame()
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-    m_GridRenderer.draw(*m_FreeCam, m_ProjMatrix, m_CubeSelector->activeGrid());
+    m_GridRenderer.drawGrid(*m_FreeCam, m_ProjMatrix, m_CubeSelector->activeGrid());
 	m_LightManager->dirLight().lightDirection = glm::vec3(glm::mat4(1.0f) * glm::vec4(m_LightManager->direction(), 0));
     m_LightManager->pointLightList()[0].lightPosition = glm::vec3(glm::mat4(1.0f) * glm::vec4(m_LightManager->position(), 0));
-    m_CubeRenderer->draw(m_FreeCam->getViewMatrix(), m_ProjMatrix, *m_LightManager, *m_textureArray);
-    m_CubeSelector->Show(m_FreeCam->getViewMatrix(), m_ProjMatrix);
+    m_CubeRenderer->drawCubes(m_FreeCam->getViewMatrix(), m_ProjMatrix, *m_LightManager, *m_textureArray);
+
+	if (m_CubeSelector->selector()->selectorState == interaction::SelectorState::CUT)
+		m_CubeRenderer->drawSelector(m_CubeSelector->selector()->selectedPosition,
+			m_CubeSelector->selector()->selectorCube.scale(),
+			m_CubeSelector->textSelected(), m_FreeCam->getViewMatrix(), m_ProjMatrix);
+	m_CubeRenderer->drawSelector(m_CubeSelector->selector()->selectorCube.position(),
+		m_CubeSelector->selector()->selectorCube.scale(), m_CubeSelector->textSelector(),
+		m_FreeCam->getViewMatrix(), m_ProjMatrix);
+
 
     // NOTE: Generating offscreen selection texture
     m_frameBufferSelection.Bind();

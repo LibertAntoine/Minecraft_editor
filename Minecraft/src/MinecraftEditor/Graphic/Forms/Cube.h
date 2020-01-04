@@ -1,5 +1,11 @@
 #pragma once
 
+/**
+ * \file Cube.h
+ * \brief Contains data relative to a cube of the scene.
+ * \author Antoine Libert & Nicolas Lienart
+ */
+
 
 #include <glm/glm.hpp>
 #include "GraphicEngine/Texture.h"
@@ -7,28 +13,38 @@
 
 namespace Forms {
 
+  /**
+  * \brief determine if the cube will be designed with color, texture or multi-texture.
+  */
   typedef enum CubeType {
     COLORED = 0,
     TEXTURED = 1,
     MULTI_TEXTURED = 2
   } CubeType;
 
-
-  typedef struct CubeData {
-    static const int datas[];
-    static const unsigned int indices[];
-  } CubeData;
-
   class Cube {
     public:
+
+	  /**
+	  * \brief Create a new cube
+      * \param Position of the cube in the scene.
+	  * \param Scale of the cube.
+	  * \param Color of the cube in RGB.
+	  * \param Type of the cube (COLORED|TEXTURED|MULTI_TEXTURED)
+	  * \param Texture for each face of the cube (the first is the texture by default).
+	  */
       Cube(const glm::ivec3& position = glm::ivec3(0, 0, 0), const short& scale = 3,
           const glm::vec3 & color = glm::vec3(0.5f, 0.5f, 0.5f), const CubeType & cubetype = COLORED,
           const std::vector<unsigned int>& textures = {0,0,0,0,0,0}
           );
       ~Cube();
+	  /**
+	  * \brief Compare position of the two Cubes.
+      * \param Cube to compare
+      */
+      bool operator==(const Forms::Cube& a);
 
-        bool operator==(const Forms::Cube& a);
-
+	  // GETTERS - SETTERS //
       inline const glm::ivec3& position() const { return m_position; };
       inline glm::ivec3& position() { return m_position; };
       inline void position(const glm::ivec3& position) { m_position = position; };
@@ -38,11 +54,6 @@ namespace Forms {
       inline glm::vec3& color() { return m_color; };
       inline void Setcolor(const glm::vec3& color) { m_color = color; };
       inline CubeType& type() { return m_type; };
-
-
-    public:
-      static const int datas[];
-      static const unsigned int indices[];
 
     private:
       glm::ivec3 m_position;

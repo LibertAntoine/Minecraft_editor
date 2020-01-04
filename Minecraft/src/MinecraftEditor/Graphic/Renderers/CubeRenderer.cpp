@@ -1,7 +1,7 @@
 #include "CubeRenderer.h"
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "MinecraftEditor/Graphic/Forms/Cube.h"
 #include "GraphicEngine/GLerror.h"
 
 namespace renderer {
@@ -66,14 +66,15 @@ void CubeRenderer::del(Forms::Cube* cube) {
     this->updateCubeId();
 }
 
-    void CubeRenderer::draw(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager, const TextureArray& texture)
+    void CubeRenderer::drawCubes(glm::mat4 view, glm::mat4 projection, interaction::LightManager& lightManager, const TextureArray& texture)
     {
       Renderer renderer;
   
       glm::mat4 MVMatrix = view;
       MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
+
       glActiveTexture(GL_TEXTURE0);
-			glEnable(GL_CULL_FACE); // NOTE: VERY AWESOME SHIT : do not print triangles that are not visible (great perFormsance improvement)
+	  glEnable(GL_CULL_FACE); 
       texture.Bind();
       m_VAO->Bind();
 
@@ -102,7 +103,7 @@ void CubeRenderer::del(Forms::Cube* cube) {
       }
 
       GLCall(glDrawArraysInstanced(GL_POINTS, 0, m_CubeList.size(), m_CubeList.size()));
-			glDisable(GL_CULL_FACE);
+	  glDisable(GL_CULL_FACE);
     }
 
     void CubeRenderer::drawSelector(const glm::vec3 &position, const int &scale,
@@ -112,7 +113,6 @@ void CubeRenderer::del(Forms::Cube* cube) {
       Renderer renderer;
       glDisable(GL_DEPTH_TEST);
       GLCall(glLineWidth(5));
-
 
       glm::mat4 MVMatrix = glm::mat4(1.0f);
       MVMatrix = glm::scale(MVMatrix, glm::vec3((scale)+1, (scale)+1, (scale)+1));
@@ -136,11 +136,10 @@ void CubeRenderer::del(Forms::Cube* cube) {
         glDisable(GL_CULL_FACE);
         glClearColor(1, 1, 1, 0); // White for unselectable air
         glViewport(0, 0, App::WINDOW_WIDTH, App::WINDOW_HEIGHT);
-        GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+		GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
-        
-				glm::mat4 MVMatrix = view;
-				MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
+		glm::mat4 MVMatrix = view;
+		MVMatrix = glm::scale(MVMatrix, glm::vec3(2, 2, 2));
 
         m_VAO->Bind();
         m_ShaderClickSelection->Bind();
@@ -197,13 +196,9 @@ void CubeRenderer::del(Forms::Cube* cube) {
         std::for_each(m_CubeList.begin(), m_CubeList.end(),
             [&cubeId](Forms::Cube& cube) {
 						
-						// BUG: Weird vector behavior : parts mus be initialised outside of the push_back
-						// cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32);
-						// cubeId.push_back((intptr_t(&cube) & 0xFFFFFFFF));
-						
-						GLuint idPart[2];
-						idPart[0] = (intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32;
-						idPart[1] = (intptr_t(&cube) & 0xFFFFFFFF);
+			    GLuint idPart[2];
+				idPart[0] = (intptr_t(&cube) & 0xFFFFFFFF00000000) >> 32;
+				idPart[1] = (intptr_t(&cube) & 0xFFFFFFFF);
 
             cubeId.push_back(idPart[0]);
             cubeId.push_back(idPart[1]);

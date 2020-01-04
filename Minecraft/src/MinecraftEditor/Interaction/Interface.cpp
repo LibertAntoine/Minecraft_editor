@@ -38,7 +38,7 @@ namespace interaction {
 				this->LightController();
 			}
 			if (ImGui::CollapsingHeader("RBF", ImGuiTreeNodeFlags_DefaultOpen)) {
-				this->RBFController(*m_cubeSelector);
+				this->RBFController();
 			}
 		ImGui::End();
 
@@ -88,8 +88,6 @@ namespace interaction {
 	}
 
 	/* CONTROLLERS */
-
-
 	void Interface::WorldController() {
 		float color[3] = {
 			m_backgroundColor->x,
@@ -101,20 +99,20 @@ namespace interaction {
 		};
 	}
 
-	void Interface::RBFController(interaction::CubeSelector& cubeSelector) {
-		if (ImGui::Button("Apply RBF")) cubeSelector.ApplyRBF();
+	void Interface::RBFController() {
+		if (ImGui::Button("Apply RBF")) m_cubeSelector->ApplyRBF();
                 std::vector<std::string> filePaths;
                 filePaths.push_back("res/rbf.txt");
-                this->RBFFile(cubeSelector, "Select a RBF file");
+                this->RBFFile(*m_cubeSelector, "Select a RBF file");
 	}
 
 	void Interface::CubeController() {
 		if (ImGui::Button("Add Cube")) m_cubeSelector->AddToSelector();
 		ImGui::SameLine();
 		if (ImGui::Button("Delete Cube")) m_cubeSelector->DeleteToSelector();
-		if (ImGui::Button("Select")) m_cubeSelector->MoveIn();
+		if (ImGui::Button("Cut")) m_cubeSelector->CutToSelector();
 		ImGui::SameLine();
-		if (ImGui::Button("Move Selection")) m_cubeSelector->MoveOut();
+		if (ImGui::Button("Paste")) m_cubeSelector->PasteToSelector();
 		if (ImGui::Button("Extrude")) m_cubeSelector->Extrude();
 		ImGui::SameLine();
 		if (ImGui::Button("Dig")) m_cubeSelector->Dig();
@@ -311,10 +309,10 @@ namespace interaction {
 				m_cubeSelector->DeleteToSelector();
 
 			if (ImGui::IsKeyPressed(SDL_SCANCODE_X))
-				m_cubeSelector->MoveIn();
+				m_cubeSelector->CutToSelector();
 
 			if (ImGui::IsKeyPressed(SDL_SCANCODE_V))
-				m_cubeSelector->MoveOut();
+				m_cubeSelector->PasteToSelector();
 
 			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
 				m_cubeSelector->Extrude();
@@ -420,24 +418,4 @@ namespace interaction {
 			ImGui::TextUnformatted(m_textureArray->nameList()[textures[j]].c_str());
 		}
 	}
-
-	bool Interface::DragIntSameLine(const int& nb, int* value, const int& step, const int& min, const int& max, const char* symbol) {
-
-		bool value_changed = false;
-		ImGui::BeginGroup();
-
-		for (int i = 0; i < nb; i++)
-		{
-			value_changed |= ImGui::DragInt("##v", &value[i], step, min, max, symbol);
-
-			ImGui::SameLine(0, -1.0f);
-		}
-
-		ImGui::EndGroup();
-		return value_changed;
-	}
-
-
-
-
 }

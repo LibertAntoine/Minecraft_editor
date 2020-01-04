@@ -1,5 +1,11 @@
 #pragma once
 
+/**
+ * \file Grid.h
+ * \brief Contains data relative to a grid of the scene and the click grid selection.
+ * \author Antoine Libert & Nicolas Lienart
+ */
+
 #include <glm/glm.hpp>
 #include <vector>
 #include <GL/glew.h>
@@ -9,9 +15,16 @@ namespace Forms {
   class Grid {
     public:
       Grid() = delete;
+
+	  /**
+      * \brief Create a new grid
+      * \param size of the grid in all directions.
+      * \param color of the grid
+      */
       Grid(const int &size, const glm::vec3 &color = glm::vec3(0.5,0.5,0.5));
       ~Grid();
 
+	  // GETTERS - SETTERS //
       inline const glm::vec3 color() const { return m_color; };
       inline void position(const glm::vec3& color) { m_color = color; };
       inline unsigned int size() const { return m_size; };
@@ -27,10 +40,17 @@ namespace Forms {
 
   class GridSelection {
   public:
+
 	  GridSelection() = delete;
-	  GridSelection(const int& half_size, const glm::vec3& color = glm::vec3(0.5, 0.5, 0.5));
+	  /**
+	  * \brief Create a new grid
+      * \param size of the grid in all directions.
+      * \param color of the grid
+      */
+	  GridSelection(const int& size, const glm::vec3& color = glm::vec3(0.5, 0.5, 0.5));
 	  ~GridSelection();
 
+	  // GETTERS - SETTERS //
 	  inline const glm::vec3 color() const { return m_color; };
 	  inline const std::vector<GLfloat> datas() const { return m_datas; };
 	  inline unsigned int size() const { return m_size; };

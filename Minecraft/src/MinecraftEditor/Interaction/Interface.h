@@ -1,14 +1,21 @@
 #pragma once
 
+/**
+ * \file Interface.h
+ * \brief Manage the ImGui interface and its interactions.
+ * \author Antoine Libert & Nicolas Lienart
+ */
 
+#include <iostream>
 
 #include "ImGUI/imgui.h"
 #include "SDL.h"
-#include "MinecraftEditor/Interaction/CubeSelector.h"
-#include "GraphicEngine/Camera.h"
-#include <iostream>
+
 #include "GraphicEngine/App.h"
+#include "GraphicEngine/Camera.h"
 #include "GraphicEngine/Texture.h"
+
+#include "MinecraftEditor/Interaction/CubeSelector.h"
 
 namespace interaction {
 
@@ -30,22 +37,58 @@ namespace interaction {
 		~Interface();
 
 		/* MENU */
+		/**
+		* \brief Active the menu which the different controller panel.
+		*/
 		void MainActionMenu();
+
+		/**
+		* \brief Active the bar menu.
+		*/
 		void MenuBarInterface();
+
+		/**
+		* \brief Active the navigation menu with infos relative to the selector and current cube selected.
+		*/
 		void MenuInfosInterface();
 		
 
 		/* CONTROLLER */
-		void RBFController(interaction::CubeSelector& cubeSelector);
+
+		/**
+		* \brief Active grid panel controller.
+		*/
 		void GridController();
+		/**
+		* \brief Active world panel controller (color of the world).
+		*/
 		void WorldController();
+		/**
+		* \brief Active the cube panel controller (add/delete/extrude...).
+		*/
 		void CubeController();
+		/**
+		* \brief Active the light panel controller.
+		*/
 		void LightController();
+		/**
+		* \brief Active the camera panel controller.
+		*/
 		void CameraController();
+		/**
+		* \brief Active the RBF panel controller.
+		*/
+		void RBFController();
 
 
 		/* INFOS - SELECTOR CONTROLLER */
+		/**
+		* \brief Active the infos panel/controller relative to the cube selected.
+		*/
 		void InfosCurrentCubeInterface();
+		/**
+		* \brief Active the infos panel/controller relative to the selector.
+		*/
 		void InfosSelectorInterface();
 
 		void CameraKeyBoard();
@@ -54,10 +97,20 @@ namespace interaction {
 
 	private:
 		/* ImGUI WIDGET */
+
         void RBFFile(interaction::CubeSelector& cubeSelector, const char* label);
+		/**
+		* \brief Create a combo button to select one texture.
+		* \param Texture that modified the combo.
+		* \param Label of the combo button.
+		*/
 		void ComboTexture(std::vector<unsigned int>& textures, const char* label);
+		/**
+		* \brief Create a suite of six combo buttons to select six textures (for each face of a cube).
+		* \param Texture array of the six textures that the combos modified.
+		* \param Label of the combo buttons.
+		*/
 		void ComboMultiTexture(std::vector<unsigned int>& textures, const char* label);
-		bool DragIntSameLine(const int& nb, int* value, const int& step = 1, const int& min = 0, const int& max = 100, const char* symbol = "");
 	};
 
 }

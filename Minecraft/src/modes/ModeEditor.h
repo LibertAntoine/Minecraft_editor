@@ -1,5 +1,11 @@
 #pragma once
 
+/**
+ * \file ModeEditor.h
+ * \brief Manage the Minecraft Editor.
+ * \author Antoine Libert & Nicolas Lienart
+ */
+
 #include "Mode.h"
 
 #include "GraphicEngine/Camera.h"
@@ -29,12 +35,12 @@ class ModeEditor : public Mode
 private:
   glm::mat4 m_ProjMatrix;
   renderer::GridRenderer m_GridRenderer;
-	std::shared_ptr<renderer::CubeRenderer> m_CubeRenderer;
-	std::shared_ptr<TextureArray> m_textureArray;
-	std::shared_ptr<interaction::CubeSelector> m_CubeSelector;
-	std::shared_ptr<glm::vec3> m_backgroundColor;
-	std::shared_ptr<camera::FreeflyCamera> m_FreeCam;
-	std::shared_ptr<interaction::LightManager> m_LightManager;
+  std::shared_ptr<renderer::CubeRenderer> m_CubeRenderer;
+  std::shared_ptr<TextureArray> m_textureArray;
+  std::shared_ptr<interaction::CubeSelector> m_CubeSelector;
+  std::shared_ptr<glm::vec3> m_backgroundColor;
+  std::shared_ptr<camera::FreeflyCamera> m_FreeCam;
+  std::shared_ptr<interaction::LightManager> m_LightManager;
   interaction::Interface m_Interface;
   FrameBuffer m_frameBufferSelection; /// Custom framebuffer that is bound during selection texture rendering, also for queries
   DepthBuffer m_depthBufferSelection;
@@ -58,17 +64,19 @@ private:
 public:
   ModeEditor();
   ~ModeEditor();
+
   void OnUpdate(float ) override;
   void OnEvent(const SDL_Event &e) override;
   void OnRender() override;
   void OnImGuiRender() override;
 
+  // GETTERS - SETTERS //
   inline glm::vec3& backgroundColor() { return  *m_backgroundColor; };
   inline camera::FreeflyCamera& freeCam() { return  *m_FreeCam; };
   inline interaction::CubeSelector& cubeSelector() { return  *m_CubeSelector; };
   inline interaction::LightManager& lightManager() { return  *m_LightManager; };
 
-	void resetInteractionBool();
+  void resetInteractionBool();
 
 };
 } // namespace modes
