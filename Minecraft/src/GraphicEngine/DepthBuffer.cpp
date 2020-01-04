@@ -6,10 +6,9 @@ DepthBuffer::DepthBuffer()
   GLCall(glGenRenderbuffers(1, &m_DepthBufferId));
 }
 
-// TODO: write this with the proper syntax
 DepthBuffer::~DepthBuffer()
 {
-  //GLCall(glDeleteDepthbuffers(1, &m_DepthBufferId));
+  GLCall(glDeleteRenderbuffers(1, &m_DepthBufferId));
 }
 
 void DepthBuffer::Bind() const
