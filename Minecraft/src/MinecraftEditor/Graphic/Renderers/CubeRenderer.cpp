@@ -76,11 +76,12 @@ void CubeRenderer::del(Forms::Cube* cube) {
       glActiveTexture(GL_TEXTURE0);
 	  glEnable(GL_CULL_FACE); 
       texture.Bind();
-      m_VAO->Bind();
 
       if (lightManager.currentLight() == interaction::lightStatus::NONE) {
           m_ShaderCube->Bind();
           m_ShaderCube->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+		  renderer.DrawArraysInstanced(GL_POINTS, *m_VAO, *m_ShaderCube, m_CubeList.size());
+
       }
       else if (lightManager.currentLight() == interaction::lightStatus::DIRECTIONNAL) {
           m_ShaderCubeDirLight->Bind();
@@ -90,6 +91,7 @@ void CubeRenderer::del(Forms::Cube* cube) {
           m_ShaderCubeDirLight->SetUniform3f("uLightDir_vs", lightManager.dirLight().lightDirection.x, lightManager.dirLight().lightDirection.y, lightManager.dirLight().lightDirection.z);
           m_ShaderCubeDirLight->SetUniform3f("uLightIntensity", lightManager.dirLight().lightIntensity.x, lightManager.dirLight().lightIntensity.y, lightManager.dirLight().lightIntensity.z);
           m_ShaderCubeDirLight->SetUniform1f("uShininess", lightManager.dirLight().shininess);
+		  renderer.DrawArraysInstanced(GL_POINTS, *m_VAO, *m_ShaderCubeDirLight, m_CubeList.size());
       }
       else if (lightManager.currentLight() == interaction::lightStatus::PONCTUAL) {
           m_ShaderCubePonctLight->Bind();
@@ -99,11 +101,10 @@ void CubeRenderer::del(Forms::Cube* cube) {
           m_ShaderCubePonctLight->SetUniform3f("uLightPos", lightManager.pointLightList()[0].lightPosition.x, lightManager.pointLightList()[0].lightPosition.y, lightManager.pointLightList()[0].lightPosition.z);
           m_ShaderCubePonctLight->SetUniform3f("uLightIntensity", lightManager.pointLightList()[0].lightIntensity.x, lightManager.pointLightList()[0].lightIntensity.y, lightManager.pointLightList()[0].lightIntensity.z);
           m_ShaderCubePonctLight->SetUniform1f("uShininess", lightManager.pointLightList()[0].shininess);
-
+		  renderer.DrawArraysInstanced(GL_POINTS, *m_VAO, *m_ShaderCubePonctLight, m_CubeList.size());
       }
-
-      GLCall(glDrawArraysInstanced(GL_POINTS, 0, m_CubeList.size(), m_CubeList.size()));
 	  glDisable(GL_CULL_FACE);
+	  texture.Bind();
     }
 
     void CubeRenderer::drawSelector(const glm::vec3 &position, const int &scale,
@@ -122,9 +123,8 @@ void CubeRenderer::del(Forms::Cube* cube) {
       m_ShaderSelector->Bind();
       m_ShaderSelector->SetUniform3f("uPosition", position.x, position.y, position.z);
       m_ShaderSelector->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
-      m_VAO->Bind();
-      glDrawArrays(GL_POINTS, 0, 1);
 
+	  renderer.DrawArrays(GL_POINTS, *m_VAO, *m_ShaderSelector, 1);
       glEnable(GL_DEPTH_TEST);
       texture->Unbind();
     };

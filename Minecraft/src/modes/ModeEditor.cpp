@@ -16,7 +16,7 @@ namespace Modes {
     :m_ProjMatrix(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
     m_GridRenderer(200, glm::vec3(0.5f, 0.5f, 0.5f)), m_CubeRenderer(std::make_shared<renderer::CubeRenderer>()),
     m_textureArray(std::make_shared<TextureArray>( 32, 32 )),
-    m_CubeSelector(std::make_shared<interaction::CubeSelector>( m_CubeRenderer, 2048 )), // Should be a pow of two.
+    m_CubeSelector(std::make_shared<interaction::CubeSelector>( m_CubeRenderer, 512 )), // Should be a pow of two.
     m_backgroundColor(std::make_shared<glm::vec3>(0.3f, 0.3f, 0.3f)),
 	m_FreeCam(std::make_shared<camera::FreeflyCamera>()),
 	m_LightManager(std::make_shared<interaction::LightManager>()),

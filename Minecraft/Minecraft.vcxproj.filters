@@ -84,12 +84,6 @@
     <ClCompile Include="src\MinecraftEditor\Interaction\Interface.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\MinecraftEditor\RBF\RBF.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MinecraftEditor\Graphic\Lights\LightManager.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\MinecraftEditor\Graphic\Renderers\CubeRenderer.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -105,13 +99,16 @@
     <ClCompile Include="src\MinecraftEditor\Interaction\CubeSelector.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="src\MinecraftEditor\Interaction\RBF.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\GraphicEngine\GLerror.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="src\GraphicEngine\App.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MinecraftEditor\Graphic\Lights\LightManager.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MinecraftEditor\Interaction\RBF.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -311,12 +308,6 @@
     <ClInclude Include="src\MinecraftEditor\Interaction\Interface.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\MinecraftEditor\RBF\RBF.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MinecraftEditor\Graphic\Lights\LightManager.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="src\MinecraftEditor\Graphic\Renderers\CubeRenderer.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -332,13 +323,16 @@
     <ClInclude Include="src\MinecraftEditor\Interaction\CubeSelector.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="src\MinecraftEditor\Interaction\RBF.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="src\GraphicEngine\GLerror.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="src\GraphicEngine\App.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Graphic\Lights\LightManager.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MinecraftEditor\Interaction\RBF.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
