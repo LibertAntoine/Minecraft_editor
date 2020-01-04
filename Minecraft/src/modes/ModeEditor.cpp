@@ -30,7 +30,18 @@ namespace Modes {
 
     m_textureArray->AddTexture("res/textures/Cube/log_acacia_top.png", "res/textures/Cube/log_acacia_top_proxi.png");
     m_textureArray->AddTexture("res/textures/Cube/piston_bottom.png", "res/textures/Cube/piston_bottom_proxi.png");
-    m_textureArray->AddTexture("res/textures/Cube/lava_placeholder.png", "res/textures/Cube/lava_placeholder_proxi.png");
+    m_textureArray->AddTexture("res/textures/Cube/bookshelf.png", "res/textures/Cube/bookshelf_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/brick.png", "res/textures/Cube/brick_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/coarse_dirt.png", "res/textures/Cube/coarse_dirt_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/cobblestone.png", "res/textures/Cube/cobblestone_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/crafting_table_front.png", "res/textures/Cube/crafting_table_front_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/lava_placeholder.png", "res/textures/Cube/lava_placeholder_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/glowstone.png", "res/textures/Cube/glowstone_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/grass_carried.png", "res/textures/Cube/grass_carried_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/grass_side.png", "res/textures/Cube/grass_side_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/planks_jungle.png", "res/textures/Cube/planks_jungle_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/prismarine_bricks.png", "res/textures/Cube/prismarine_bricks_proxi.png");
+	m_textureArray->AddTexture("res/textures/Cube/sponge_wet.png", "res/textures/Cube/sponge_wet_proxi.png");
     
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -98,7 +109,7 @@ namespace Modes {
 
   void ModeEditor::OnEvent(const SDL_Event& e)
   {
-	  if (ImGui::IsAnyWindowHovered() == false) {
+	  if (!ImGui::IsAnyWindowHovered() && !ImGui::IsAnyWindowFocused()) {
 		  switch (e.type) {
 		  case SDL_MOUSEWHEEL:
 			  m_FreeCam->moveFront(e.wheel.y);
