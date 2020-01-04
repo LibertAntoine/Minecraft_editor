@@ -23,36 +23,14 @@ TextureArray::TextureArray(const unsigned int& witdh, const unsigned int& height
     this->Unbind();
 }
 
-void TextureArray::AddTexture(const std::string& path, const std::string& proxi) {
-    stbi_set_flip_vertically_on_load(1); //Retourne verticlement la texture.
-    int width = 0;
-    int height = 0;
+TextureArray::~TextureArray() { GLCall(glDeleteTextures(1, &m_TextureArrayID)); }
 
-    m_LocalBuffer = stbi_load(path.c_str(), &width, &height, nullptr, 4);
-    this->Bind();
-
-    if (width <= m_Width && height <= m_Height) {
-        GLCall(glTexSubImage3D(GL_TEXTURE_2D_ARRAY,
-            0,                      //Mipmap number
-            0, 0, m_layerCount, //xoffset, yoffset, zoffset
-            m_Width, m_Height, 1,          //width, height, depth
-            GL_RGBA,                 //Formsat
-            GL_UNSIGNED_BYTE,       //type
-            m_LocalBuffer)); //pointer to data
-        this->addProxi(proxi, this->nammed(path));
-        m_layerCount++;
-    } else {
-        std::cerr << "Texture " << path << " resolution too high" << std::endl;
-    }
-    
-    this->Unbind();
-
-    if (m_LocalBuffer)
-        stbi_image_free(m_LocalBuffer);
+void TextureArray::Bind(unsigned int slot /*= 0*/) const {
+	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
+	GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, m_TextureArrayID));
 }
 
-
-TextureArray::~TextureArray() { GLCall(glDeleteTextures(1, &m_TextureArrayID)); }
+void TextureArray::Unbind() const { GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, 0)); }
 
 unsigned int TextureArray::give(std::string name) {
     if (m_TextureList.find(name) != m_TextureList.end()) 
@@ -68,23 +46,38 @@ Texture* TextureArray::giveProxi(std::string name) {
         return nullptr;
 }
 
+void TextureArray::AddTexture(const std::string& path, const std::string& proxi) {
+	stbi_set_flip_vertically_on_load(1); //Retourne verticlement la texture.
+	int width = 0;
+	int height = 0;
 
+	m_LocalBuffer = stbi_load(path.c_str(), &width, &height, nullptr, 4);
+	this->Bind();
 
-void TextureArray::Bind(unsigned int slot /*= 0*/) const {
-    GLCall(glActiveTexture(
-        GL_TEXTURE0 +
-        slot)); // Selectionne un slot pour la texture, on peut active plusieurs
-                // texture dans different slot, 0 etant le plus proche.
-    // Go a la definition de GL_TEXTURE0 pour voir combien notre GPU possede de
-    // slot.
-    GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, m_TextureArrayID));
+	if (width <= m_Width && height <= m_Height) {
+		GLCall(glTexSubImage3D(GL_TEXTURE_2D_ARRAY,
+			0,                      //Mipmap number
+			0, 0, m_layerCount, //xoffset, yoffset, zoffset
+			m_Width, m_Height, 1,          //width, height, depth
+			GL_RGBA,                 //Formsat
+			GL_UNSIGNED_BYTE,       //type
+			m_LocalBuffer)); //pointer to data
+		this->addProxi(proxi, this->nammed(path));
+		m_layerCount++;
+	}
+	else {
+		std::cerr << "Texture " << path << " resolution too high" << std::endl;
+	}
+
+	this->Unbind();
+
+	if (m_LocalBuffer)
+		stbi_image_free(m_LocalBuffer);
 }
 
 
-void TextureArray::Unbind() const { GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, 0)); }
-
 std::string TextureArray::nammed(const std::string& path) {
-    std::regex name_regex("[a-zA-Z0-9_]*\\.png");
+    std::regex name_regex("[a-zA-Z0-9_]*\\.");
     std::smatch name_match;
     if (std::regex_search(path, name_match, name_regex)) {
         std::string name = name_match.str().substr(0, name_match.length() - 4);
@@ -93,7 +86,7 @@ std::string TextureArray::nammed(const std::string& path) {
         return name;
     }
     else {
-        assert("texture has not a png extension");
+        assert("texture has not a conform name");
 				return "0";
     }
 }

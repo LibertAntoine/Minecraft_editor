@@ -1,12 +1,10 @@
 #include "Shader.h"
+#include "GLerror.h"
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
-
-#include "Renderer.h"
-#include "GLerror.h"
 
 Shader::Shader(const std::string& filepath) 
 	: m_FilePath(filepath), m_RendererID(0)
@@ -57,14 +55,22 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string& source)
 	if (result == GL_FALSE) {
 		int length;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-                // NOTE: replaced alloca by malloc, alloc seems to be a non-standard MSVC thing
-                // Was causing segfaults
+
 		char* message = (char*)malloc(length * sizeof(char));
+		std::string shaderPart = "";
+		if (type == GL_VERTEX_SHADER) {
+			shaderPart = "vertex";
+		}
+		else if(type == GL_FRAGMENT_SHADER) {
+			shaderPart = "fragment";
+		}
+		else if (type == GL_GEOMETRY_SHADER) {
+			shaderPart = "geometry";
+		}
+
 		glGetShaderInfoLog(id, length, &length, message);
-                std::cout << "Error in: " << m_FilePath << std::endl;
-		std::cout << "Failed to compile  " <<
-			(type == GL_VERTEX_SHADER ? "vertex" : "fragment")
-			<< " shader!" << std::endl;
+        std::cout << "Error in: " << m_FilePath << std::endl;
+		std::cout << "Failed to compile  " << shaderPart  << " shader!" << std::endl;
 		std::cout << message << std::endl;
 		glDeleteShader(id);
 		return 0;
@@ -120,11 +126,10 @@ unsigned int Shader::CreateShader(const std::string& vertexShader, const std::st
 		return 0;
 	}
 
-	glDeleteShader(vs); //Delete le shader du CPU
-	glDeleteShader(fs); //Delete le shader du CPU
+	glDeleteShader(vs); 
+	glDeleteShader(fs);
 	if (geometryShader != "")
-		glDeleteShader(gs); //Delete le shader du CPU
-	//glDetachShader(program); pour enlever le shader du GPU.
+		glDeleteShader(gs); 
 
 	return program;
 }

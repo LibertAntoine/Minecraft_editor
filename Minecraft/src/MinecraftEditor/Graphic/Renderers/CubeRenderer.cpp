@@ -40,8 +40,8 @@ CubeRenderer::CubeRenderer()
   m_VAO->AddBuffer(*m_VertexBufferPosition, layoutPosition, 0, 1);
   m_VAO->AddBuffer(*m_VertexBufferColor, layoutColor, 1, 1);
   m_VAO->AddBuffer(*m_VertexBufferTexture, layoutTexture, 2, 1);
-  m_VAO->AddBuffer(*m_VertexBufferType, layoutType, 4, 1, 2);
-  m_VAO->AddBuffer(*m_VertexBufferCubeId, layoutCubeId, 5, 1, 2);
+  m_VAO->AddBuffer(*m_VertexBufferType, layoutType, 4, 1, 0);
+  m_VAO->AddBuffer(*m_VertexBufferCubeId, layoutCubeId, 5, 1, 0);
 }
 
 CubeRenderer::~CubeRenderer() {}

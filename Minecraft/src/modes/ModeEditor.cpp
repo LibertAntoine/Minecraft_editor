@@ -21,7 +21,7 @@ namespace Modes {
 		m_FreeCam(std::make_shared<camera::FreeflyCamera>()),
 		m_LightManager(std::make_shared<interaction::LightManager>()),
     m_Interface(m_CubeRenderer, m_CubeSelector, m_textureArray, m_FreeCam, m_LightManager, m_backgroundColor)
-  {
+	{
     constexpr float fov = glm::radians(70.f);
     float ratio = 1080. / 720.;
     m_ProjMatrix = glm::perspective(fov, ratio, 0.1f, 100.f);
@@ -131,11 +131,11 @@ namespace Modes {
 		GLCall( glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, App::WINDOW_WIDTH, App::WINDOW_HEIGHT); );
 		GLCall( glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depthBufferSelection.getDepthBufferId()); );
 
-    m_textureSelectionCube.SimpleBind();
+    m_textureSelectionCube.Bind();
 
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_textureSelectionCube.GetTextureID(), 0););
 
-    m_textureSelectionCube.SimpleBind();
+    m_textureSelectionCube.Bind();
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_textureSelectionGround.GetTextureID(), 0););
 
     //GLenum DrawBuffers[2] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
