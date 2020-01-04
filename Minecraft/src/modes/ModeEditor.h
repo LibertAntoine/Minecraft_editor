@@ -8,7 +8,6 @@
 #include "Interaction/CubeSelector.h"
 #include "Interaction/Interface.h"
 #include "Renderer/CubeRenderer.h"
-#include "Renderer/CubeSelectionRenderer.h"
 #include "Renderer/GroundSelectionRenderer.h"
 #include "Renderer/GridRenderer.h"
 #include "Texture.h"
@@ -38,7 +37,6 @@ private:
 	std::shared_ptr<camera::FreeflyCamera> m_FreeCam;
 	std::shared_ptr<interaction::LightManager> m_LightManager;
   interaction::Interface m_Interface;
-  renderer::CubeSelectionRenderer m_CubeSelectionRenderer;
   FrameBuffer m_frameBufferSelection; /// Custom framebuffer that is bound during selection texture rendering, also for queries
   DepthBuffer m_depthBufferSelection;
   Texture m_textureSelectionCube; /// Offscreen texture that contains mouse selectable(visible) Cubes

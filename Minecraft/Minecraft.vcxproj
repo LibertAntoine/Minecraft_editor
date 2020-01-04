@@ -94,7 +94,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)WinDependencies\glew-2.1.0\include;$(SolutionDir)WinDependencies\GLFW;$(SolutionDir)WinDependencies\SDL2\include;vendor;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)WinDependencies\glew-2.1.0\include;$(SolutionDir)WinDependencies\GLFW;$(SolutionDir)WinDependencies\SDL2\include;vendor;src;$(SolutionDir)WinDependencies\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -109,7 +109,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)WinDependencies\glew-2.1.0\include;$(SolutionDir)WinDependencies\GLFW;$(SolutionDir)WinDependencies\SDL2\include;vendor;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)WinDependencies\glew-2.1.0\include;$(SolutionDir)WinDependencies\GLFW;$(SolutionDir)WinDependencies\SDL2\include;vendor;src;$(SolutionDir)WinDependencies\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)WinDependencies\glew-2.1.0\lib\Debug\x64;$(SolutionDir)WinDependencies\SDL2\x64</AdditionalLibraryDirectories>
@@ -125,7 +125,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)WinDependencies\glew-2.1.0\include;$(SolutionDir)WinDependencies\GLFW;$(SolutionDir)WinDependencies\SDL2\include;vendor;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)WinDependencies\glew-2.1.0\include;$(SolutionDir)WinDependencies\GLFW;$(SolutionDir)WinDependencies\SDL2\include;vendor;src;$(SolutionDir)WinDependencies\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <OmitFramePointers>false</OmitFramePointers>
     </ClCompile>
@@ -147,7 +147,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)WinDependencies\glew-2.1.0\include;$(SolutionDir)WinDependencies\GLFW;$(SolutionDir)WinDependencies\SDL2\include;vendor;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)WinDependencies\glew-2.1.0\include;$(SolutionDir)WinDependencies\GLFW;$(SolutionDir)WinDependencies\SDL2\include;vendor;src;$(SolutionDir)WinDependencies\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <OmitFramePointers>
       </OmitFramePointers>
@@ -182,7 +182,6 @@
     <ClCompile Include="src\RBF\RBF.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Renderer\CubeRenderer.cpp" />
-    <ClCompile Include="src\Renderer\CubeSelectionRenderer.cpp" />
     <ClCompile Include="src\Renderer\GridRenderer.cpp" />
     <ClCompile Include="src\Renderer\GroundSelectionRenderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
@@ -219,7 +218,6 @@
     <ClInclude Include="src\modes\Mode.h" />
     <ClInclude Include="src\RBF\RBF.h" />
     <ClInclude Include="src\Renderer\CubeRenderer.h" />
-    <ClInclude Include="src\Renderer\CubeSelectionRenderer.h" />
     <ClInclude Include="src\Renderer\GridRenderer.h" />
     <ClInclude Include="src\Renderer\GroundSelectionRenderer.h" />
     <ClInclude Include="src\Shader.h" />
