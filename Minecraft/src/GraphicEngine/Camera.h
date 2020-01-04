@@ -17,15 +17,17 @@ namespace camera {
 	*/
 	class FreeflyCamera {
 	private:
-		// Rotation attributes //
-		float m_fPhi;
-		float m_fTheta;
-
+		
 		// Position vectors //
 		glm::vec3 m_Position;
 		glm::vec3 m_FrontVector; 
 		glm::vec3 m_LeftVector; 
 		glm::vec3 m_UpVector;
+
+		// Rotation attributes //
+		float m_fPhi;
+		float m_fTheta;
+
 
 	public:
 		FreeflyCamera();

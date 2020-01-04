@@ -11,11 +11,11 @@
 class Texture
 {
 private:
-	unsigned int m_TextureID;
 	std::string m_FilePath;
 	std::string m_Name;
 	unsigned char* m_LocalBuffer;
 	int m_Width, m_Height, m_BPP;
+	unsigned int m_TextureID;
 
 public: 
 

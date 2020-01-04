@@ -20,17 +20,19 @@ namespace renderer {
   class GridRenderer
   {
     private:
-      std::unique_ptr<VertexArray> m_VAOGrid;
-      std::unique_ptr<IndexBuffer> m_IndexBufferGrid;
-      std::unique_ptr<VertexBuffer> m_VertexBufferGrid;
-      std::unique_ptr<Shader> m_ShaderGrid;
-	  Forms::Grid m_grid;
 
-	  std::unique_ptr<VertexArray> m_VAOGridSelection;
-	  std::unique_ptr<VertexBuffer> m_VertexBufferGridSelection;
-	  std::unique_ptr<IndexBuffer> m_IndexBufferGridSelection;
-	  std::unique_ptr<Shader> m_ShaderGridSelection;
-	  Forms::GridSelection m_gridSelection;
+			Forms::Grid m_grid;
+			Forms::GridSelection m_gridSelection;
+			std::unique_ptr<Shader> m_ShaderGrid;
+			std::unique_ptr<Shader> m_ShaderGridSelection;
+			std::unique_ptr<VertexArray> m_VAOGrid;
+			std::unique_ptr<VertexArray> m_VAOGridSelection;
+
+			std::unique_ptr<VertexBuffer> m_VertexBufferGridSelection;
+			std::unique_ptr<IndexBuffer> m_IndexBufferGridSelection;
+
+			std::unique_ptr<IndexBuffer> m_IndexBufferGrid;
+			std::unique_ptr<VertexBuffer> m_VertexBufferGrid;
 
     public:
       GridRenderer(const unsigned int& size, glm::vec3 color);
