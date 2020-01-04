@@ -7,12 +7,10 @@
 namespace renderer {
   GridRenderer::GridRenderer(const unsigned int& size, glm::vec3 color)
     :m_grid(form::Grid(size, color)), m_gridSelection(form::GridSelection(size)),
-	  m_ShaderGrid(std::make_unique<Shader>("res/shaders/3DGrid.shader")),
+	  m_ShaderGrid(std::make_unique<Shader>("res/shaders/Grid.shader")),
 	  m_ShaderGridSelection(std::make_unique<Shader>("res/shaders/GroundSelection.shader")),
 	  m_VAOGrid(std::make_unique<VertexArray>()),
 	  m_VAOGridSelection(std::make_unique<VertexArray>())
-
-
   {
     
     m_VertexBufferGrid = std::make_unique<VertexBuffer>(m_grid.datas().data(), 8.f * (size + 1.0f) * 3.f * sizeof(int));

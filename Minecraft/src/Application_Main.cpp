@@ -36,63 +36,44 @@ int main(int argc, char* args[])
   App app;
   Renderer renderer;
 
+  //Pass Auto in editor mode.
+  modes::Mode* currentMode = new modes::ModeEditor;
 
-
-  modes::Mode* currentMode = nullptr;
   modes::ModeMenu* modeMenu = new modes::ModeMenu(currentMode);
-  currentMode = modeMenu;
-
   modeMenu->RegisterMode<modes::ModeEditor>("Cube");
   modeMenu->RegisterMode<modes::ModeImGUITest>("ImGUI Demo");
 
 
-
   /* Boucle principale */
   while (app.isRunning()) {
-    renderer.Clear();
-    app.beginFrame();
-    {
-
-      if (currentMode)
-      {
-        currentMode->OnUpdate(0.0f);
-        currentMode->OnRender();
-        SDL_Event e;
-        while (SDL_PollEvent(&e))
-        {
-          if (e.type == SDL_QUIT)
-          {
-            app.exit();
-            break;
-          }
-          currentMode->OnEvent(e);
-          ImGui_ImplSDL2_ProcessEvent(&e);	
-        }
-        ImGui::Begin("Select Mode");
-		if (currentMode != modeMenu && ImGui::Button("<-"))
-        {
-          delete currentMode;
-          currentMode = modeMenu;
-        }
-		currentMode->OnImGuiRender();
-        ImGui::End();
-      }
-
-	  ImGui::Render();
-      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-      app.endFrame();
-
-    }
-
+	  renderer.Clear();
+	  app.beginFrame();
+	  {
+		  if (currentMode)
+		  {
+			  currentMode->OnUpdate(0.0f);
+			  currentMode->OnRender();
+			  SDL_Event e;
+			  while (SDL_PollEvent(&e))
+			  {
+				  if (e.type == SDL_QUIT)
+				  {
+					  app.exit();
+					  break;
+				  }
+				  currentMode->OnEvent(e);
+				  ImGui_ImplSDL2_ProcessEvent(&e);
+			  }
+			  currentMode->OnImGuiRender();
+		  }
+		  ImGui::Render();
+		  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		  app.endFrame();
+	  }
   }
-
   if (currentMode != modeMenu) {
     delete modeMenu;
   }
   delete currentMode;
-
-
-
-
   return 0;
 }
