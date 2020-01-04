@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- * \file Application_Main.cpp
+ * \file App.h
  * \brief Main - Manage the SDL, GLEW and ImGUI context and the program states.
  * \author Antoine Libert & Nicolas Lienart
  *

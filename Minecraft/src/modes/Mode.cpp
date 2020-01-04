@@ -3,6 +3,7 @@
 
 namespace Modes {
 
+	
 	ModeMenu::ModeMenu(Mode*& currentTestPointer)
 		: m_CurrentMode(currentTestPointer)
 	{
