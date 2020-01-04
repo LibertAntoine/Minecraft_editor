@@ -4,8 +4,6 @@
 namespace details {
 	template<typename T>
 	GLenum getGLenum() {
-		//static_assert(false);
-                // https://stackoverflow.com/questions/52137187/static-assert-in-template-specialization-fails-even-if-it-is-not-instantiated
 		return GL_FLOAT;
 	}
 
@@ -31,7 +29,6 @@ namespace details {
 
 	template<typename T>
 	unsigned char getGLbool() {
-		//static_assert(false);
 		return GL_FALSE;
 	}
 
