@@ -31,95 +31,8 @@ namespace Modes {
     m_textureArray->AddTexture("res/textures/Cube/piston_bottom.png", "res/textures/Cube/piston_bottom_proxi.png");
     m_textureArray->AddTexture("res/textures/Cube/lava_placeholder.png", "res/textures/Cube/lava_placeholder_proxi.png");
     
-    /*
-    int Width;
-    int Height;
-    int BPP;
-
-
-    unsigned char* LocalBuffer = stbi_load("res/textures/blocks/log_acacia_top.png", &Width, &Height, &BPP, 4);
-
-
-    GLCall(glGenTextures(1, &m_textureArray));
-    GLCall(glActiveTexture(GL_TEXTURE0));
-    GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, m_textureArray));
-    GLCall(glTexStorage3D(GL_TEXTURE_2D_ARRAY,
-        1,                    //5 mipmaps
-        GL_RGBA8,               //Internal Formsat
-        Width, Height,           //width,height
-        4                  //Number of layers
-    ));
-
-    GLubyte color[3] = { 0, 0,255};
-    
-
-
-
-   
-    GLCall(glTexSubImage3D(GL_TEXTURE_2D_ARRAY,
-        0,                      //Mipmap number
-        0, 0, 0, //xoffset, yoffset, zoffset
-        Width , Height , 1,          //width, height, depth
-        GL_RGBA,                 //Formsat
-        GL_UNSIGNED_BYTE,       //type
-        LocalBuffer)); //pointer to data
-
-    GLubyte color2[12] = { 255, 0, 0,  255, 0, 0, 255, 0, 0, 255, 0, 0, };
-
-    GLCall(glTexSubImage3D(GL_TEXTURE_2D_ARRAY,
-        0,                      //Mipmap number
-        0, 0, 1, //xoffset, yoffset, zoffset
-        1, 1, 1,         //width, height, depth
-        GL_RGB,                 //Formsat
-        GL_UNSIGNED_BYTE,       //type
-        color2)); //pointer to data
-
-
-    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-    GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
-
-
-
-  
-
-    */
-
-
-
-    
-
-    //GLCall(glBindTexture(GL_TEXTURE_2D_ARRAY, m_textureArray));
-    //GLCall(glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
-
-    //GLCall(glGenerateMipmap(GL_TEXTURE_2D_ARRAY));
-
-
-
-    // TODO: check the following if necessary
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDisable(GL_CULL_FACE);
-
-    /* 
-       m_CubeSelector.Create(glm::vec3(0, 0, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 2, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 4, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 6, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 8, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 10, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 12, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 14, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 16, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 18, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 20, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 22, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       m_CubeSelector.Create(glm::vec3(0, 24, 0), &m_textureSelection, 1, glm::vec3(1,1,1));
-       */
-
-    // TODO: check the following if necessary
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // NOTE: Selection related stuff
     m_textureSelectionCube.EmptyTextureUI();
@@ -137,9 +50,6 @@ namespace Modes {
 
     m_textureSelectionCube.SimpleBind();
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_textureSelectionGround.GetTextureID(), 0););
-
-    //GLenum DrawBuffers[2] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
-    //GLCall(glDrawBuffers(2, DrawBuffers););
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) 
       std::cout << "Problem with the framebuffer" << std::endl;
