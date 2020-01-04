@@ -17,8 +17,8 @@
 #include "GraphicEngine/App.h"
 #include "GraphicEngine/Renderer.h"
 
-#include "Modes/ModeEditor.h"
-#include "Modes/ModeImGUITest.h"
+#include "modes/ModeEditor.h"
+#include "modes/ModeImGUITest.h"
 
 int main(int argc, char* args[])
 {
