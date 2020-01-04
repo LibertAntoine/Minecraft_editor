@@ -17,7 +17,6 @@ namespace modes {
     m_textureArray(std::make_shared<TextureArray>( 32, 32 )),
     m_CubeSelector(std::make_shared<interaction::CubeSelector>( m_CubeRenderer, m_textureArray, 2048 )), // Obligatoirement une puissance de deux.
     m_backgroundColor(std::make_shared<glm::vec3>(0.3f, 0.3f, 0.3f)),
-    m_GroundSelectionRenderer(200),
 		m_FreeCam(std::make_shared<camera::FreeflyCamera>()),
 		m_LightManager(std::make_shared<interaction::LightManager>()),
     m_Interface(m_CubeRenderer, m_CubeSelector, m_textureArray, m_FreeCam, m_LightManager, m_backgroundColor)
@@ -176,7 +175,7 @@ namespace modes {
     m_frameBufferSelection.Bind();
     //m_CubeSelectionRenderer.draw(m_FreeCam.getViewMatrix(), m_ProjMatrix, m_CubeRenderer.m_CubeList); // NOTE: old draw calls
 		m_CubeRenderer->drawSelectionTexture(m_FreeCam->getViewMatrix(), m_ProjMatrix);
-    m_GroundSelectionRenderer.draw(*m_FreeCam, m_ProjMatrix);
+		m_GridRenderer.drawGridSelection(*m_FreeCam, m_ProjMatrix);
     m_frameBufferSelection.Unbind();
 
   }

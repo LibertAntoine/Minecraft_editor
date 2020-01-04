@@ -8,7 +8,6 @@
 #include "Interaction/CubeSelector.h"
 #include "Interaction/Interface.h"
 #include "Renderer/CubeRenderer.h"
-#include "Renderer/GroundSelectionRenderer.h"
 #include "Renderer/GridRenderer.h"
 #include "Texture.h"
 #include "VertexBuffer.h"
@@ -33,7 +32,6 @@ private:
 	std::shared_ptr<TextureArray> m_textureArray;
 	std::shared_ptr<interaction::CubeSelector> m_CubeSelector;
 	std::shared_ptr<glm::vec3> m_backgroundColor;
-  renderer::GroundSelectionRenderer m_GroundSelectionRenderer;
 	std::shared_ptr<camera::FreeflyCamera> m_FreeCam;
 	std::shared_ptr<interaction::LightManager> m_LightManager;
   interaction::Interface m_Interface;
