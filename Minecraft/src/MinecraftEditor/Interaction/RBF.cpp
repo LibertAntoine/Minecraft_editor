@@ -43,7 +43,7 @@ RBF::RBF(const std::string& filepath)
       std::stringstream streamRBF(line);
 
       if ( type == DataType::BOUNDARIES ) {
-        glm::vec3 point;
+        glm::ivec3 point;
         streamRBF >> point.x;
         streamRBF >> point.y;
         streamRBF >> point.z;
@@ -125,6 +125,9 @@ void RBF::parseSelectedRBFFile()
     if (line.find("#boundaries") != std::string::npos) {
         type = DataType::BOUNDARIES;
     }
+		else if ( line.find("#noproba") != std::string::npos ) {
+			m_useProbability = false;
+		}
     else if (line.find("#controlpoints") != std::string::npos) {
         type = DataType::CONTROL_POINTS;
     }
@@ -232,26 +235,55 @@ double RBF::getScalar(const glm::vec3& position) const
 bool RBF::isThereACubeHere(const glm::vec3& position) const
 {
   bool cube;
-  double chances = this->getScalar(position);
-  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-  // Select a random generator engine
-  std::default_random_engine generator(seed);
-  // uniform real distribution
-  std::uniform_real_distribution<double> uniformRealDistribution(0, abs( chances * 0.5 ));
+  double scalar = this->getScalar(position);
+	if ( m_useProbability ) {
+		double chances = scalar;
+		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+		// Select a random generator engine
+		std::default_random_engine generator(seed);
+		// uniform real distribution
+		std::uniform_real_distribution<double> uniformRealDistribution(0, abs( chances * 0.5 ));
 
-  if ( chances < 0 ) {
-    cube = false;
-    if ( trunc( uniformRealDistribution(generator) ) ) {
-      cube = true;
-    } 
-  }
-  else {
-    cube = true;
-    if ( trunc( uniformRealDistribution(generator) ) ) {
-      cube = false;
-    } 
+		if ( chances < 0 ) {
+			cube = false;
+			if ( trunc( uniformRealDistribution(generator) ) ) {
+				cube = true;
+			} 
+		}
+		else {
+			cube = true;
+			if ( trunc( uniformRealDistribution(generator) ) ) {
+				cube = false;
+			} 
+		}
+  } 
+	else {
+    if ( scalar ) {
+			return true;
+    }
+		else {
+		  return false;
+		}
   }
 
   return cube;
+}
+
+glm::ivec3 RBF::getBoundaryA() const
+{
+	glm::ivec3 boundA(-10, 0, -10);
+	if ( m_Boundaries.size() >= 2 ) {
+		boundA = m_Boundaries[m_Boundaries.size() -2]; 
+	}
+	return boundA;
+}
+
+glm::ivec3 RBF::getBoundaryB() const
+{
+	glm::ivec3 boundB(10, 10, 10);
+	if ( m_Boundaries.size() >= 2 ) {
+		boundB = m_Boundaries[m_Boundaries.size() -1]; 
+	}
+	return boundB;
 }
 

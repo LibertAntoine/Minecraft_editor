@@ -129,10 +129,23 @@ namespace interaction {
     this->refresh();
   }
 
-  void CubeSelector::SetSelector(const glm::ivec3& NewPosition) {
-		if ( NewPosition.x ) {
-		  
+	bool CubeSelector::isInsideWorldBoundaries(const glm::ivec3& position) const
+	{
+		if ( abs(position.x) > m_SizeWorld) {
+			return false;
 		}
+		else if ( position.y < 0 || abs(position.y) > m_SizeWorld * 2) {
+			return false;
+		}
+		else if ( abs(position.z) > m_SizeWorld) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+  void CubeSelector::SetSelector(const glm::ivec3& NewPosition) {
     m_selector->selectorCube.position() = NewPosition;
     if (m_selector->selectorCube.position().y < 0)
       m_selector->selectorCube.position().y = 0;
@@ -149,14 +162,18 @@ namespace interaction {
 
   // TODO: make boundaries dynamic
   // TODO: Optimise rendering for large scenes
-  /// @brief Generate the world using the current RBF
+  /// \brief Generate the world using the current RBF
   void CubeSelector::ApplyRBF()
   {
     m_rbf.parseSelectedRBFFile();
     m_rbf.solveOmegas();
-    for ( int x = -20; x < 20; x++ ) {
-      for ( int z = -10; z < 10; z++ ) {
-        for ( int y = 0; y < 10; y++ ) {
+
+		glm::ivec3 boundary1 = m_rbf.getBoundaryA();
+		glm::ivec3 boundary2 = m_rbf.getBoundaryB();
+
+    for ( int x = boundary1.x; x <= boundary2.x; x++ ) {
+      for ( int z = boundary1.z; z <= boundary2.z; z++ ) {
+        for ( int y = boundary2.y; y <= boundary2.y; y++ ) {
           glm::vec3 position(x, y, z);
           if ( m_rbf.isThereACubeHere(position) ) {
 			  Forms::Cube newCube(position, 1, m_selector->selectorCube.color(), m_selector->selectorCube.type(), m_selector->selectorCube.texture());
@@ -216,13 +233,16 @@ namespace interaction {
 			// NOTE: Rebuild the pointer address (64-bit) using two 32-bit values
 			selectionAddress = (Forms::Cube*)( (intptr_t( data[0] ) << 32 & 0xFFFFFFFF00000000) | ( intptr_t( data[1] ) & 0xFFFFFFFF ) );
 
-			this->SetSelector(glm::ivec3(selectionAddress->position()));
+			if ( this->isInsideWorldBoundaries(selectionAddress->position()) ) {
+				this->SetSelector(glm::ivec3(selectionAddress->position()));
+			}
 		}
 		// NOTE: No cube is under the position so check the ground
 		else {
 			GLint position[4];
 			framebufferSelection.getDataAtPosition4i(x, y, position, GL_COLOR_ATTACHMENT1);
-			if ( position[3] == 1 ) this->SetSelector(glm::ivec3(position[0], 0, position[1]));
+			glm::ivec3 ivPosition(position[0], 0, position[1]);
+			if ( position[3] == 1 && this->isInsideWorldBoundaries(ivPosition)) this->SetSelector(ivPosition);
 		}
 
     framebufferSelection.Unbind();        

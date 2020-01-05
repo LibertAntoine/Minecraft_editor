@@ -98,6 +98,12 @@ namespace interaction {
 		void SetSelector(const glm::ivec3& NewPosition);
 
 		/**
+		 * \brief Match given position with world boundaries
+		 */
+		bool isInsideWorldBoundaries(const glm::ivec3& position) const;
+
+
+		/**
 		* \brief Move a cube in the scene.
 		* \param cube to move
 		* \param NewPosition of the cube.
