@@ -57,6 +57,21 @@ Forms::Cube *CubeRenderer::add(const Forms::Cube& cube)
   return &m_CubeList.back();
 }
 
+Forms::Cube *CubeRenderer::addNoUpdate(const Forms::Cube& cube)
+{
+  m_CubeList.push_back(cube);
+  return &m_CubeList.back();
+}
+
+void CubeRenderer::updateAll()
+{
+    this->updatePosition();
+    this->updateColor();
+    this->updateTexture();
+    this->updateType();
+    this->updateCubeId();
+}
+
 void CubeRenderer::del(Forms::Cube* cube) { 
     m_CubeList.remove(*cube);
     this->updatePosition();
