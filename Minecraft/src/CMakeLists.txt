@@ -14,10 +14,12 @@ target_link_libraries(Minecraft
 )
 
 # https://stackoverflow.com/a/50882216/11106413
-if (MSVC)
-	target_compile_options(Minecraft PRIVATE /W4 /WX)
-else()
-	target_compile_options(Minecraft PRIVATE -W -Wall)
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+	if (MSVC)
+		target_compile_options(Minecraft PRIVATE /W4 /WX)
+	else()
+		target_compile_options(Minecraft PRIVATE -W -Wall)
+	endif()
 endif()
 
 

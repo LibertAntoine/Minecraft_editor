@@ -8,10 +8,16 @@ project(Minecraft)
 # https://stackoverflow.com/questions/10851247/how-do-i-activate-c-11-in-cmake#31010221
 set (CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_BUILD_TYPE Debug)
+if(NOT CMAKE_BUILD_TYPE)
+	set(CMAKE_BUILD_TYPE Release)
+endif()
+
 set(CMAKE_CXX_FLAGS_DEBUG "-g -ggdb3") # Keep macro definition for debugging with GDB
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+	set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+	message(STATUS "Exporting compile_commands.json library file for IDEs")
+endif()
 
 #Append compile flags
 #SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -BLAH")
