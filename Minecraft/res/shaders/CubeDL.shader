@@ -16,6 +16,7 @@ out vData{
 } data_vs;
 
 
+
 void main() {
 	gl_Position = vec4(position, 1);
 	data_vs.color = color;
@@ -97,7 +98,7 @@ void main() {
 			for (int i = 0; i < 4; i++) {
 				int v = cubeIndices[i + k * 4];
 				gl_Position = uMVPMatrix * (gl_in[j].gl_Position + cubeVerts[v]);
-				data_gs.position = data_vs[0].position;
+				data_gs.position = data_vs[0].position ;
 				data_gs.color = data_vs[0].color;
 				data_gs.tex_coord = texc[i];
 				if (data_vs[0].type == 2) data_gs.textureLayer = tex[k];

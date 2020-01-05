@@ -95,24 +95,29 @@ namespace interaction {
 	}
 
 	void KeyBoard::MouseShortCut() {
-		if (!ImGui::IsAnyWindowHovered() && !ImGui::IsAnyWindowFocused()) {
-			if (ImGui::IsMouseDown(0)) {
+		if (!ImGui::IsAnyWindowHovered() && !ImGui::IsAnyItemHovered()) {
+			
+			if (ImGui::IsMouseClicked(1) || ImGui::IsMouseDragging(1)) {
 				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 				if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) {
+					if (ImGui::GetMouseDragDelta(1).x > 6 || ImGui::GetMouseDragDelta(1).y > 6) {
 					m_cubeSelector->DeleteToSelector();
+					ImGui::ResetMouseDragDelta(1);
+					}
 				}
-			}
-
-			if (ImGui::IsMouseDown(SDL_BUTTON_LEFT)) {
+			} else if (ImGui::IsMouseDragging(0) || ImGui::IsMouseClicked(0)) {
 				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 				if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)) {
 					if (!(ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))) {
 						m_cubeSelector->MoveSelectorToClickFace(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 					}
-					m_cubeSelector->AddToSelector();
+					if (ImGui::GetMouseDragDelta(0).x > 6 || ImGui::GetMouseDragDelta(0).y > 6) {
+						m_cubeSelector->AddToSelector();
+						ImGui::ResetMouseDragDelta(0);
+					}
 				}
 			}
-			else if ((ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) && ImGui::IsMouseDown(SDL_BUTTON_LEFT)) {
+			else if ((ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) && ImGui::IsMouseDown(0)) {
 				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 				if (m_cubeSelector->currentCube()) {
 					Forms::CubeType cubeStyle = m_cubeSelector->selectorCube().type();
@@ -138,15 +143,6 @@ namespace interaction {
 				else if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)) {
 					m_cubeSelector->AddToSelector();
 				}
-			}
-			else if ((ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) && ImGui::IsMouseDown(SDL_BUTTON_RIGHT)) {
-				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
-				m_cubeSelector->DeleteToSelector();
-			}
-			else if ((ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)) && ImGui::IsMouseDown(SDL_BUTTON_RIGHT)) {
-				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
-				m_cubeSelector->MoveSelectorToClickFace(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
-				m_cubeSelector->AddToSelector();
 			}
 		}
 

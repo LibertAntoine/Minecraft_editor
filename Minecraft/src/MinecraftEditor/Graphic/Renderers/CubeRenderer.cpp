@@ -86,6 +86,7 @@ void CubeRenderer::del(Forms::Cube* cube) {
       else if (lightManager.currentLight() == interaction::lightStatus::DIRECTIONNAL) {
           m_ShaderCubeDirLight->Bind();
           m_ShaderCubeDirLight->SetUniformMat4f("uMVPMatrix", projection * MVMatrix);
+		  m_ShaderCubeDirLight->SetUniformMat4f("uMVMatrix", MVMatrix);
           m_ShaderCubeDirLight->SetUniform3f("uKd", lightManager.dirLight().uKd.x, lightManager.dirLight().uKd.y, lightManager.dirLight().uKd.z);
           m_ShaderCubeDirLight->SetUniform3f("uKs", lightManager.dirLight().uKs.x, lightManager.dirLight().uKs.y, lightManager.dirLight().uKs.z);
           m_ShaderCubeDirLight->SetUniform3f("uLightDir_vs", lightManager.dirLight().lightDirection.x, lightManager.dirLight().lightDirection.y, lightManager.dirLight().lightDirection.z);
