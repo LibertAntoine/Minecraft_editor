@@ -3,6 +3,7 @@
 // TODO: Find available rbf files automatically
 // NOTE: Windows and Linux must have specific code for directory searching
 RBF::RBF()
+  :m_rbf(m_useless)
 {
   m_FilePaths.push_back("res/rbf1.txt");
   m_FilePaths.push_back("res/rbf2.txt");
@@ -20,6 +21,7 @@ RBF::RBF(std::vector<std::pair<glm::vec3, double>> controlPoints)
 }
 
 RBF::RBF(const std::string& filepath)
+  :m_rbf(m_useless)
 {
   std::ifstream stream(filepath);
   enum class DataType { NONE = -1, BOUNDARIES = 0, CONTROL_POINTS = 1, RBF = 2};
@@ -262,40 +264,34 @@ bool RBF::isThereACubeHere(const glm::vec3& position) const
   bool cube;
   double scalar = this->getScalar(position);
 	if ( m_useProbability ) {
-		//double chances = scalar;
 		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 		// Select a random generator engine
-		std::default_random_engine generator(seed);
-		// uniform real distribution
-		//
-		double ecartMinMax = abs(m_maxVal - m_minVal);
-		double ecartScal = scalar - m_minVal;
-		double ratio = ecartScal / ecartMinMax;
+		std::default_random_engine m_Generator(seed);
+		std::uniform_real_distribution<double> RealDistribution(0, 1);
+		double random_value = RealDistribution(m_Generator);
 
-		std::uniform_real_distribution<double> uniformRealDistribution(0, 1);
+		if ( scalar < 0 ) {
+			double chance_ratio = scalar / m_minVal;
 
-		if ( uniformRealDistribution(generator) <= ratio ) {
-			cube = true;
-		} 
-		else {
-		  cube = false;
-		}
-
-		/*
-		if ( chances < 0 ) {
-			cube = false;
-			if ( uniformRealDistribution(generator) > ) {
+			if ( random_value <= abs( chance_ratio ) ) {
 				cube = true;
 			} 
+			else {
+				cube = false;
+			}
 		}
 		else {
-			cube = true;
-			if ( trunc( uniformRealDistribution(generator) ) ) {
-				cube = false;
+			double chance_ratio = scalar / m_maxVal;
+
+			if ( random_value > abs( chance_ratio ) ) {
+				cube = true;
 			} 
+			else {
+				cube = false;
+			}
 		}
-	*/
   } 
+	// NOTE: Simple RBF interpolation
 	else {
     if ( scalar > 0) {
 			return true;
