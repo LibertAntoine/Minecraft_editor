@@ -100,48 +100,46 @@ namespace interaction {
 			if (ImGui::IsMouseClicked(1) || ImGui::IsMouseDragging(1)) {
 				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 				if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) {
-					if (ImGui::GetMouseDragDelta(1).x > 6 || ImGui::GetMouseDragDelta(1).y > 6) {
+					if ((ImGui::GetMouseDragDelta(1).x > 2 || ImGui::GetMouseDragDelta(1).y > 2) || ImGui::IsMouseClicked(1)) {
 					m_cubeSelector->DeleteToSelector();
 					ImGui::ResetMouseDragDelta(1);
 					}
 				}
-			} else if (ImGui::IsMouseDragging(0) || ImGui::IsMouseClicked(0)) {
+			}
+			else if (ImGui::IsMouseDragging(0) || ImGui::IsMouseClicked(0)) {
 				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 				if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)) {
 					if (!(ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))) {
 						m_cubeSelector->MoveSelectorToClickFace(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 					}
-					if (ImGui::GetMouseDragDelta(0).x > 6 || ImGui::GetMouseDragDelta(0).y > 6) {
+					if ((ImGui::GetMouseDragDelta(0).x > 2 || ImGui::GetMouseDragDelta(0).y > 2) || ImGui::IsMouseClicked(0)) {
 						m_cubeSelector->AddToSelector();
 						ImGui::ResetMouseDragDelta(0);
 					}
 				}
-			}
-			else if ((ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) && ImGui::IsMouseDown(0)) {
-				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
-				if (m_cubeSelector->currentCube()) {
-					Forms::CubeType cubeStyle = m_cubeSelector->selectorCube().type();
-					if (m_cubeSelector->currentCube()->type() != cubeStyle) {
-						m_cubeSelector->currentCube()->type() = cubeStyle;
-						m_cubeRenderer->updateType();
+				if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) {
+					m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
+					if (m_cubeSelector->currentCube()) {
+						Forms::CubeType cubeStyle = m_cubeSelector->selectorCube().type();
+						if (m_cubeSelector->currentCube()->type() != cubeStyle) {
+							m_cubeSelector->currentCube()->type() = cubeStyle;
+							m_cubeRenderer->updateType();
+						}
+						if (cubeStyle == Forms::COLORED) {
+							m_cubeSelector->currentCube()->Setcolor(glm::vec3(m_cubeSelector->selectorCube().color()));
+							m_cubeRenderer->updateColor();
+						}
+						else if (cubeStyle == Forms::TEXTURED) {
+							m_cubeSelector->currentCube()->texture() = m_cubeSelector->selectorCube().texture();
+							m_cubeRenderer->updateTexture();
+						}
+						else if (cubeStyle == Forms::MULTI_TEXTURED) {
+							m_cubeSelector->currentCube()->texture() = m_cubeSelector->selectorCube().texture();
+							m_cubeRenderer->updateTexture();
+						}
+						// TODO: check if necessary
+						//m_CubeSelector->refresh();
 					}
-					if (cubeStyle == Forms::COLORED) {
-						m_cubeSelector->currentCube()->Setcolor(glm::vec3(m_cubeSelector->selectorCube().color()));
-						m_cubeRenderer->updateColor();
-					}
-					else if (cubeStyle == Forms::TEXTURED) {
-						m_cubeSelector->currentCube()->texture() = m_cubeSelector->selectorCube().texture();
-						m_cubeRenderer->updateTexture();
-					}
-					else if (cubeStyle == Forms::MULTI_TEXTURED) {
-						m_cubeSelector->currentCube()->texture() = m_cubeSelector->selectorCube().texture();
-						m_cubeRenderer->updateTexture();
-					}
-					// TODO: check if necessary
-					//m_CubeSelector->refresh();
-				}
-				else if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)) {
-					m_cubeSelector->AddToSelector();
 				}
 			}
 		}
