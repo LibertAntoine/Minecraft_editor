@@ -94,6 +94,9 @@ namespace interaction {
 		if (ImGui::Button("Clean Scene")) {
 			m_cubeSelector->DeleteAll();
 		}
+		if (ImGui::Button("Add ground")) {
+			m_cubeSelector->initGround(10);
+		}
 	}
 
 	void Interface::RBFController() {
