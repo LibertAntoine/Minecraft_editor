@@ -95,7 +95,7 @@ namespace interaction {
 	}
 
 	void KeyBoard::MouseShortCut() {
-		if (!ImGui::IsAnyWindowHovered() && !ImGui::IsAnyItemHovered()) {
+		if (!ImGui::IsAnyWindowHovered() && !ImGui::IsAnyWindowFocused()) {
 			
 			if (ImGui::IsMouseClicked(1) || ImGui::IsMouseDragging(1)) {
 				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
