@@ -86,6 +86,14 @@ namespace interaction {
 		void refresh();
 
 		/**
+		* \brief Initialise a ground centered in 0
+		* \param size of the ground in Cube.
+		*/
+		void initGround(const int& size);
+
+
+
+		/**
 		* \brief Move the selector in function of relative deplacement.
 		* \param deplacement x,y,z which correspond to the selector deplacement.
 		*/

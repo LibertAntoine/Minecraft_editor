@@ -100,7 +100,7 @@ namespace interaction {
 			if (ImGui::IsMouseClicked(1) || ImGui::IsMouseDragging(1)) {
 				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 				if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) {
-					if ((ImGui::GetMouseDragDelta(1).x > 2 || ImGui::GetMouseDragDelta(1).y > 2) || ImGui::IsMouseClicked(1)) {
+					if ((abs(ImGui::GetMouseDragDelta(1).x) > 6 || abs(ImGui::GetMouseDragDelta(1).y) > 6) || ImGui::IsMouseClicked(1)) {
 					m_cubeSelector->DeleteToSelector();
 					ImGui::ResetMouseDragDelta(1);
 					}
@@ -112,7 +112,7 @@ namespace interaction {
 					if (!(ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))) {
 						m_cubeSelector->MoveSelectorToClickFace(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 					}
-					if ((ImGui::GetMouseDragDelta(0).x > 2 || ImGui::GetMouseDragDelta(0).y > 2) || ImGui::IsMouseClicked(0)) {
+					if ((abs(ImGui::GetMouseDragDelta(0).x) > 6 || abs(ImGui::GetMouseDragDelta(0).y) > 6) || ImGui::IsMouseClicked(0)) {
 						m_cubeSelector->AddToSelector();
 						ImGui::ResetMouseDragDelta(0);
 					}

@@ -18,13 +18,26 @@ namespace interaction {
     m_selector->selectorState = SelectorState::NEUTRAL;
     m_selector->selectorCube = Forms::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0, 0.5, 0.5), Forms::COLORED, { 0,0,0,0,0,0 });
 
-    this->Create(m_selector->selectorCube);
+    this->initGround(10);
     this->refresh();
   }	
 
   CubeSelector::~CubeSelector() {
     delete m_selector;
   }
+
+
+  void CubeSelector::initGround(const int& size) {
+	  Forms::Cube cube = m_selector->selectorCube;
+	  for (int x = -size / 2; x < size / 2; x++) {
+		  for (int z = -size / 2; z < size / 2; z++) {
+				  cube.position() = glm::ivec3(x, 0, z);
+				  this->Create(cube);
+		  }
+	  }
+  }
+
+
 
   void CubeSelector::Create(const Forms::Cube& NewCube) {
     {
@@ -165,10 +178,11 @@ namespace interaction {
   /// \brief Generate the world using the current RBF
   void CubeSelector::ApplyRBF()
   {
+	  /*
     m_rbf.parseSelectedRBFFile();
     m_rbf.solveOmegas();
 
-		glm::ivec3 boundary1 = m_rbf.getBoundaryA();
+	    glm::ivec3 boundary1 = m_rbf.getBoundaryA();
 		glm::ivec3 boundary2 = m_rbf.getBoundaryB();
 
     for ( int x = boundary1.x; x <= boundary2.x; x++ ) {
@@ -182,6 +196,7 @@ namespace interaction {
         }
       }
     }
+	*/
   }
 
 	void CubeSelector::MoveSelectorToClickFace(int x, int y, const FrameBuffer& framebufferSelection)

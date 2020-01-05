@@ -109,7 +109,7 @@ namespace Modes {
 
   void ModeEditor::OnEvent(const SDL_Event& e)
   {
-	  if (!ImGui::IsAnyWindowHovered() && !ImGui::IsAnyWindowFocused()) {
+	  if (!ImGui::IsAnyWindowHovered() && !ImGui::IsAnyItemHovered()) {
 		  switch (e.type) {
 		  case SDL_MOUSEWHEEL:
 			  m_FreeCam->moveFront(e.wheel.y);

@@ -7,7 +7,7 @@ namespace camera {
 
 	// FREEFLY CAMERA //
 	FreeflyCamera::FreeflyCamera()
-		: m_Position(-2, 3, 5),
+		: m_Position(-4, 6, 15),
 		m_fPhi(glm::pi<float>() + glm::radians(-30.f)),
 		m_fTheta(glm::radians(-20.f))
 	{
