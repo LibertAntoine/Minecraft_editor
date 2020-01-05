@@ -23,7 +23,7 @@ namespace Modes {
 	m_KeyBoard(m_CubeRenderer, m_CubeSelector, m_FreeCam, &m_frameBufferSelection)
 	{
     constexpr float fov = glm::radians(70.f);
-    constexpr float ratio = (float)App::WINDOW_WIDTH / App::WINDOW_WIDTH;
+    constexpr float ratio = (float)App::WINDOW_WIDTH / App::WINDOW_HEIGHT;
     m_ProjMatrix = glm::perspective(fov, ratio, 0.1f, 100.f);
 
 
