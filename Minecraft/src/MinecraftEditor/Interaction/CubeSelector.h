@@ -132,6 +132,12 @@ namespace interaction {
 
 
 		/**
+		* \brief Delete all the cube in the scene.
+		*/
+		void DeleteAll();
+
+
+		/**
 		* \brief Add a new cube in the scene at the current selector position, with the selector presets.
 		*/
 		void AddToSelector();
