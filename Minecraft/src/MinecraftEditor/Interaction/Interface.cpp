@@ -91,6 +91,9 @@ namespace interaction {
 		if (ImGui::ColorEdit3("##BackgroundColor", color)) {
 			*m_backgroundColor = glm::vec3(color[0], color[1], color[2]);
 		};
+		if (ImGui::Button("Clean Scene")) {
+			m_cubeSelector->DeleteAll();
+		}
 	}
 
 	void Interface::RBFController() {

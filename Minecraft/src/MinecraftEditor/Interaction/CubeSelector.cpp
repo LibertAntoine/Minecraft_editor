@@ -82,6 +82,19 @@ namespace interaction {
     }
   }
 
+  void CubeSelector::DeleteAll() {
+	  m_CubeWorld = Octree<Forms::Cube*>(m_SizeWorld * 2, nullptr);
+	  m_Cuberenderer->CubeList() = std::list<Forms::Cube>();
+	  m_Cuberenderer->updatePosition();
+	  m_Cuberenderer->updateColor();
+	  m_Cuberenderer->updateTexture();
+	  m_Cuberenderer->updateType();
+	  m_Cuberenderer->updateCubeId();
+	  m_selector->selectorCube = Forms::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0, 0.5, 0.5), Forms::COLORED, { 0,0,0,0,0,0 });
+	  this->initGround(10);
+  }
+
+
   void CubeSelector::refresh() {
     m_selector->currentCube = m_CubeWorld.at(
         m_selector->selectorCube.position().x + m_SizeWorld,
