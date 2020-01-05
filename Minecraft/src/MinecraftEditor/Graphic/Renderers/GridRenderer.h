@@ -22,45 +22,45 @@
 namespace renderer {
   class GridRenderer
   {
-    private:
-	  // Scene Grids //
-      std::unique_ptr<VertexArray> m_VAOGrid;
-      std::unique_ptr<IndexBuffer> m_IndexBufferGrid;
-      std::unique_ptr<VertexBuffer> m_VertexBufferGrid;
-      std::unique_ptr<Shader> m_ShaderGrid;
-	  Forms::Grid m_grid;
+		private:
+			// Scene Grids //
+			std::unique_ptr<VertexArray> m_VAOGrid;
+			std::unique_ptr<IndexBuffer> m_IndexBufferGrid;
+			std::unique_ptr<VertexBuffer> m_VertexBufferGrid;
+			std::unique_ptr<Shader> m_ShaderGrid;
+			Forms::Grid m_grid;
 
-	  // Click Selection Grid Texture //
-	  std::unique_ptr<VertexArray> m_VAOGridSelection;
-	  std::unique_ptr<VertexBuffer> m_VertexBufferGridSelection;
-	  std::unique_ptr<IndexBuffer> m_IndexBufferGridSelection;
-	  std::unique_ptr<Shader> m_ShaderGridSelection;
-	  Forms::GridSelection m_gridSelection;
+			// Click Selection Grid Texture //
+			std::unique_ptr<VertexArray> m_VAOGridSelection;
+			std::unique_ptr<VertexBuffer> m_VertexBufferGridSelection;
+			std::unique_ptr<IndexBuffer> m_IndexBufferGridSelection;
+			std::unique_ptr<Shader> m_ShaderGridSelection;
+			Forms::GridSelection m_gridSelection;
 
-    public:
+		public:
 
-		/**
-		* \brief Init the grid renderer.
-		* \param size of the grid in the scene.
-		* \param color of the grid.
-		*/
-      GridRenderer(const unsigned int& size, glm::vec3 color);
-      ~GridRenderer();
+			/**
+			 * \brief Init the grid renderer.
+			 * \param size of the grid in the scene.
+			 * \param color of the grid.
+			 */
+			GridRenderer(const unsigned int& size, glm::vec3 color);
+			~GridRenderer();
 
-	  /**
-	  * \brief Draw the different grids of the scene (if visible).
-      * \param camera : current camera of the scene.
-      * \param projection : current projection matrix.
-      * \param active : array of three bool said which grid are visible (x, y, z grid).
-      */
-      void drawGrid(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active);
+			/**
+			 * \brief Draw the different grids of the scene (if visible).
+			 * \param camera : current camera of the scene.
+			 * \param projection : current projection matrix.
+			 * \param active : array of three bool said which grid are visible (x, y, z grid).
+			 */
+			void drawGrid(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active);
 
-	  /**
-      * \brief Draw the click selection grid texture.
-      * \param camera : current camera of the scene.
-      * \param projection : current projection matrix.
-      */
-	  void drawGridSelection(const camera::FreeflyCamera& camera, const glm::mat4& projection);
+			/**
+			 * \brief Draw the click selection grid texture.
+			 * \param camera : current camera of the scene.
+			 * \param projection : current projection matrix.
+			 */
+			void drawGridSelection(const camera::FreeflyCamera& camera, const glm::mat4& projection);
   };
 
 }

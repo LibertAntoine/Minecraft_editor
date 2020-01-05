@@ -14,10 +14,10 @@ namespace renderer {
 	  m_VAOGridSelection(std::make_unique<VertexArray>())
   {
     
-    m_VertexBufferGrid = std::make_unique<VertexBuffer>(m_grid.datas().data(), 8.f * (size + 1.0f) * 3.f * sizeof(int));
+    m_VertexBufferGrid = std::make_unique<VertexBuffer>(m_grid.datas().data(), m_grid.datas().size() * sizeof(int));
 
     VertexBufferLayout layoutGrid;
-	layoutGrid.Push<int>(3);
+		layoutGrid.Push<int>(3);
 
     m_VAOGrid->AddBuffer(*m_VertexBufferGrid, layoutGrid);
     m_IndexBufferGrid = std::make_unique<IndexBuffer>(m_grid.indices().data(), 8 * (size + 1));
