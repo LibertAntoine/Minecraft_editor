@@ -14,6 +14,9 @@
 
 #include "glm/glm.hpp"
 
+/**
+ * \brief All de diferent possible RBF, used as callback functors when computing Phis
+ */
 namespace RBF_CALLBACKS
 {
   struct Useless
@@ -66,10 +69,11 @@ class RBF
 
     double m_epsilon = 1.0;
 
-		double m_minVal;
-		double m_maxVal;
+		double m_minVal; ///\var Minimum control point weight found in the file
+		double m_maxVal; ///\var Maximum control point weight found in the file
 
 		bool m_useProbability = true;
+
 
   public:
     //std::string m_FilePath;
@@ -83,7 +87,15 @@ class RBF
     RBF(const std::string& filepath); /// @brief automatically parse a RBF file and load properties into class
 
     double computeDistance(const Eigen::Vector3i& pointA, const Eigen::Vector3i& pointB) const;
+
+		/**
+		 * \brief Compute omega vector used in RBF interpolation
+		 */
     void findOmega();
+
+		/**
+		 * \brief Build phi matrix that will be decomposed to solve the linear system
+		 */
     Eigen::MatrixXd phiMatrix();
 
     void solveOmegas(); /// @brief Method to call in order to use the new RBF function parameters
@@ -102,6 +114,9 @@ class RBF
     void switchRBFtoMultiQuadratic(const double epsilon);
     void switchRBFtoGaussian(const double epsilon);
 
+		/**
+		 * \brief Interpolate value using RBF
+		 */
     double getScalar(const glm::vec3& position) const; /// @brief Compute the output scalar value of the current RBF function
 
 		/**
