@@ -78,6 +78,16 @@ namespace renderer {
       Forms::Cube* add(const Forms::Cube& cube);
 	  void del(Forms::Cube* cube);
 
+		/**
+		 * \brief Add a new cube at the scene (in the list and the octree). But do not update on GPU
+		 * Suited for adding multiple element at once.
+		 */
+		Forms::Cube* addNoUpdate(const Forms::Cube& cube);
+		/**
+		 * \brief Update data on GPU
+		 */
+		void updateAll();
+
 	  /**
 		* \brief Update the PositionBuffer regarding the current Cube List.
 	  */

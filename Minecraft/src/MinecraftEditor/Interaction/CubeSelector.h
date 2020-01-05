@@ -125,6 +125,12 @@ namespace interaction {
 		void Create(const Forms::Cube& cube);
 
 		/**
+		* \brief Create a new cube in the scene without updating
+		* \param cube to add in the scene.
+		*/
+		void BatchCreate(const Forms::Cube& NewCube);
+
+		/**
 		* \brief Delete a cube on the scene.
 		* \param *cube to delete in the scene.
 		*/
