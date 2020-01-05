@@ -42,8 +42,14 @@ void App::exit() { m_running = false; }
 
 
 void App::initSDL() {
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0) {
-		std::cerr << "Can't init SDL : " << SDL_GetError() << std::endl;
+	try {
+		int sdlInit = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
+		if ( sdlInit != 0 ) {
+			throw SDL_GetError();
+		}
+	}
+	catch (const char* msg) {
+		std::cerr << "Can't init SDL : " << msg << std::endl;
 	}
 
 	// Use OpenGL 3.3 //
