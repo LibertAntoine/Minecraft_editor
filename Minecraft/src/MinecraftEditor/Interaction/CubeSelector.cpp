@@ -56,6 +56,23 @@ namespace interaction {
     }
   }
 
+  void CubeSelector::BatchCreate(const Forms::Cube& NewCube) {
+    {
+      m_selector->selectorState = SelectorState::NEUTRAL;
+	  Forms::Cube* cube = m_CubeWorld.at(NewCube.position().x + m_SizeWorld, NewCube.position().y + m_SizeWorld, NewCube.position().z + m_SizeWorld);
+      if (cube != nullptr) {
+        this->Delete(cube);
+      }
+      m_CubeWorld.set(
+          NewCube.position().x + m_SizeWorld,
+          NewCube.position().y + m_SizeWorld,
+          NewCube.position().z + m_SizeWorld,
+          m_Cuberenderer->addNoUpdate(NewCube)
+          );
+      this->refresh();
+    }
+  }
+
   void CubeSelector::Delete(Forms::Cube* cube) {
 	  m_selector->selectorState = SelectorState::NEUTRAL;
     if (cube != nullptr) {
@@ -187,16 +204,17 @@ namespace interaction {
 
     for ( int x = boundary1.x; x <= boundary2.x; x++ ) {
       for ( int z = boundary1.z; z <= boundary2.z; z++ ) {
-        for ( int y = boundary2.y; y <= boundary2.y; y++ ) {
+        for ( int y = boundary1.y; y <= boundary2.y; y++ ) {
           glm::vec3 position(x, y, z);
           if ( m_rbf.isThereACubeHere(position) ) {
-			  Forms::Cube newCube(position, 1, m_selector->selectorCube.color(), m_selector->selectorCube.type(), m_selector->selectorCube.texture());
-            this->Create(newCube);
+						Forms::Cube newCube(position, 1, m_selector->selectorCube.color(), m_selector->selectorCube.type(), m_selector->selectorCube.texture());
+            this->BatchCreate(newCube);
           }
         }
       }
     }
 	*/
+		m_Cuberenderer->updateAll();
   }
 
 	void CubeSelector::MoveSelectorToClickFace(int x, int y, const FrameBuffer& framebufferSelection)
