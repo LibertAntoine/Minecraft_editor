@@ -13,7 +13,8 @@ namespace interaction {
 
 	/* MENUS */
 	void Interface::MainActionMenu() {
-		ImGui::SetNextWindowSizeConstraints({ 200.0f,  (float)App::WINDOW_HEIGHT - 20 }, { 500.0f,  (float)App::WINDOW_HEIGHT - 20 });
+		constexpr float height = (float)App::WINDOW_HEIGHT - 20 ;
+		ImGui::SetNextWindowSizeConstraints({ 200.0f, height}, { 500.0f,  height });
 		ImGui::Begin("ControllerWindow", &m_open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar);
 			m_actionMenuWitdh = ImGui::GetWindowWidth();
 			ImGui::SetWindowPos(ImVec2((float)App::WINDOW_WIDTH - m_actionMenuWitdh, 20), true);
