@@ -11,6 +11,7 @@ If you are using a terminal simply execute the following command :
 git clone --depth=1 https://github.com/LibertAntoine/Minecraft_editor.git
 ```
 Notice: the `--depth` option will perform a shallow clone with only 1 commit history, this will reduce the amount off downloaded content :upside_down_face:
+
 Then move into `Minecraft_editor` directory or whatever name you've used when cloning and create a new directory at the root called `bin` for instance. It will contain your future executable.
 ### Compiling
 Now we can compile the project using...
@@ -21,7 +22,7 @@ cmake ..
 ```bash
 cmake .. -DCMAKE_BUILD_TYPE=Debug
 ```
-... if you when to keep debug data and make the compile verbose for warnings.
+... if you want to keep debug data and make the compile verbose for warnings.
 Then compile using the automatically generated `Makefile` with :
 ```bash
 make
