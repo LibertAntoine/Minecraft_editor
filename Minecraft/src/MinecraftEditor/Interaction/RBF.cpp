@@ -58,6 +58,18 @@ RBF::RBF(const std::string& filepath)
         streamRBF >> point(2);
 
         streamRBF >> weight;
+				if ( m_ControlPoints.size() == 0 ) {
+					m_minVal = weight;
+					m_maxVal = weight;
+				}
+				else {
+				  if ( m_minVal > weight ) {
+						m_minVal = weight;
+				  }
+					else if ( m_maxVal < weight ) {
+						m_maxVal = weight;
+					}
+				}
         m_ControlPoints.push_back(std::tuple<Eigen::Vector3i, double, double>(point, weight, 0.0));
       }
       else if ( type == DataType::RBF ) {
@@ -154,6 +166,19 @@ void RBF::parseSelectedRBFFile()
         streamRBF >> point(2);
 
         streamRBF >> weight;
+
+				if ( m_ControlPoints.size() == 0 ) {
+					m_minVal = weight;
+					m_maxVal = weight;
+				}
+				else {
+				  if ( weight < m_minVal ) {
+						m_minVal = weight;
+				  }
+					else if ( weight > m_maxVal ) {
+						m_maxVal = weight;
+					}
+				}
         m_ControlPoints.push_back(std::tuple<Eigen::Vector3i, double, double>(point, weight, 0.0));
       }
       else if ( type == DataType::RBF ) {
@@ -237,16 +262,29 @@ bool RBF::isThereACubeHere(const glm::vec3& position) const
   bool cube;
   double scalar = this->getScalar(position);
 	if ( m_useProbability ) {
-		double chances = scalar;
+		//double chances = scalar;
 		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 		// Select a random generator engine
 		std::default_random_engine generator(seed);
 		// uniform real distribution
-		std::uniform_real_distribution<double> uniformRealDistribution(0, abs( chances * 0.5 ));
+		//
+		double ecartMinMax = abs(m_maxVal - m_minVal);
+		double ecartScal = scalar - m_minVal;
+		double ratio = ecartScal / ecartMinMax;
 
+		std::uniform_real_distribution<double> uniformRealDistribution(0, 1);
+
+		if ( uniformRealDistribution(generator) <= ratio ) {
+			cube = true;
+		} 
+		else {
+		  cube = false;
+		}
+
+		/*
 		if ( chances < 0 ) {
 			cube = false;
-			if ( trunc( uniformRealDistribution(generator) ) ) {
+			if ( uniformRealDistribution(generator) > ) {
 				cube = true;
 			} 
 		}
@@ -256,6 +294,7 @@ bool RBF::isThereACubeHere(const glm::vec3& position) const
 				cube = false;
 			} 
 		}
+	*/
   } 
 	else {
     if ( scalar > 0) {

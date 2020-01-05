@@ -66,6 +66,9 @@ class RBF
 
     double m_epsilon = 1.0;
 
+		double m_minVal;
+		double m_maxVal;
+
 		bool m_useProbability = true;
 
   public:
