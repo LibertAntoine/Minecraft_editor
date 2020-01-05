@@ -195,11 +195,10 @@ namespace interaction {
   /// \brief Generate the world using the current RBF
   void CubeSelector::ApplyRBF()
   {
-	  /*
     m_rbf.parseSelectedRBFFile();
     m_rbf.solveOmegas();
 
-	    glm::ivec3 boundary1 = m_rbf.getBoundaryA();
+		glm::ivec3 boundary1 = m_rbf.getBoundaryA();
 		glm::ivec3 boundary2 = m_rbf.getBoundaryB();
 
     for ( int x = boundary1.x; x <= boundary2.x; x++ ) {
@@ -213,7 +212,6 @@ namespace interaction {
         }
       }
     }
-	*/
 		m_Cuberenderer->updateAll();
   }
 
