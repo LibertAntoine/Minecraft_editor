@@ -23,7 +23,13 @@ TextureArray::TextureArray(const unsigned int& witdh, const unsigned int& height
     this->Unbind();
 }
 
-TextureArray::~TextureArray() { GLCall(glDeleteTextures(1, &m_TextureArrayID)); }
+TextureArray::~TextureArray() { 
+	GLCall(glDeleteTextures(1, &m_TextureArrayID)); 
+
+	for (auto proxy : m_ProxiList) {
+		delete proxy.second;
+	}
+}
 
 void TextureArray::Bind(unsigned int slot /*= 0*/) const {
 	GLCall(glActiveTexture(GL_TEXTURE0 + slot));
