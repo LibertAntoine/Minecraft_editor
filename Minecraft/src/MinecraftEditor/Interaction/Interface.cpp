@@ -293,12 +293,14 @@ namespace interaction {
 	void Interface::RBFFile(interaction::CubeSelector& cubeSelector, const char* label) {
           // TODO: Optimize transFormss between strig to char pointers
           // Don't do it on every frame, maybe store it as is in class
-          std::vector<char*> filePaths(cubeSelector.m_rbf.m_FilePaths.size() + 1);
-          for ( size_t i = 0; i != cubeSelector.m_rbf.m_FilePaths.size(); ++i) {
-            filePaths[i] = &cubeSelector.m_rbf.m_FilePaths[i][0];
+					RBF& rbf = cubeSelector.getRBF();
+					std::vector<std::string> filepath_rbf = rbf.getFilePaths();
+          std::vector<char*> filePaths(filepath_rbf.size() + 1);
+          for ( size_t i = 0; i != filepath_rbf.size(); ++i) {
+            filePaths[i] = &filepath_rbf[i][0];
           }
 
-          ImGui::Combo(label, &cubeSelector.m_rbf.m_RBFFileId, filePaths.data(), cubeSelector.m_rbf.m_FilePaths.size());
+          ImGui::Combo(label, &rbf.CurrentFileIdAddress(), filePaths.data(), filepath_rbf.size());
 
 	}
 	void Interface::ComboMultiTexture(std::vector<unsigned int>& textures, const char* label) {

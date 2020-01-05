@@ -74,17 +74,18 @@ class RBF
 
 		bool m_useProbability = true;
 
-
-  public:
-    //std::string m_FilePath;
-    // TODO: use getters and setters instead of sharing it everywhere
-    int m_RBFFileId;
     std::vector<std::string> m_FilePaths;
 
+    int m_RBFFileId; ///\var Current source of user data for RBF interpolation. Refers to a m_FilePaths index.
+
+  public:
     RBF();
 
     RBF(std::vector<std::pair<glm::vec3, double>> controlPoints);
     RBF(const std::string& filepath); /// @brief automatically parse a RBF file and load properties into class
+
+		inline const std::vector<std::string>& getFilePaths() const { return m_FilePaths; }
+		inline int& CurrentFileIdAddress() { return m_RBFFileId; }
 
     double computeDistance(const Eigen::Vector3i& pointA, const Eigen::Vector3i& pointB) const;
 

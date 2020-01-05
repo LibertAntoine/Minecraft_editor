@@ -55,9 +55,10 @@ namespace interaction {
 		std::shared_ptr<Texture> m_textCut;
 		std::shared_ptr<Texture> m_textCopy;
 
+		RBF m_rbf; //TODO: go to private w/ getter
+
 
 	public:
-        RBF m_rbf; //TODO: go to private w/ getter
 
 		CubeSelector() = delete;
 
@@ -70,6 +71,7 @@ namespace interaction {
 
 
 		// GETTERS - SETTERS //
+		inline RBF& getRBF() { return m_rbf; }
 		inline Selector* selector() { return m_selector; };
 		inline Forms::Cube* currentCube() { return m_selector->currentCube; };
 		inline Forms::Cube& selectorCube() { return m_selector->selectorCube; };
