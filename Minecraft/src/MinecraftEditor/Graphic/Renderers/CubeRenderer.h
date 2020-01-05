@@ -36,7 +36,7 @@ namespace renderer {
       std::unique_ptr<VertexBuffer> m_VertexBufferTexture;
       std::unique_ptr<VertexBuffer> m_VertexBufferType;
       std::unique_ptr<VertexBuffer> m_VertexBufferCubeId;
-	  std::list<Forms::Cube> m_CubeList;
+			std::list<Forms::Cube> m_CubeList;
       
     public:
       

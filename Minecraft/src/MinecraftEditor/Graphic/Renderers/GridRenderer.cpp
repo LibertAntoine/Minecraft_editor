@@ -7,38 +7,40 @@
 
 namespace renderer {
   GridRenderer::GridRenderer(const unsigned int& size, glm::vec3 color)
-    :m_grid(Forms::Grid(size, color)), m_gridSelection(Forms::GridSelection(size)),
+    : m_VAOGrid(std::make_unique<VertexArray>()),
+		m_grid(Forms::Grid(size, color)), 
 	  m_ShaderGrid(std::make_unique<Shader>("res/shaders/Grid.shader")),
-	  m_ShaderGridSelection(std::make_unique<Shader>("res/shaders/GroundSelection.shader")),
-	  m_VAOGrid(std::make_unique<VertexArray>()),
-	  m_VAOGridSelection(std::make_unique<VertexArray>())
+	  m_VAOGridSelection(std::make_unique<VertexArray>()),
+		m_gridSelection(Forms::GridSelection(size)),
+	  m_ShaderGridSelection(std::make_unique<Shader>("res/shaders/GroundSelection.shader"))
   {
-    
-    m_VertexBufferGrid = std::make_unique<VertexBuffer>(m_grid.datas().data(), m_grid.datas().size() * sizeof(int));
 
-    VertexBufferLayout layoutGrid;
+		m_VertexBufferGrid = std::make_unique<VertexBuffer>(m_grid.datas().data(), m_grid.datas().size() * sizeof(int));
+
+		VertexBufferLayout layoutGrid;
 		layoutGrid.Push<int>(3);
 
-    m_VAOGrid->AddBuffer(*m_VertexBufferGrid, layoutGrid);
-    m_IndexBufferGrid = std::make_unique<IndexBuffer>(m_grid.indices().data(), 8 * (size + 1));
+		m_VAOGrid->AddBuffer(*m_VertexBufferGrid, layoutGrid);
+		m_IndexBufferGrid = std::make_unique<IndexBuffer>(m_grid.indices().data(), 8 * (size + 1));
 
-    m_ShaderGrid->Bind();
-    m_ShaderGrid->SetUniform4f("u_Color", color.x, color.y, color.z, 0.3f);
+		m_ShaderGrid->Bind();
+		m_ShaderGrid->SetUniform4f("u_Color", color.x, color.y, color.z, 0.3f);
 
 
 
-	m_VertexBufferGridSelection = std::make_unique<VertexBuffer>(m_gridSelection.datas().data(), pow(size * 2 + 1, 2) * 2 * sizeof(GLfloat));
+		m_VertexBufferGridSelection = std::make_unique<VertexBuffer>(m_gridSelection.datas().data(), pow(size * 2 + 1, 2) * 2 * sizeof(GLfloat));
 
-	VertexBufferLayout layoutGridSelection;
-	layoutGridSelection.Push<GLfloat>(2);
+		VertexBufferLayout layoutGridSelection;
+		layoutGridSelection.Push<GLfloat>(2);
 
-	m_VAOGridSelection->AddBuffer(*m_VertexBufferGridSelection, layoutGridSelection);
-	m_IndexBufferGridSelection = std::make_unique<IndexBuffer>(m_gridSelection.indices().data(), m_gridSelection.indices().size());
+		m_VAOGridSelection->AddBuffer(*m_VertexBufferGridSelection, layoutGridSelection);
+		m_IndexBufferGridSelection = std::make_unique<IndexBuffer>(m_gridSelection.indices().data(), m_gridSelection.indices().size());
   }
 
   GridRenderer::~GridRenderer() {}
 
-  void GridRenderer::drawGrid(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active) {
+  void GridRenderer::drawGrid(const camera::FreeflyCamera& camera, const glm::mat4& projection, bool* active) 
+	{
     Renderer renderer;
     GLCall(glLineWidth(1));
     glm::mat4 MVMatrix;
