@@ -258,7 +258,7 @@ bool RBF::isThereACubeHere(const glm::vec3& position) const
 		}
   } 
 	else {
-    if ( scalar ) {
+    if ( scalar > 0) {
 			return true;
     }
 		else {

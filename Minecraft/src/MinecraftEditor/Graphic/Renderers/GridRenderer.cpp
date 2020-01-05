@@ -93,7 +93,6 @@ namespace renderer {
 	  if (gridMove < 0)
 		  gridMove = 0;
 
-	  // TODO: Clarify active[] role
 	  // NOTE: gridWidth * 4 == total vertices that constitute the grid
 
 	  m_ShaderGridSelection->Bind();
