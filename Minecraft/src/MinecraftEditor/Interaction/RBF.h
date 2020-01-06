@@ -87,6 +87,8 @@ class RBF
 		inline const std::vector<std::string>& getFilePaths() const { return m_FilePaths; }
 		inline int& CurrentFileIdAddress() { return m_RBFFileId; }
 
+		inline bool getProbaState() const { return m_useProbability; }
+
     double computeDistance(const Eigen::Vector3i& pointA, const Eigen::Vector3i& pointB) const;
 
 		/**

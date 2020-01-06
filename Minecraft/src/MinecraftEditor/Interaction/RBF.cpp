@@ -135,6 +135,11 @@ void RBF::parseSelectedRBFFile()
   enum class DataType { NONE = -1, BOUNDARIES = 0, CONTROL_POINTS = 1, RBF = 2};
   DataType type = DataType::NONE;
   std::string line;
+	// NOTE: Reset state to normal, do not append
+  m_Boundaries.clear();
+  m_ControlPoints.clear();
+	m_useProbability = true;
+
   while (std::getline(stream, line)) {
     if (line.find("#boundaries") != std::string::npos) {
         type = DataType::BOUNDARIES;
