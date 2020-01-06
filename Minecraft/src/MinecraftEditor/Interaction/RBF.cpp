@@ -250,7 +250,7 @@ void RBF::solveOmegas()
   for ( size_t i = 0; i < m_ControlPoints.size(); i++ ) {
     weights(i) = std::get<1>(m_ControlPoints[i]);
   }
-  omega = phis.colPivHouseholderQr().solve(weights);
+  omega = phis.householderQr().solve(weights);
   for ( long int i = 0; i < weights.size(); i++ ) {
     std::get<2>(m_ControlPoints[i]) = omega(i);
   }
