@@ -13,6 +13,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(CMAKE_CXX_FLAGS_DEBUG "-g -ggdb3") # Keep macro definition for debugging with GDB
+set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
 	set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
