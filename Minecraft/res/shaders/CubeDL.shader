@@ -61,9 +61,9 @@ const vec2 texc[4] = vec2[](vec2(0, 0), // texture coordinates
 	vec2(0, 1),
 	vec2(1, 1));
 
-const vec3 normc[6] = vec3[](vec3(0, 0, 1), // normal
+const vec3 normc[6] = vec3[](vec3(0, 0, -1), // normal
 	vec3(-1, 0, 0),
-	vec3(0, 0, -1),
+	vec3(0, 0, 1),
 	vec3(0, -1, 0),
 	vec3(1, 0, 0),
 	vec3(0, 1, 0));
