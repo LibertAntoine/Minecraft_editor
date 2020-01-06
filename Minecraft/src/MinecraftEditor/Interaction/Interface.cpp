@@ -187,7 +187,6 @@ namespace interaction {
 	void Interface::InfosCurrentCubeInterface() {
 		if (m_cubeSelector->currentCube() != nullptr) {
 			ImGui::Text("Current cube selected infos : ");
-			ImGui::InputInt("Scale Cube", m_cubeSelector->selector()->currentCube->scalePtr(), 1, 100);
 			ImGui::Text("Cube Position : ");
 			if (ImGui::DragInt3("##DragCubePosition", &m_cubeSelector->selectorCube().position().x, 1, -m_cubeSelector->sizeWorld() / 2, m_cubeSelector->sizeWorld() / 2)) {
 				if (m_cubeSelector->selectorCube().position().y < 0) {
@@ -226,7 +225,7 @@ namespace interaction {
 			} else if (r == Forms::MULTI_TEXTURED) {
 				this->ComboMultiTexture(m_cubeSelector->currentCube()->texture(), "Cube Multi-Texture");
 			}
-
+			ImGui::InputInt("Scale Cube", m_cubeSelector->selector()->currentCube->scalePtr(), 1, 100);
 		} else {
 			ImGui::Text("No Cube Selected.");
 		}
@@ -234,7 +233,6 @@ namespace interaction {
 
 	void Interface::InfosSelectorInterface() {
 		ImGui::Text("Selector Infos : ");
-		ImGui::InputInt("Selector Scale", &m_cubeSelector->selectorCube().scale(), 1, 100);
 		ImGui::Text("Position : ");
 		if (ImGui::DragInt3("##DragSelectorPosition", &m_cubeSelector->selectorCube().position().x, 1, -m_cubeSelector->sizeWorld() /2, m_cubeSelector->sizeWorld() /2)) {
 			if (m_cubeSelector->selectorCube().position().y < 0)
@@ -262,6 +260,7 @@ namespace interaction {
 			m_cubeSelector->selectorCube().type() = Forms::MULTI_TEXTURED;
 			this->ComboMultiTexture(m_cubeSelector->selectorCube().texture(), "Selector Multi-Texture");
 		}	
+		ImGui::InputInt("Selector Scale", &m_cubeSelector->selectorCube().scale(), 1, 100);
 	}
 
 	/* ImGui WIDGETS */

@@ -22,8 +22,8 @@
 class App {
 public:
 	// CONST RESOLUTION //
-	static const unsigned int WINDOW_HEIGHT = 720;
-	static const unsigned int WINDOW_WIDTH = 1080;
+	static const unsigned int WINDOW_HEIGHT = 980;
+	static const unsigned int WINDOW_WIDTH = 1440;
 
 	App();
 	~App();
