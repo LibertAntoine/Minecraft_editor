@@ -30,6 +30,8 @@ RBF::RBF(const std::string& filepath)
 
   m_Boundaries.clear();
   m_ControlPoints.clear();
+	m_useProbability = true;
+
   while (std::getline(stream, line)) {
     if (line.find("#boundaries") != std::string::npos) {
         type = DataType::BOUNDARIES;
@@ -82,7 +84,7 @@ RBF::RBF(const std::string& filepath)
           this->switchRBFtoGaussian();
         } else if ( rbf == "multiquadratic" ) {
           this->switchRBFtoMultiQuadratic();
-        } else if ( rbf == "inversquadratic" ) {
+        } else if ( rbf == "inversequadratic" ) {
           this->switchRBFtoInverseQuadratic();
         } else {
           this->switchRBFtoUseless();
@@ -196,7 +198,7 @@ void RBF::parseSelectedRBFFile()
           this->switchRBFtoGaussian();
         } else if ( rbf == "multiquadratic" ) {
           this->switchRBFtoMultiQuadratic();
-        } else if ( rbf == "inversquadratic" ) {
+        } else if ( rbf == "inversequadratic" ) {
           this->switchRBFtoInverseQuadratic();
         } else {
           this->switchRBFtoUseless();

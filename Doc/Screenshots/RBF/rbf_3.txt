@@ -4,6 +4,3 @@
 #controlpoints
 0 0 0 -1
 0 20 0 1
-#rbf
-multiquadratic 0.2
-#noproba
