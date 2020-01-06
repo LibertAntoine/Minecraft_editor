@@ -214,6 +214,22 @@ namespace interaction {
 		glm::ivec3 boundary1 = m_rbf.getBoundaryA();
 		glm::ivec3 boundary2 = m_rbf.getBoundaryB();
 
+		if ( boundary1.x > boundary2.x ) {
+			int temp = boundary1.x;
+			boundary1.x = boundary2.x;
+			boundary2.x = temp;
+		}
+		if ( boundary1.y > boundary2.y ) {
+			int temp = boundary1.y;
+			boundary1.y = boundary2.y;
+			boundary2.y = temp;
+		}
+		if ( boundary1.z > boundary2.z ) {
+			int temp = boundary1.z;
+			boundary1.z = boundary2.z;
+			boundary2.z = temp;
+		}
+
     for ( int x = boundary1.x; x <= boundary2.x; x++ ) {
       for ( int z = boundary1.z; z <= boundary2.z; z++ ) {
         for ( int y = boundary1.y; y <= boundary2.y; y++ ) {
