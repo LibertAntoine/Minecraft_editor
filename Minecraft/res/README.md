@@ -83,27 +83,21 @@ You can find examples in [this directory](https://github.com/LibertAntoine/Minec
 inversequadratic 1
 ```
 
-![RBF file 7 results in the editor](../../Doc/Screenshots/RBF/rbf_7.png?raw=true)
+![RBF file 8 results in the editor](../../Doc/Screenshots/RBF/rbf_8.png?raw=true)
 ```python
 #boundaries
--25 56 0
-25 0 0
+-15 13 -15
+15 0 15
 #controlpoints
-0 -2 0 -1
-15 0 0 13
--20 0 5 8
-3 5 0 -2
-7 5 0 -2
-7 8 0 8
--3 5 0 -2
-0 10 0 -1
-0 14 0 -3
-0 18 0 -1
-3 15 0 6
-3 7 0 13
--15 26 0 3
-15 26 0 3
+0 0 0 10
+15 0 5 6
+-15 0 -1 10
+-14 18 -5 -42
+-5 15 -5 -16
+-5 20 5 -26
+5 20 5 -13
 #rbf
-gaussian 3.50
+inversequadratic 0.02
+#noproba
 ```
 :smile: enjoy!
