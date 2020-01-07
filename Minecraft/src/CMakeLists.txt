@@ -1,8 +1,8 @@
 #file(GLOB HEADER_FILES *.h forms/*.h modes/*.h Renderer/*.h Interaction/*.h)
 #file(GLOB SRC_FILES *.cpp forms/*.cpp modes/*.cpp Renderer/*.cpp Interaction/*.cpp)
 
-file(GLOB HEADER_FILES *.h GraphicEngine/*.h modes/*.h MinecraftEditor/Interaction/*.h MinecraftEditor/Graphic/Forms/*.h MinecraftEditor/Graphic/Lights/*.h MinecraftEditor/Graphic/Renderers/*.h)
-file(GLOB SRC_FILES *.cpp GraphicEngine/*.cpp modes/*.cpp MinecraftEditor/Interaction/*.cpp MinecraftEditor/Graphic/Forms/*.cpp MinecraftEditor/Graphic/Lights/*.cpp MinecraftEditor/Graphic/Renderers/*.cpp)
+file(GLOB HEADER_FILES *.h GraphicEngine/*.h modes/*.h MinecraftEditor/Interaction/*.h MinecraftEditor/Math/*.h MinecraftEditor/Graphic/Forms/*.h MinecraftEditor/Graphic/Lights/*.h MinecraftEditor/Graphic/Renderers/*.h)
+file(GLOB SRC_FILES *.cpp GraphicEngine/*.cpp modes/*.cpp MinecraftEditor/Interaction/*.cpp MinecraftEditor/Math/*.cpp MinecraftEditor/Graphic/Forms/*.cpp MinecraftEditor/Graphic/Lights/*.cpp MinecraftEditor/Graphic/Renderers/*.cpp)
 
 add_executable(Minecraft
     ${SRC_FILES}

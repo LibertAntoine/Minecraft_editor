@@ -17,7 +17,7 @@
 #include "MinecraftEditor/Graphic/Forms/Cube.h"
 #include <octree/octree.h>
 #include "MinecraftEditor/Graphic/Renderers/CubeRenderer.h"
-#include "RBF.h"
+#include "MinecraftEditor/Math/RBF.h"
 
 
 namespace interaction {

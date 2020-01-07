@@ -185,7 +185,7 @@
     <ClCompile Include="src\MinecraftEditor\Interaction\CubeSelector.cpp" />
     <ClCompile Include="src\MinecraftEditor\Interaction\Interface.cpp" />
     <ClCompile Include="src\MinecraftEditor\Interaction\KeyBoard.cpp" />
-    <ClCompile Include="src\MinecraftEditor\Interaction\RBF.cpp" />
+    <ClCompile Include="src\MinecraftEditor\Math\RBF.cpp" />
     <ClCompile Include="src\Modes\Mode.cpp" />
     <ClCompile Include="src\Modes\ModeEditor.cpp" />
     <ClCompile Include="src\Modes\ModeImGUITest.cpp" />
@@ -222,7 +222,7 @@
     <ClInclude Include="src\MinecraftEditor\Interaction\CubeSelector.h" />
     <ClInclude Include="src\MinecraftEditor\Interaction\Interface.h" />
     <ClInclude Include="src\MinecraftEditor\Interaction\KeyBoard.h" />
-    <ClInclude Include="src\MinecraftEditor\Interaction\RBF.h" />
+    <ClInclude Include="src\MinecraftEditor\Math\RBF.h" />
     <ClInclude Include="src\Modes\Mode.h" />
     <ClInclude Include="src\Modes\ModeEditor.h" />
     <ClInclude Include="src\Modes\ModeImGUITest.h" />

@@ -10,7 +10,6 @@
 #include <random>
 #include <chrono>
 #include <math.h>
-#include <math.h>
 
 #include "glm/glm.hpp"
 
