@@ -21,8 +21,9 @@ namespace RBF_CALLBACKS
 {
   struct Useless
   {
+		double m_epsilon = 1.0;
     double operator()(const double d) {
-      return d;
+      return m_epsilon * d;
     }
   };
 

@@ -31,6 +31,7 @@ RBF::RBF(const std::string& filepath)
   m_Boundaries.clear();
   m_ControlPoints.clear();
 	m_useProbability = true;
+	this->switchRBFtoUseless(1.0);
 
   while (std::getline(stream, line)) {
     if (line.find("#boundaries") != std::string::npos) {
@@ -217,6 +218,7 @@ void RBF::parseSelectedRBFFile()
 void RBF::updateEpsilon(const double newEpsilon)
 {
   m_epsilon = newEpsilon;
+  m_useless.m_epsilon = newEpsilon;
   m_gaussian.m_epsilon = newEpsilon;
   m_multiQuadratic.m_epsilon = newEpsilon;
   m_inverseQuadratic.m_epsilon = newEpsilon;
