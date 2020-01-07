@@ -142,6 +142,7 @@ void RBF::parseSelectedRBFFile()
   m_Boundaries.clear();
   m_ControlPoints.clear();
 	m_useProbability = true;
+	this->switchRBFtoUseless(1.0);
 
   while (std::getline(stream, line)) {
     if (line.find("#boundaries") != std::string::npos) {
