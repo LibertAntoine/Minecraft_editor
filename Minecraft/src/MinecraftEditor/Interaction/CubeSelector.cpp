@@ -85,12 +85,14 @@ namespace interaction {
   void CubeSelector::DeleteAll() {
 	  m_CubeWorld = Octree<Forms::Cube*>(m_SizeWorld * 2, nullptr);
 	  m_Cuberenderer->CubeList() = std::list<Forms::Cube>();
+		m_selector->currentCube = nullptr;
 	  m_Cuberenderer->updatePosition();
 	  m_Cuberenderer->updateColor();
 	  m_Cuberenderer->updateTexture();
 	  m_Cuberenderer->updateType();
 	  m_Cuberenderer->updateCubeId();
 	  m_selector->selectorCube = Forms::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0, 0.5, 0.5), Forms::COLORED, { 0,0,0,0,0,0 });
+		this->refresh();
 	  //this->initGround(10);
   }
 
@@ -244,6 +246,22 @@ namespace interaction {
 		m_Cuberenderer->updateAll();
   }
 
+	bool CubeSelector::OnACube() const
+	{
+		bool value = false;
+		if (m_selector->currentCube) value = true;
+		return value;
+	}
+
+	bool CubeSelector::OnUpperFace() const
+	{
+		bool value = false;
+		if (m_selector->currentCube) {
+			if ( m_selectedFace == 5 ) value = true;				
+		}
+		return value;
+	}
+
 	void CubeSelector::MoveSelectorToClickFace(int x, int y, const FrameBuffer& framebufferSelection)
 	{
 		if (m_selector->currentCube) {
@@ -295,10 +313,13 @@ namespace interaction {
 
 			if ( this->isInsideWorldBoundaries(selectionAddress->position()) ) {
 				this->SetSelector(glm::ivec3(selectionAddress->position()));
+				m_selectedFace = data[2];
 			}
+			else m_selectedFace = -1;
 		}
 		// NOTE: No cube is under the position so check the ground
 		else {
+			m_selectedFace = -1;
 			GLint position[4];
 			framebufferSelection.getDataAtPosition4i(x, y, position, GL_COLOR_ATTACHMENT1);
 			glm::ivec3 ivPosition(position[0], 0, position[1]);
@@ -316,5 +337,64 @@ namespace interaction {
 				size - i, m_selector->selectorCube.position().z + m_SizeWorld);
 		}
 		return cube;
+	}
+
+	void CubeSelector::loadScene(const std::string &filepath)
+	{
+		std::ifstream stream(filepath);
+		std::string line;
+
+		while (std::getline(stream, line)) {
+			glm::ivec3 position;
+			stream >> position.x;
+			stream >> position.y;
+			stream >> position.z;
+
+			glm::vec3 color;
+			stream >> color.x;
+			stream >> color.y;
+			stream >> color.z;
+
+			std::vector<unsigned int> textures;
+			unsigned int id;
+			for ( int i = 0; i < 6; i++ ) {
+				stream >> id;
+				textures.push_back(id);
+			}
+
+			int type;
+			stream >> type;
+
+			Forms::Cube newCube(position, 1, color, (Forms::CubeType)type, textures);
+			this->BatchCreate(newCube);
+		}
+
+		m_Cuberenderer->updateAll();
+	}
+
+	void CubeSelector::saveScene(const std::string &filepath)
+	{
+		std::filesystem::remove(filepath);
+		std::cout << "Writing a new file" << std::endl;
+		std::ofstream stream("res/scenes/"+filepath+".txt");
+		for ( auto cube : m_Cuberenderer->CubeList() ) {
+			// Position
+			stream << cube.position().x << " ";
+			stream << cube.position().y << " ";
+			stream << cube.position().z << " ";
+
+			// Color
+			stream << cube.color().x << " ";
+			stream << cube.color().y << " ";
+			stream << cube.color().z << " ";
+
+			for ( auto texId : cube.texture() ) {
+				stream << texId << " ";
+			}
+			
+			// Type
+			stream << cube.type() << std::endl;
+		}
+		stream.close();
 	}
 }

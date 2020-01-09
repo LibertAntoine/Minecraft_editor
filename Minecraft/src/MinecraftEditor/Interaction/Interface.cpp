@@ -5,9 +5,17 @@ namespace interaction {
 		:m_cubeRenderer(renderer) , m_cubeSelector(selector), m_textureArray(textureArray), 
 		m_camera(camera), m_light(light), m_backgroundColor(backgroundColor)
 	{
+		this->findFiles();
 	}
 
 	Interface::~Interface() {
+	}
+
+	void Interface::findFiles()
+	{
+		std::string path = "res/scenes/";
+		for (const auto & entry : std::filesystem::directory_iterator(path))
+			m_filePaths.push_back(entry.path());
 	}
 
 
@@ -98,13 +106,22 @@ namespace interaction {
 		if (ImGui::Button("Add ground")) {
 			m_cubeSelector->initGround(10);
 		}
+
+		this->SceneFiles("Select scene");
+		if (ImGui::Button("Load object")) m_cubeSelector->loadScene(m_filePaths[m_selectedFile]);
+		ImGui::SameLine();
+		if (ImGui::Button("Save object")) {
+			m_cubeSelector->saveScene(m_newFile);
+			this->findFiles();
+		}
+		char* newFile = m_newFile.data();
+		ImGui::InputText("File Name", newFile, 20);
+		m_newFile = std::string( newFile );
 	}
 
 	void Interface::RBFController() {
 		if (ImGui::Button("Apply RBF")) m_cubeSelector->ApplyRBF();
-                std::vector<std::string> filePaths;
-                filePaths.push_back("res/rbf.txt");
-                this->RBFFile(*m_cubeSelector, "Select a RBF file");
+		this->RBFFile(*m_cubeSelector, "Select a RBF file");
 	}
 
 	void Interface::CubeController() {
@@ -303,6 +320,16 @@ namespace interaction {
           ImGui::Combo(label, &rbf.CurrentFileIdAddress(), filePaths.data(), filepath_rbf.size());
 
 	}
+	void Interface::SceneFiles(const char* label) {
+		// TODO: Optimize transFormss between strig to char pointers
+		// Don't do it on every frame, maybe store it as is in class
+		std::vector<char*> filePaths(m_filePaths.size() + 1);
+		for ( size_t i = 0; i != m_filePaths.size(); ++i) {
+			filePaths[i] = &m_filePaths[i][0];
+		}
+		ImGui::Combo(label, &m_selectedFile, filePaths.data(), m_filePaths.size());
+	}
+
 	void Interface::ComboMultiTexture(std::vector<unsigned int>& textures, const char* label) {
 		const char* labels[6]{
 			"Front Face", "Back Face",

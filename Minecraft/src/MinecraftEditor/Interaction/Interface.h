@@ -7,6 +7,7 @@
  */
 
 #include <iostream>
+#include <filesystem>
 
 #include "ImGUI/imgui.h"
 #include "SDL.h"
@@ -28,6 +29,11 @@ namespace interaction {
 		std::shared_ptr<camera::FreeflyCamera> m_camera;
 		std::shared_ptr<interaction::LightManager> m_light;
 		std::shared_ptr<glm::vec3> m_backgroundColor;
+
+		std::vector<std::string> m_filePaths;
+		int m_selectedFile;
+		std::string m_newFile = "untitled";
+
 		float m_actionMenuWitdh;
 		bool m_open;
 
@@ -95,6 +101,7 @@ namespace interaction {
 		/* ImGUI WIDGET */
 
         void RBFFile(interaction::CubeSelector& cubeSelector, const char* label);
+				void SceneFiles(const char* label);
 		/**
 		* \brief Create a combo button to select one texture.
 		* \param Texture that modified the combo.
@@ -107,6 +114,8 @@ namespace interaction {
 		* \param Label of the combo buttons.
 		*/
 		void ComboMultiTexture(std::vector<unsigned int>& textures, const char* label);
+
+		void findFiles();
 	};
 
 }
