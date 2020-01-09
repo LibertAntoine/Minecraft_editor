@@ -31,7 +31,9 @@ namespace interaction {
 			if (ImGui::CollapsingHeader("World", ImGuiTreeNodeFlags_DefaultOpen)) {
 				this->WorldController();
 			}
-
+			if (ImGui::CollapsingHeader("RBF", ImGuiTreeNodeFlags_DefaultOpen)) {
+				this->RBFController();
+			}
 			if (ImGui::CollapsingHeader("Save Controller", ImGuiTreeNodeFlags_DefaultOpen)) {
 				this->SaveController();
 			}
@@ -50,9 +52,6 @@ namespace interaction {
 
 			if (ImGui::CollapsingHeader("Light Controller", ImGuiTreeNodeFlags_DefaultOpen)) {
 				this->LightController();
-			}
-			if (ImGui::CollapsingHeader("RBF", ImGuiTreeNodeFlags_DefaultOpen)) {
-				this->RBFController();
 			}
 		ImGui::End();
 
