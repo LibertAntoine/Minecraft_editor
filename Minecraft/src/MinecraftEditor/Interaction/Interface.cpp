@@ -112,7 +112,7 @@ namespace interaction {
 	}
 
 
-	void SaveController() {
+	void Interface::SaveController() {
 		this->SceneFiles("Select scene");
 		if (ImGui::Button("Load object")) m_cubeSelector->loadScene(m_filePaths[m_selectedFile]);
 		ImGui::SameLine();
