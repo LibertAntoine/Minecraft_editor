@@ -103,7 +103,7 @@ namespace interaction {
 			
 			if (ImGui::IsMouseClicked(1) || ImGui::IsMouseDragging(1)) {
 				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
-				if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) {
+				if ( ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT) ) {
 					if ((abs(ImGui::GetMouseDragDelta(1).x) > 6 || abs(ImGui::GetMouseDragDelta(1).y) > 6) || ImGui::IsMouseClicked(1)) {
 					m_cubeSelector->DeleteToSelector();
 					ImGui::ResetMouseDragDelta(1);
