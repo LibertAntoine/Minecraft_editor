@@ -2,11 +2,11 @@
 #  RBF file instructions
 
 <p align="center">
-  <img width="600" src="../../Doc/Screenshots/RBF/rbf_3.png?raw=true">
+  <img width="600" src="/Screenshots/RBF/rbf_3.png?raw=true">
 </p>
 
 ## Where to put the configuration files
-You must put the rbf files in `Minecraft/res/` in the current version of the program you can only have three different files and must either be called `rbf1.txt` `rbf2.txt` or `rbf3.txt`
+You must put the rbf files in `Minecraft/res/rbf/` and give it any name you like.
 ## Syntax
 The program make use of a parser to extract data out of the files.
 
@@ -68,7 +68,7 @@ By default the program make use of randomization based on the scalar value. To d
 ## Examples
 You can find examples in [this directory](https://github.com/LibertAntoine/Minecraft_editor/tree/master/Doc/Screenshots/RBF) `Doc/Screenshots/RBF/`
 
-![RBF file 6 results in the editor](../../Doc/Screenshots/RBF/rbf_6.png?raw=true)
+![RBF file 6 results in the editor](/Doc/Screenshots/RBF/rbf_6.png?raw=true)
 ```python
 #boundaries
 5 10 5
@@ -83,7 +83,7 @@ You can find examples in [this directory](https://github.com/LibertAntoine/Minec
 inversequadratic 1
 ```
 
-![RBF file 8 results in the editor](../../Doc/Screenshots/RBF/rbf_8.png?raw=true)
+![RBF file 8 results in the editor](/Doc/Screenshots/RBF/rbf_8.png?raw=true)
 ```python
 #boundaries
 -15 13 -15
