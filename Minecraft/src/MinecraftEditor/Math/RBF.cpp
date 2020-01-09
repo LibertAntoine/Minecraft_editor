@@ -1,7 +1,5 @@
 #include "RBF.h"
 
-// TODO: Find available rbf files automatically
-// NOTE: Windows and Linux must have specific code for directory searching
 RBF::RBF()
   :m_rbf(m_useless)
 {

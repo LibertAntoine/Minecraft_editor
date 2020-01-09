@@ -141,7 +141,6 @@ namespace interaction {
 	void Interface::CameraController() {
 
 		ImGui::Text("Cam Position :");
-		// TODO Check if the value is not to high with the input.
 		if (ImGui::DragFloat3("##DragCameraPosition", &m_camera->position().x, 0.1f, -m_cubeSelector->sizeWorld() / 2, m_cubeSelector->sizeWorld() / 2))
 		{
 			if (m_camera->position().y < 0)
@@ -309,8 +308,6 @@ namespace interaction {
 	}
 
 	void Interface::RBFFile(interaction::CubeSelector& cubeSelector, const char* label) {
-          // TODO: Optimize transFormss between strig to char pointers
-          // Don't do it on every frame, maybe store it as is in class
 					RBF& rbf = cubeSelector.getRBF();
 					std::vector<std::string> filepath_rbf = rbf.getFilePaths();
           std::vector<char*> filePaths(filepath_rbf.size() + 1);
@@ -322,8 +319,6 @@ namespace interaction {
 
 	}
 	void Interface::SceneFiles(const char* label) {
-		// TODO: Optimize transFormss between strig to char pointers
-		// Don't do it on every frame, maybe store it as is in class
 		std::vector<char*> filePaths(m_filePaths.size() + 1);
 		for ( size_t i = 0; i != m_filePaths.size(); ++i) {
 			filePaths[i] = &m_filePaths[i][0];
