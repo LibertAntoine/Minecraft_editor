@@ -12,6 +12,9 @@
 #include "GraphicEngine/FrameBuffer.h"
 #include "GraphicEngine/VertexBufferLayout.h"
 #include <vector>
+#include <fstream>
+#include <cstdio>
+#include <filesystem>
 #include <memory> // For std::make_unique
 #include <algorithm>
 #include "MinecraftEditor/Graphic/Forms/Cube.h"
@@ -21,7 +24,6 @@
 
 
 namespace interaction {
-
 
 	/**
 	* \brief State of the selector, indicate if the selector is currently in a cut or copy action.
@@ -55,7 +57,9 @@ namespace interaction {
 		std::shared_ptr<Texture> m_textCut;
 		std::shared_ptr<Texture> m_textCopy;
 
-		RBF m_rbf; //TODO: go to private w/ getter
+		RBF m_rbf;
+
+		int m_selectedFace = -1;
 
 
 	public:
@@ -78,6 +82,8 @@ namespace interaction {
 		inline int sizeWorld() const { return m_SizeWorld; };
 		inline const bool* activeGrid() const { return m_activeGrid; };
 		inline bool* activeGrid() { return m_activeGrid; };
+		inline int getSelectedFace() const { return m_selectedFace; };
+
 		std::shared_ptr<Texture> textSelected() { return m_textCut; };
 		std::shared_ptr<Texture> textSelector() { return m_textSelector; };
 		Forms::Cube* currentSelected();
@@ -179,9 +185,24 @@ namespace interaction {
 		*/
 		void PasteToSelector();
 
+		/**
+		 * \brief Compute and apply RBF interpolation.
+		 */
 		void ApplyRBF();
+
 		void MoveSelectorToClick(int x, int y, const FrameBuffer& framebufferSelection);
 		void MoveSelectorToClickFace(int x, int y, const FrameBuffer& framebufferSelection);
+		bool OnACube() const;
+		bool OnUpperFace() const;
+
+		/**
+		 * \brief Load saved scene
+		 */
+		void loadScene(const std::string &filepath);
+		/**
+		 * \brief Save current scene to file and remove oldest file
+		 */
+		void saveScene(const std::string &filepath);
 
 	private:
 		Forms::Cube* giveHighestCube();

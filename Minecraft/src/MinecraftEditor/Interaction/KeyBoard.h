@@ -26,6 +26,9 @@ namespace interaction {
 		std::shared_ptr<camera::FreeflyCamera> m_camera;
 		FrameBuffer* m_frameBufferSelection;
 
+		bool m_LayerDraw = false; /// \var enabled when drawing or erasing a layer
+		int m_yLayer; /// \var enabled when drawing or erasing a layer
+
 	public:
 		/**
 		* \brief Init Keyboard
