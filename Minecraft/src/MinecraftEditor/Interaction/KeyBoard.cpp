@@ -96,6 +96,10 @@ namespace interaction {
 
 	void KeyBoard::MouseShortCut() {
 		if (!ImGui::IsAnyWindowHovered() && !ImGui::IsAnyWindowFocused()) {
+			if (m_LayerDraw && (  ImGui::IsMouseReleased(0) || ImGui::IsMouseReleased(1) ) )
+			{
+				m_LayerDraw = false;
+			}
 			
 			if (ImGui::IsMouseClicked(1) || ImGui::IsMouseDragging(1)) {
 				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
@@ -109,12 +113,29 @@ namespace interaction {
 			else if (ImGui::IsMouseDragging(0) || ImGui::IsMouseClicked(0)) {
 				m_cubeSelector->MoveSelectorToClick(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 				if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)) {
-					if (!(ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL))) {
-						m_cubeSelector->MoveSelectorToClickFace(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
+					if ( ImGui::IsMouseDragging(0) ) {
+						if (m_cubeSelector->OnACube() == false && m_LayerDraw == false) {
+							m_cubeSelector->AddToSelector();
+							m_LayerDraw = true;
+							m_yLayer = m_cubeSelector->selector()->selectorCube.position().y;
+						}
+						else if (m_cubeSelector->OnACube() == false && m_LayerDraw == true && m_yLayer == 0 && m_cubeSelector->selector()->selectorCube.position().y == 0) m_cubeSelector->AddToSelector();
+						else if (m_cubeSelector->OnUpperFace() && m_LayerDraw == false) {
+							m_LayerDraw = true;
+							m_cubeSelector->MoveSelector({0,1,0});
+							m_cubeSelector->AddToSelector();
+							m_yLayer = m_cubeSelector->selector()->selectorCube.position().y;
+						}
+						else if (m_cubeSelector->OnUpperFace() && m_LayerDraw) {
+							if (m_cubeSelector->selector()->selectorCube.position().y + 1 == m_yLayer) {
+								m_cubeSelector->MoveSelector({0,1,0});
+								m_cubeSelector->AddToSelector();
+							}
+						}
 					}
-					if ((abs(ImGui::GetMouseDragDelta(0).x) > 6 || abs(ImGui::GetMouseDragDelta(0).y) > 6) || ImGui::IsMouseClicked(0)) {
+					else {
+						if (m_cubeSelector->OnACube()) m_cubeSelector->MoveSelectorToClickFace(ImGui::GetMousePos().x, App::WINDOW_HEIGHT - ImGui::GetMousePos().y - 1, *m_frameBufferSelection);
 						m_cubeSelector->AddToSelector();
-						ImGui::ResetMouseDragDelta(0);
 					}
 				}
 				if (ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)) {
@@ -138,7 +159,7 @@ namespace interaction {
 							m_cubeRenderer->updateTexture();
 						}
 						// TODO: check if necessary
-						//m_CubeSelector->refresh();
+						m_cubeSelector->refresh();
 					}
 				}
 			}
