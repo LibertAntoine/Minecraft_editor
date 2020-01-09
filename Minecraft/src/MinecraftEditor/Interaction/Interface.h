@@ -70,6 +70,10 @@ namespace interaction {
 		*/
 		void WorldController();
 		/**
+		* \brief Active save/load panel controller.
+		*/
+		void WorldController();
+		/**
 		* \brief Active the cube panel controller (add/delete/extrude...).
 		*/
 		void CubeController();

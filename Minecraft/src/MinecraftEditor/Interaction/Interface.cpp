@@ -32,6 +32,10 @@ namespace interaction {
 				this->WorldController();
 			}
 
+			if (ImGui::CollapsingHeader("Save Controller", ImGuiTreeNodeFlags_DefaultOpen)) {
+				this->SaveController();
+			}
+
 			if (ImGui::CollapsingHeader("Cube Action", ImGuiTreeNodeFlags_DefaultOpen)) {
 				this->CubeController();
 			}
@@ -105,7 +109,10 @@ namespace interaction {
 		if (ImGui::Button("Add ground")) {
 			m_cubeSelector->initGround(10);
 		}
+	}
 
+
+	void SaveController() {
 		this->SceneFiles("Select scene");
 		if (ImGui::Button("Load object")) m_cubeSelector->loadScene(m_filePaths[m_selectedFile]);
 		ImGui::SameLine();
@@ -115,8 +122,9 @@ namespace interaction {
 		}
 		char* newFile = m_newFile.data();
 		ImGui::InputText("File Name", newFile, 20);
-		m_newFile = std::string( newFile );
+		m_newFile = std::string(newFile);
 	}
+
 
 	void Interface::RBFController() {
 		if (ImGui::Button("Apply RBF")) m_cubeSelector->ApplyRBF();
