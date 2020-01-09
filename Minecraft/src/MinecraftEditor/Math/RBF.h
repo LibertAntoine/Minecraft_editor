@@ -5,9 +5,11 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <fstream>
 #include <sstream>
 #include <eigen3/Eigen/Dense>
 #include <random>
+#include <filesystem>
 #include <chrono>
 #include <math.h>
 
@@ -137,5 +139,7 @@ class RBF
 
     //void applyRBF() const;
     void parseSelectedRBFFile(); /// @brief Parse RBF file specified in m_FilePaths at index m_RBFFileId
+
+		void findRBFFiles();
 
 };

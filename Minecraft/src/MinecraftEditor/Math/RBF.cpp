@@ -5,10 +5,16 @@
 RBF::RBF()
   :m_rbf(m_useless)
 {
-  m_FilePaths.push_back("res/rbf1.txt");
-  m_FilePaths.push_back("res/rbf2.txt");
-  m_FilePaths.push_back("res/rbf3.txt");
+	findRBFFiles();
   m_RBFFileId = 0;
+}
+
+void RBF::findRBFFiles()
+{
+		std::string path = "res/rbf/";
+		m_FilePaths.clear();
+		for (const auto & entry : std::filesystem::directory_iterator(path))
+			m_FilePaths.push_back(entry.path());
 }
 
 RBF::RBF(std::vector<std::pair<glm::vec3, double>> controlPoints)

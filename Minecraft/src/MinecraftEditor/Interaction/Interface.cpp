@@ -14,6 +14,7 @@ namespace interaction {
 	void Interface::findFiles()
 	{
 		std::string path = "res/scenes/";
+		m_filePaths.clear();
 		for (const auto & entry : std::filesystem::directory_iterator(path))
 			m_filePaths.push_back(entry.path());
 	}
@@ -119,6 +120,8 @@ namespace interaction {
 
 	void Interface::RBFController() {
 		if (ImGui::Button("Apply RBF")) m_cubeSelector->ApplyRBF();
+		ImGui::SameLine(); 
+		if ( ImGui::Button("Refresh list") ) m_cubeSelector->getRBF().findRBFFiles();
 		this->RBFFile(*m_cubeSelector, "Select a RBF file");
 	}
 
