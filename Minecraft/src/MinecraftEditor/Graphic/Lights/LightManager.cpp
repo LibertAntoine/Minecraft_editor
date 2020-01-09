@@ -3,7 +3,7 @@
 
 namespace interaction {
 	LightManager::LightManager() 
-		:m_direction(glm::vec3(0.80f, 0.96f, -0.66f)), m_position(glm::vec3(1.2f, 1.5f, -1.7f)),
+		:m_direction(glm::vec3(-0.31f, 1.00f, 0.5f)), m_position(glm::vec3(1.2f, 1.5f, -1.7f)),
 		m_currentLight(lightStatus::NONE)
 	{
 		m_dirLight = {

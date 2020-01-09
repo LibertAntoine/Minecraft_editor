@@ -13,10 +13,10 @@ namespace interaction {
 
 	void KeyBoard::CameraShortCut() {
 		if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)) {
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP) || ImGui::IsKeyPressed(SDL_SCANCODE_KP_PLUS))
 				m_camera->moveFront(1.f);
 
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN))
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN) || ImGui::IsKeyPressed(SDL_SCANCODE_KP_MINUS))
 				m_camera->moveFront(-1.f);
 
 			if (ImGui::IsKeyPressed(SDL_SCANCODE_UP))
@@ -61,10 +61,10 @@ namespace interaction {
 			if (ImGui::IsKeyPressed(SDL_SCANCODE_V))
 				m_cubeSelector->PasteToSelector();
 
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP) || ImGui::IsKeyPressed(SDL_SCANCODE_KP_PLUS))
 				m_cubeSelector->Extrude();
 
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN))
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN) || ImGui::IsKeyPressed(SDL_SCANCODE_KP_MINUS))
 				m_cubeSelector->Dig();
 		}
 	}
@@ -74,10 +74,10 @@ namespace interaction {
 			!(ImGui::IsKeyDown(SDL_SCANCODE_LCTRL) || ImGui::IsKeyDown(SDL_SCANCODE_RCTRL)))
 			&& !(ImGui::IsKeyDown(SDL_SCANCODE_LALT) || ImGui::IsKeyDown(SDL_SCANCODE_RALT)))
 		{
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP))
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEUP) || ImGui::IsKeyPressed(SDL_SCANCODE_KP_PLUS))
 				m_cubeSelector->MoveSelector(glm::vec3(0, 1, 0));
 
-			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN))
+			if (ImGui::IsKeyPressed(SDL_SCANCODE_PAGEDOWN) || ImGui::IsKeyPressed(SDL_SCANCODE_KP_MINUS))
 				m_cubeSelector->MoveSelector(glm::vec3(0, -1, 0));
 
 			if (ImGui::IsKeyPressed(SDL_SCANCODE_UP))

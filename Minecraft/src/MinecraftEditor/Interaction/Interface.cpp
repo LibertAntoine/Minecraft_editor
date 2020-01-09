@@ -63,8 +63,6 @@ namespace interaction {
 				ImGui::EndMenu();
 			}
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-			ImGui::SameLine();
-			ImGui::Text("SCROLL WHEEL for zooming in/out, hold on SHIFT to look, hold on SPACE for camera shifting. Z Q S D to move");
 			ImGui::EndMainMenuBar();
 		}
 	}
@@ -305,9 +303,9 @@ namespace interaction {
 	}
 	void Interface::ComboMultiTexture(std::vector<unsigned int>& textures, const char* label) {
 		const char* labels[6]{
-			"Front Face", "Back Face",
-			"Right Face", "Left Face",
-			"Top Face", "Bottom Face",
+			"Front Face", "Right Face",
+			"Back Face", "Bottom Face",
+			"Left Face", "Top Face",
 		};
 		ImGui::TextUnformatted(label);
 		for (int j = 0; j < 6; ++j) {

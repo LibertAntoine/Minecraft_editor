@@ -91,7 +91,6 @@ namespace interaction {
 	  m_Cuberenderer->updateType();
 	  m_Cuberenderer->updateCubeId();
 	  m_selector->selectorCube = Forms::Cube(glm::ivec3(0, 0, 0), 1, glm::vec3(0, 0.5, 0.5), Forms::COLORED, { 0,0,0,0,0,0 });
-	  //this->initGround(10);
   }
 
 
