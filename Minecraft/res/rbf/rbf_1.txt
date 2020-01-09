@@ -1,0 +1,7 @@
+#boundaries
+-10 0 0
+10 20 0
+#controlpoints
+0 0 0 1
+0 20 0 1
+#noproba
