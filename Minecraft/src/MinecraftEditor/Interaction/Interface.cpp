@@ -13,10 +13,12 @@ namespace interaction {
 
 	void Interface::findFiles()
 	{
-		std::string path = "res/scenes/";
-		m_filePaths.clear();
-		for (const auto & entry : std::filesystem::directory_iterator(path))
-			m_filePaths.push_back(entry.path());
+		#ifndef _WIN32
+			std::string path = "res/scenes/";
+			m_filePaths.clear();
+			for (const auto & entry : std::filesystem::directory_iterator(path))
+				m_filePaths.push_back(entry.path());
+		#endif
 	}
 
 
@@ -119,9 +121,11 @@ namespace interaction {
 			m_cubeSelector->saveScene(m_newFile);
 			this->findFiles();
 		}
-		char* newFile = m_newFile.data();
-		ImGui::InputText("File Name", newFile, 20);
-		m_newFile = std::string(newFile);
+		#ifndef _WIN32
+			char* newFile = m_newFile.data();
+			ImGui::InputText("File Name", newFile, 20);
+			m_newFile = std::string(newFile);
+		#endif
 	}
 
 

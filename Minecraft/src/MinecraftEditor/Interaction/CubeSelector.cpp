@@ -372,27 +372,29 @@ namespace interaction {
 
 	void CubeSelector::saveScene(const std::string &filepath)
 	{
-		std::filesystem::remove(filepath);
-		std::cout << "Writing a new file" << std::endl;
-		std::ofstream stream("res/scenes/"+filepath+".txt");
-		for ( auto cube : m_Cuberenderer->CubeList() ) {
-			// Position
-			stream << cube.position().x << " ";
-			stream << cube.position().y << " ";
-			stream << cube.position().z << " ";
+		#ifndef _WIN32
+			std::filesystem::remove(filepath);
+			std::cout << "Writing a new file" << std::endl;
+			std::ofstream stream("res/scenes/"+filepath+".txt");
+			for ( auto cube : m_Cuberenderer->CubeList() ) {
+				// Position
+				stream << cube.position().x << " ";
+				stream << cube.position().y << " ";
+				stream << cube.position().z << " ";
 
-			// Color
-			stream << cube.color().x << " ";
-			stream << cube.color().y << " ";
-			stream << cube.color().z << " ";
+				// Color
+				stream << cube.color().x << " ";
+				stream << cube.color().y << " ";
+				stream << cube.color().z << " ";
 
-			for ( auto texId : cube.texture() ) {
-				stream << texId << " ";
-			}
+				for ( auto texId : cube.texture() ) {
+					stream << texId << " ";
+				}
 			
-			// Type
-			stream << cube.type() << std::endl;
-		}
-		stream.close();
+				// Type
+				stream << cube.type() << std::endl;
+			}
+			stream.close();
+		#endif
 	}
 }

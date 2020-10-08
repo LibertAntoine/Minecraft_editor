@@ -9,10 +9,12 @@ RBF::RBF()
 
 void RBF::findRBFFiles()
 {
+	#ifndef _WIN32
 		std::string path = "res/rbf/";
 		m_FilePaths.clear();
-		for (const auto & entry : std::filesystem::directory_iterator(path))
-			m_FilePaths.push_back(entry.path());
+		for (const auto& entry : std::filesystem::directory_iterator(path))
+		m_FilePaths.push_back(entry.path());
+	#endif // !_WIN32
 }
 
 RBF::RBF(std::vector<std::pair<glm::vec3, double>> controlPoints)
