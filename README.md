@@ -1,37 +1,104 @@
-# IMAC 3D voxel editor project
+# :hammer_and_wrench: MinecraftEditor
 
-![3D editor in action](Doc/Screenshots/Screenshot_20200105_210133.png?raw=true "3D editing made easy")
+ ![MinecraftEditor](doc/readme-img/MinecraftEditor.png?raw=true "MinecraftEditor")
 
-## Instructions
-Please follow these steps to compile the project and start using the 3D editor:
-### Downloading
-First you may first clone this Git repository
-If you are using a terminal, simply execute the following command :
+## Table of Contents
+
+- [**Building configuration**](#Building-configuration)
+  * [**Clone repository**](#clone-repository)
+  * [**Linux**](#linux)
+    - [**Add dependencies**](#add-dependencies)
+    - [**Build**](#build)
+    - [**Execute**](#execute)
+  * [**Windows**](#windows)
+    
+- [**Presentation**](#presentation)
+
+- [**Main Features**](#main-features)
+
+- [**Contributors**](#contributors)
+
+- [**Dependencies**](#dependencies)
+
+
+## Building configuration 
+* **OS Supported :** Windows, Linux
+
+### Clone repository 
+In the local folder for the project
 ```bash
-git clone --depth=1 https://github.com/LibertAntoine/Minecraft_editor.git
+git clone https://github.com/LibertAntoine/Minecraft_editor.git
 ```
-Notice: the `--depth` option will perform a shallow clone with only 1 commit history, this will reduce the amount off downloaded content :upside_down_face:
 
-Then move into `Minecraft_editor` directory (or whatever name you've used when cloning) and create a new directory at the root called `bin`, for instance. It will contain your future executable.
-### Compiling
-Now we can compile the project using...
+### Linux
+
+#### Add dependencies 
 ```bash
+sudo apt-get update
+sudo apt-get install cmake libgl1-mesa-dev  libsdl2-dev libeigen3-dev libglew-dev.
+```
+
+#### Build
+In the project folder
+```bash
+mkdir build
+cd build
 cmake ..
-```
-... or ...
-```bash
-cmake .. -DCMAKE_BUILD_TYPE=Debug
-```
-... if you want to keep debug data and make the compiler verbose for warnings.
-
-Then compile using the automatically generated `Makefile` with:
-```bash
 make
 ```
-### Running
-To use the 3D editor you have to execute it from a specific directory which is located under `Minecraft_editor/Minecraft`
-Then hit this command from your terminal :
+
+#### Execute
+In the project folder
 ```bash
-../bin/Minecraft/src/Minecraft
+bin/Minecraft
 ```
-And there you go :smile: enjoy!
+
+### Windows
+* Move SDL2.dll from WinDependencies\SDL2\{systemType} to the bin directory
+* Move SDL2.dll from WinDependencies\glew-2.1.0\{configType}\{systemType} to the bin directory
+* Open Visual studio project and generate the project.
+
+
+## Presentation
+<p>
+Cubic-based 3D world editor, developed in C++ and the OpenGL 4 graphics API. This editor offers a very complete interface allowing you to create cubes by moving a selector or using the mouse. It is possible to change the colour or texture of the cubes, and to do multi-texturing on the same cube, by choosing a different texture per face. It is possible to place a directional or point light in the scene. Each cube is built by the geometry shader from a coordinate. The cubes are rendered in batch rendering technics.
+</p>
+<p>
+This project is an initiative resulting from a lecture about image synthesis and applied mathematics at the IMAC engineering school.
+</p>
+
+Realized in December 2019.
+
+
+[**More details... (FR)**](doc/Minecraft_Editor_Rapport.pdf)
+
+<p align="center">
+<img src="doc/readme-img/MinecraftEditor2.png?raw=true" width="45%" alt="Screenshot">
+<img src="doc/readme-img/MinecraftEditor3.png?raw=true" width="45%" alt="Screenshot">
+</p>
+
+
+## Main Features
+
+* Graphics pipeline in OpenGL 4.
+* Selection of cubes with the mouse.
+* Multi-texturing of cubes.
+* Interface with ImGui.
+* Directional or point light.
+
+
+## Contributors
+
+* [Antoine Libert](https://github.com/LibertAntoine) - Graphic Renderer, GUI, multi-texturing, light.
+* [Nicolas Liénart](https://github.com/nicolnt) - Selection, RBF.
+
+## Dependencies
+
+- [OpenGL4](http://docs.gl/) - Graphic API used
+- [SDL2](https://wiki.libsdl.org/) - The library to create window.
+- [ImGui](https://github.com/ocornut/imgui) - For interfaces.
+- [StbImage](https://github.com/nothings/stb) - For loading images
+- [Eigen3](https://eigen.tuxfamily.org/dox-devel/index.html) - For matrices.
+- [GLM](https://glm.g-truc.net/0.9.9/index.html) - For transform.
+- [Octree](https://nomis80.org/code/octree.html) - For 3D map location.
+
