@@ -1,6 +1,6 @@
 # :hammer_and_wrench: MinecraftEditor
 
- ![MinecraftEditor](doc/readme-img/MinecraftEditor.png?raw=true "MinecraftEditor")
+ ![MinecraftEditor](Doc/readme-img/MinecraftEditor.png?raw=true "MinecraftEditor")
 
 ## Table of Contents
 
@@ -70,11 +70,11 @@ This project is an initiative resulting from a lecture about image synthesis and
 Realized in December 2019.
 
 
-[**More details... (FR)**](doc/Minecraft_Editor_Rapport.pdf)
+[**More details... (FR)**](Doc/Minecraft_Editor_Rapport.pdf)
 
 <p align="center">
-<img src="doc/readme-img/MinecraftEditor2.png?raw=true" width="45%" alt="Screenshot">
-<img src="doc/readme-img/MinecraftEditor3.png?raw=true" width="45%" alt="Screenshot">
+<img src="Doc/readme-img//MinecraftEditor2.png?raw=true" width="45%" alt="Screenshot">
+<img src="Doc/readme-img//MinecraftEditor3.png?raw=true" width="45%" alt="Screenshot">
 </p>
 
 
